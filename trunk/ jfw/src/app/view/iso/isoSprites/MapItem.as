@@ -1,6 +1,8 @@
-package app.view.game.sprite 
+package app.view.iso.isoSprites
 {
 	import com.isolib.as3isolib.display.IsoSprite;
+	import com.isolib.as3isolib.geom.Pt;
+	import com.isolib.as3isolib.utils.IsoDrawingUtil;
 	import com.jfw.engine.animation.BmdAtlas;
 	import com.jfw.engine.animation.Texture;
 	import com.jfw.engine.core.base.Core;
@@ -26,6 +28,12 @@ package app.view.game.sprite
 		private function init():void
 		{
 			spriteContainer = new Sprite();
+			
+			//temp
+//			var base:Sprite = new Sprite();
+//			base.graphics.beginFill(0x336699);
+//			IsoDrawingUtil.drawIsoRectangle(base.graphics, new Pt(), 4*30,4*30);
+//			sprites = [base,spriteContainer];
 			sprites = [spriteContainer];
 			container.mouseChildren = false;
 			container.mouseEnabled = false;
@@ -35,6 +43,7 @@ package app.view.game.sprite
 		{
 			return spriteContainer;
 		}
+		
 		public function setHighLight( show:Boolean, color:uint = 0xFFFFFF, alpha:Number = 1 ):void
 		{
 			if ( show )
@@ -42,51 +51,12 @@ package app.view.game.sprite
 			else
 				container.filters = [];
 		}
-		protected function loadAssets( path:String ):void
-		{
-			_path = path;
-			if ( !assetsDomains[_path] )
-			{
-				assetsDomains[_path] = { loaded:false, domain:null };
-				bulkLoader.add( _path, { id: _path } );
-				bulkLoader.addEventListener( BulkProgressEvent.SINGLE_COMPLETE, onLoaded );
-				if ( !bulkLoader.isRunning )
-					bulkLoader.start();
-			}
-			else if ( !assetsDomains[_path]['loaded'] )
-				bulkLoader.addEventListener( BulkProgressEvent.SINGLE_COMPLETE, onLoaded );
-			else
-				onAssetsLoaded( assetsDomains[_path]['domain'] );
-		}
-		
-		private function onLoaded( evt:BulkProgressEvent ):void
-		{
-			if ( _path != evt.item.id )
-				return;
-			assetsDomains[_path]['domain'] = bulkLoader.getMovieClip( _path ).loaderInfo.applicationDomain;
-			assetsDomains[_path]['loaded'] = true;
-			bulkLoader.removeEventListener( BulkProgressEvent.SINGLE_COMPLETE, onLoaded );
-			onAssetsLoaded( assetsDomains[_path]['domain'] );
-		}
-		
-		protected function onAssetsLoaded( assetsDomain:ApplicationDomain ):void
-		{
-			
-		}
+
 		public function hitTestPoint( x:Number, y:Number, shapeFlag:Boolean = false ):Boolean
 		{
 			if ( container.hitTestPoint( x, y, shapeFlag ) )
 				return true;
 			return false;
-		}
-		protected function getMovieClip( domain:ApplicationDomain, define:String ):MovieClip
-		{
-			if (! domain.hasDefinition(define)) {
-				define = 'AItem';
-			}
-			var classDef:Class = domain.getDefinition( define ) as Class;
-			var mc:MovieClip = new classDef as MovieClip;
-			return mc;
 		}
 		
 		protected function getAssets( clsName:String ):BmdAtlas
