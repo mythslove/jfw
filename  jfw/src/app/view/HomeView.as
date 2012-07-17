@@ -4,6 +4,7 @@ package app.view
 	import app.model.events.HomeEvent;
 	import app.model.events.LoadingEvent;
 	import app.model.events.ModelEvent;
+	import app.view.iso.isoSprites.building.MapBuilding;
 	import app.view.ui.WindowManager;
 	import app.view.ui.component.alert.Alert;
 	import app.view.ui.component.alert.AlertSmallWindow;
@@ -21,6 +22,7 @@ package app.view
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
 	import mx.binding.BindingManager;
@@ -36,7 +38,7 @@ package app.view
 		private var mapBg:Bitmap = null;
 		
 		private var buildings:Vector.<BuildingStruct>;
-			
+		
 		public function HomeView( mapContainer:DisplayObjectContainer = null,data:IStruct=null)
 		{
 			super(data);
@@ -52,9 +54,10 @@ package app.view
 		{
 			super.initMapBg();
 			
-//			var bmpBg:Bitmap = this.core.assetsModel.getBitmap('HomeBg');
-//			if( bmpBg )
-//				setMapBg( bmpBg );
+			var bmpBg:Bitmap = this.core.assetsModel.getBitmap('HomeBg');
+			if( bmpBg )
+				setMapBg( bmpBg );
+			
 		}
 		
 		override protected function onInit():void
@@ -63,6 +66,30 @@ package app.view
 //			this.debug();
 			
 			this.makeCenter();
+			
+			//test
+			var homeTown:MapBuilding = new MapBuilding( 'B10001',4,4 );
+			homeTown.moveTo( 5*30,5*30,0 );
+			this.isoScene.addChild( homeTown );
+			
+			homeTown = new MapBuilding( 'B10002',4,4 );
+			homeTown.moveTo( 10*30,5*30,0 );
+			this.isoScene.addChild( homeTown );
+			
+			homeTown = new MapBuilding( 'B10003',4,4 );
+			homeTown.moveTo( 5*30,10*30,0 );
+			this.isoScene.addChild( homeTown );
+			
+			homeTown = new MapBuilding( 'B10004',4,4 );
+			homeTown.moveTo( 14*30,8*30,0 );
+			this.isoScene.addChild( homeTown );
+			
+			homeTown = new MapBuilding( 'B10005',4,4 );
+			homeTown.moveTo( 8*30,15*30,0 );
+			this.isoScene.addChild( homeTown );
+			
+			this.isoScene.render();
+			
 			
 			sendEvent( LoadingEvent.LOADING_HIDE );
 		}
