@@ -1,5 +1,6 @@
 package com.jfw.engine
 {
+	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BView;
 	
@@ -9,13 +10,13 @@ package com.jfw.engine
 	
 	
 	/** 游戏世界抽象类 */
-	public class AbsGameWorld extends BView
+	public class AbsGameWorld extends Core
 	{
 		protected var gameStage:Stage = null;
 		
-		public function AbsGameWorld(data:IStruct=null)
+		public function AbsGameWorld( )
 		{
-			super(data);
+			super( );
 		}
 		
 		/** 
@@ -29,9 +30,17 @@ package com.jfw.engine
 			this.gameStage.scaleMode = StageScaleMode.NO_SCALE;
 			this.gameStage.align = StageAlign.TOP_LEFT;
 			
+			this.initCmds();
 			this.initModels();
 			this.initViews();
+			
 			this.startGame();
+		}
+		
+		/** 抽象方法，子类必须重写，初始化命令 */
+		protected function initCmds():void
+		{
+			throw new Error("Abstract method!");
 		}
 		
 		/** 抽象方法，子类必须重写，初始化models */

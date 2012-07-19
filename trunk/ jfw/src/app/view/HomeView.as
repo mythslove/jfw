@@ -1,5 +1,6 @@
 package app.view
 {
+	import app.control.events.TestEvent;
 	import app.model.data.BuildingStruct;
 	import app.model.events.HomeEvent;
 	import app.model.events.LoadingEvent;
@@ -132,6 +133,8 @@ package app.view
 		
 		override protected function onClick(event:MouseEvent):void
 		{
+			trace( "测试Command: " );
+			sendEvent( TestEvent.TEST_COMMAND_EVENT,{'fuck':100} );
 		}
 		
 		override protected function onMouseUp(event:MouseEvent):void

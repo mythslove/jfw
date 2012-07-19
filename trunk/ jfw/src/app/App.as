@@ -1,5 +1,7 @@
 package app
 {
+	import app.control.TestCmd;
+	import app.control.events.TestEvent;
 	import app.model.AssetsModel;
 	import app.model.BattleModel;
 	import app.model.ConfigModel;
@@ -34,6 +36,11 @@ package app
 			if( !instance )
 				instance = new App();
 			return instance;
+		}
+		
+		override protected function initCmds():void
+		{
+			this.regCmd( TestEvent.TEST_COMMAND_EVENT,TestCmd );
 		}
 		
 		override  protected function initModels():void
