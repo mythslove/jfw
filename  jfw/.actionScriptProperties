@@ -25,18 +25,21 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="lib"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/Common"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/ASProject"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/ASProject_Extended"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LOCALE_LOCATION}/version4locale/"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="examples/binding/FlexLiteBindingTest.as"/>
-    <application path="app/App.as"/>
-    <application path="examples/animation/Test.as"/>
-    <application path="GameMain.as"/>
     <application path="examples/animation/Test2.as"/>
+    <application path="examples/binding/FlexLiteBindingTest.as"/>
+    <application path="examples/animation/Test.as"/>
+    <application path="app/App.as"/>
+    <application path="GameMain.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>
-

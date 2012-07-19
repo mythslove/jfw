@@ -1,10 +1,11 @@
 package com.jfw.engine.core.base
 {
+	import com.jfw.engine.core.mvc.control.ICmd;
 	import com.jfw.engine.core.mvc.model.IAssetModel;
 	import com.jfw.engine.core.mvc.model.IConfigModel;
 	import com.jfw.engine.core.mvc.model.IModel;
 
-	public class Core
+	public class Core implements IObServer
 	{
 		protected static const SINGLETON_MSG:String = '';
 		
@@ -13,6 +14,12 @@ package com.jfw.engine.core.base
 		
 		/** 数据模型字典 */
 		protected var modelMap:Object = { };
+		
+		/** 命令字典 */
+		protected var cmdMap:Object = { };
+		
+		/** 被观察者单例 */
+		protected var obs:Observable;
 		
 		/** 静态资源库引用 */
 		protected var assetsLibModel:IAssetModel = null;
@@ -25,6 +32,8 @@ package com.jfw.engine.core.base
 			if ( null != instance ) 
 				throw Error( SINGLETON_MSG );
 			instance = this;
+			
+			obs = Observable.getInstance();
 		}
 		
 		public static function getInstance():Core
@@ -103,6 +112,46 @@ package com.jfw.engine.core.base
 		public function hasModel( modelName:String ):Boolean
 		{
 			return modelMap[ modelName ] != null;
+		}
+		
+		/** 执行命令 */
+		public function execCmd( evt:String,param:Object = null ):void
+		{
+			var cmdRef:Class = cmdMap[ evt ];
+			if ( null == cmdRef ) 
+				return;
+			
+			var cmd : ICmd = new cmdRef();
+			cmd.execute( evt, param );
+		}
+		
+		/** 注册命令 */
+		public function regCmd( evt:String, cmdRef:Class ):void 
+		{
+			if( null == cmdMap[evt] )
+				obs.regObServer( evt,this );
+			cmdMap[ evt ] = cmdRef;
+		}
+		
+		/** 删除命令 */
+		public function delCmd( evt:String ):void 
+		{
+			if( this.hasCmd( evt ) )
+			{
+				obs.unregObserver( evt,this );
+				cmdMap[ evt ] = null;
+			}
+		}
+
+		/** 检查是否注册命令 */
+		public function hasCmd( evt:String ) : Boolean
+		{
+			return ( null != cmdMap[ evt ] );
+		}
+		
+		public function update( evt:String, param:Object ):void
+		{
+			execCmd( evt,param );
 		}
 	}
 }
