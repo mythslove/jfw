@@ -1,9 +1,9 @@
 package app.view.ui
 {
 	import app.model.data.player.PlayerStruct;
+	import app.model.events.CommandTestEvent;
 	import app.model.player.PlayerModel;
 	import app.view.ui.component.Tip;
-	import app.view.ui.manager.TipManager;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;
@@ -44,9 +44,25 @@ package app.view.ui
 			
 			playerModel = this.core.retModel( PlayerModel.NAME ) as PlayerModel;
 			
-			(this.$mcTopPanel['$txGb'] as TextField).mouseEnabled = true;
-			Tip.register( this.$mcShortcut['$pbSocial'],'武将' );
+			Tip.register( this.$mcTopPanel['$mcHotAreaGb'],'金币' );
+			Tip.register( this.$mcTopPanel['$mcHotAreaYb'],'妖币' );
+			Tip.register( this.$mcTopPanel['$mcHotAreaLucky'],'幸运值' );
+			Tip.register( this.$mcGiftPanel['$pbBtnYellowRookie'],'免费礼物' );
+			Tip.register( this.$mcGiftPanel['$pbOnLine'],'在线奖励' );
+			Tip.register( this.$mcGiftPanel['$pbDailyActive'],'在线活跃度' );
 			
+			Tip.register( this.$mcShortcut['$pbSocial'],'社交' );
+			Tip.register( this.$mcShortcut['$pbHelp'],'帮主' );
+			Tip.register( this.$mcShortcut['$pbHome'],'回城' );
+			Tip.register( this.$mcShortcut['$pbTask'],'任务' );
+			Tip.register( this.$mcShortcut['$pbBattle'],'战斗' );
+			Tip.register( this.$mcShortcut['$pbBag'],'仓库' );
+			Tip.register( this.$mcShortcut['$pbApp'],'应用中心' );
+			Tip.register( this.$mcShortcut['$pbSocial'],'社交' );
+			Tip.register( this.$mcShortcut['$pbSocial'],'社交' );
+			Tip.register( this.$mcShortcut['$pbSocial'],'社交' );
+			Tip.register( this.$mcShortcut['$pbSocial'],'社交' );
+//			TipManager.createToolTip( this.$mcTopPanel['$pbSocial'],'即将开放' );
 			
 			this.setBindings();
 		}
@@ -65,9 +81,11 @@ package app.view.ui
 					break;
 				//社交
 				case this.$mcShortcut['$pbSocial']:
+					sendEvent( CommandTestEvent.COMMAND_TEST_EVENT,{name:'sssssssssssssss'} );
 					break;
 				//任务
 				case this.$mcShortcut['$pbTask']:
+					sendEvent( CommandTestEvent.COMMAND_TEST_EVENT2,{name:'sssssssssssssss'} );
 					break;
 			}
 		}
@@ -82,7 +100,7 @@ package app.view.ui
 			switch( obj )
 			{
 				case this.$mcShortcut['$pmGb']:
-					TipManager.createToolTip( this.$mcTopPanel['$pbHelp'],'即将开放' );
+//					TipManager.createToolTip( this.$mcTopPanel['$pbHelp'],'即将开放' );
 					break;
 			}
 		}

@@ -12,6 +12,7 @@ package app.view
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BView;
 	import com.jfw.engine.utils.Stats;
+	import com.jfw.engine.utils.logger.Logger;
 	import com.jfw.engine.utils.manager.PopUpManager;
 	
 	import flash.display.DisplayObjectContainer;
@@ -95,7 +96,7 @@ package app.view
 					loadingView = null;
 					break;
 				case ModelEvent.GAME_INIT :
-					trace( 'Game init ...' );
+					Logger.info( 'Game init ...' );
 					new HomeView( this.mapLayer );
 					new MainUIView( this.uiLayer );
 					break;

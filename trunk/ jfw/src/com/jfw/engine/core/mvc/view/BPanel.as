@@ -53,7 +53,7 @@ package com.jfw.engine.core.mvc.view
 						if(TextFieldType.INPUT != ( chd as TextField).type )
 						{
 							(chd as TextField).selectable = false;
-							(chd as TextField).mouseEnabled = false;
+//							(chd as TextField).mouseEnabled = false;
 						}
 					}
 					

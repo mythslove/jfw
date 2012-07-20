@@ -8,6 +8,7 @@ package app.model
 	import com.jfw.engine.core.mvc.model.LoadModel;
 	import com.jfw.engine.utils.data.XMLUtil;
 	import com.jfw.engine.utils.json.JSON;
+	import com.jfw.engine.utils.logger.Logger;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -72,7 +73,7 @@ package app.model
 		
 		override public function result():void
 		{
-			trace( this,"ConfigModel load finish..." );
+			Logger.info( "ConfigModel load finish..." );
 			this.dispatchEvent( new Event( Event.COMPLETE ) );
 		}
 		

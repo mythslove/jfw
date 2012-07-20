@@ -4,6 +4,7 @@ package com.jfw.engine.core.base
 	import com.jfw.engine.core.mvc.model.IAssetModel;
 	import com.jfw.engine.core.mvc.model.IConfigModel;
 	import com.jfw.engine.core.mvc.model.IModel;
+	import com.jfw.engine.utils.logger.Logger;
 
 	public class Core implements IObServer
 	{
@@ -87,7 +88,7 @@ package com.jfw.engine.core.base
 			modelMap[ model.getModelName() ] = model;
 			model.onRegister();
 			
-			trace( model.getModelName() , "<<<: Reg Model");
+			Logger.info( model.getModelName() , "<=== Reg Model");
 		}
 		
 		/** 删除model */
@@ -123,6 +124,7 @@ package com.jfw.engine.core.base
 			
 			var cmd : ICmd = new cmdRef();
 			cmd.execute( evt, param );
+			Logger.info( evt,cmd,"<=== Exec Cmd");
 		}
 		
 		/** 注册命令 */
@@ -131,6 +133,19 @@ package com.jfw.engine.core.base
 			if( null == cmdMap[evt] )
 				obs.regObServer( evt,this );
 			cmdMap[ evt ] = cmdRef;
+			Logger.info( cmdRef,evt, "<=== Reg Cmd");
+		}
+		
+		/**
+		 * 批量注册命令 
+		 * @param cmdAry
+		 * @param cmdRef
+		 * 
+		 */
+		public function regCmds( cmdAry:Array, cmdRef:Class ):void
+		{
+			for( var i:int = 0,len:int = cmdAry.length; i < len;i++ )
+				regCmd( cmdAry[i],cmdRef );
 		}
 		
 		/** 删除命令 */

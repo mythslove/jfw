@@ -2,7 +2,9 @@ package
 {
 	import app.App;
 	
+	import com.demonsters.debugger.MonsterDebugger;
 	import com.jfw.engine.utils.Stats;
+	import com.jfw.engine.utils.logger.Logger;
 	
 	import flash.display.Sprite;
 	import flash.system.Security;
@@ -11,19 +13,21 @@ package
 	
 	public class GameMain extends Sprite
 	{
-		
-		static public const DEBUG:Boolean = true;
-		
 		public function GameMain()
 		{
 			Security.allowDomain( "*" );
 			Security.allowInsecureDomain( "*" );
+			
+			CONFIG::debug {
+				MonsterDebugger.initialize(this);
+			}
+			
 			this.run( );
 		}
 		
 		public function run( ):void
 		{
-			trace( this,'GameMain.run Entry...' );
+			Logger.info( 'GameMain.run Entry...' );
 			App.getInstance( ).initWorld( this.stage );
 		}
 	}

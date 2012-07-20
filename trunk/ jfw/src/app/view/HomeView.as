@@ -135,7 +135,7 @@ package app.view
 		
 		override protected function onClick(event:MouseEvent):void
 		{
-			sendEvent( CommandTestEvent.COMMAND_TEST_EVENT,{name:'sssssssssssssss'} );
+			
 		}
 		
 		override protected function onMouseUp(event:MouseEvent):void

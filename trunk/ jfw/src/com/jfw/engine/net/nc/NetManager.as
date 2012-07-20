@@ -1,7 +1,5 @@
 package com.jfw.engine.net.nc
 {
-	import com.jfw.engine.utils.json.JSON;
-	
 	import flash.utils.ByteArray;
 	
 	public class NetManager
@@ -41,7 +39,7 @@ package com.jfw.engine.net.nc
 //			}
 // 			else
 //			{
-				vo.sendParams = JSON.encode(param);
+				vo.sendParams = JSON.stringify(param);
 //			}
 			
 			vo.callback	= callback;
