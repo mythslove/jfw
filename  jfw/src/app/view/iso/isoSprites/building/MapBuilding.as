@@ -29,16 +29,35 @@ package app.view.iso.isoSprites.building
 			this._buildingId = id;
 			this.bmpMC = Core.getInstance().assetsModel.getDisplayObj( _buildingId ) as MovieClip;
 			spriteContainer.buttonMode = false;
+			
 			spriteContainer.addChild( this.bmpMC );
 			
+			bmpMC.addEventListener( MouseEvent.MOUSE_OUT, onMouseOut5 );
+			bmpMC.addEventListener( MouseEvent.MOUSE_OVER, onMouseOver5 );
+			
 			setSize( width * 30, height * 30, 10 );
-			this.
 			init();
 		}
 		
+		private function onMouseOut5(event:MouseEvent):void
+		{
+			this.setHighLight(false);
+//			trace(event.target.toString());
+			
+		}
+		
+		private  function onMouseOver5(event:MouseEvent):void
+		{
+			this.setHighLight(true);
+//			trace(event.target.toString());
+		}
+		
+		
 		private function init():void
 		{
+			
 		}
+		
 		override public function hitTestPoint( x:Number, y:Number, shapeFlag:Boolean = false ):Boolean
 		{
 			if ( !bmpMC )
@@ -77,22 +96,6 @@ package app.view.iso.isoSprites.building
 			return length / 30;
 		}
 		
-		public function setState( state:String, level:int=-1 ):void
-		{
-			spriteContainer.buttonMode = false;
-			
-//			var mc:MovieClip = getMovieClip( assetsDomain, className );
-//			bmpMC = new BmpMovieClip( mc, _assetsPath + className );
-//			bmpMC.addEventListener( BmpMovieClipEvent.BMPMC_MOUSE_OVER, onMouseOver );
-//			bmpMC.addEventListener( BmpMovieClipEvent.BMPMC_MOUSE_OUT, onMouseOut );
-//			bmpMC.addEventListener( BmpMovieClipEvent.BMPMC_CLICK, onClick );
-//			bmpMC.addEventListener( BmpMovieClipEvent.BMPMC_MOUSE_DOWN, onMouseDown );
-//			bmpMC.play();
-//			spriteContainer.addChild(  );
-			
-		}
-		
-	
 	}
 
 }

@@ -27,6 +27,8 @@ package app.model.events
 		public static const LOGIN_FAILURE:String		= 'login_failure';			// 登陆失败提示
 		public static const FRIEND_ERROR:String			= 'friend_error';			// 获取好友列表失败
 		
+
+		
 		
 		public function ModelEvent( type:String, bubbles:Boolean=false, cancelable:Boolean=false )
 		{

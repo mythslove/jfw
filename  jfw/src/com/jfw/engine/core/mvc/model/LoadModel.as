@@ -16,6 +16,7 @@ package com.jfw.engine.core.mvc.model
 	import flash.events.EventDispatcher;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 
 	/** 加载静态资源基类 ,实现 IEventDispatcher接口,可发送事件 */
 	public class LoadModel extends BModel implements IAssetModel,IQueueItem
@@ -60,6 +61,7 @@ package com.jfw.engine.core.mvc.model
 			loader.logLevel = BulkLoader.LOG_ERRORS;
 			
 			loader.addEventListener( BulkProgressEvent.PROGRESS, onAssetsLoading );
+			loader.addEventListener( BulkProgressEvent.SINGLE_COMPLETE, onSingleAssetLoaded );
 			loader.addEventListener( BulkProgressEvent.COMPLETE, onAssetsLoaded );
 			
 			var loaderContext:LoaderContext = new LoaderContext();
@@ -123,11 +125,34 @@ package com.jfw.engine.core.mvc.model
 			process( evt );
 		}
 		
+		/**
+		 * 单独文件下载完调用 
+		 * @param evt
+		 * 
+		 */
+		protected function onSingleAssetLoaded( evt:BulkProgressEvent ):void
+		{
+			if( LoadStruct.TYPE_BINARY == evt.item.type )
+			{
+				var content:ByteArray = loader.getBinary( evt.item.id );
+				try
+				{
+					content.uncompress( );
+				}
+				catch( e:Error )
+				{
+					throw e;
+				}
+				this.xmlMap[ evt.item.id ] = XML( content );
+			}
+		}
+		
 		private function onAssetsLoaded( evt:BulkProgressEvent ):void
 		{
 			initAssets();
 			
 			loader.removeEventListener(BulkProgressEvent.PROGRESS,onAssetsLoading);
+			loader.removeEventListener(BulkProgressEvent.SINGLE_COMPLETE,onSingleAssetLoaded);
 			loader.removeEventListener(BulkProgressEvent.COMPLETE,onAssetsLoaded);
 			loader.clear();
 			loader = null;
@@ -158,6 +183,8 @@ package com.jfw.engine.core.mvc.model
 		 */
 		public function getClass( name:String ):Class
 		{
+			if( !hasClass( name ) )
+				return null;
 			return applicationDomain.getDefinition( name ) as Class;
 		}
 		
@@ -212,6 +239,20 @@ package com.jfw.engine.core.mvc.model
 		public function getXML( name:String ):XML
 		{
 			return this.xmlMap[ name ];
+		}
+		
+		/**
+		 * 存储xml 
+		 * @param name
+		 * @param xml
+		 * 
+		 */
+		public function addXML( name:String, xml:XML ):void
+		{
+			if( this.xmlMap[ name ] )
+				return;
+			
+			this.xmlMap[ name ] = xml;
 		}
 		
 		public function addEventListener( type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false ):void

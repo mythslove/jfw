@@ -1,6 +1,6 @@
 package app.view.ui.window
 {
-	import app.view.ui.WindowManager;
+	import app.view.ui.manager.WindowManager;
 	import app.view.ui.component.BPageWindow;
 	
 	import flash.display.MovieClip;

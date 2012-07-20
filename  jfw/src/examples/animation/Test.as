@@ -9,13 +9,12 @@ package examples.animation
 	import com.jfw.engine.animation.Juggler;
 	
 	import examples.animation.RoleView;
-	import examples.animation.animation.AnimationConst;
-	import examples.animation.geom.isolib.map.consts.DirectionConst;
-	import examples.animation.geom.isolib.map.data.AStar;
-	import examples.animation.geom.isolib.map.data.IMapData;
-	import examples.animation.geom.isolib.map.data.MapData;
-	import examples.animation.geom.isolib.map.data.Tile;
-	import examples.animation.source.AssetsManager;
+	import com.jfw.engine.motion.AnimationConst;
+	import com.jfw.engine.isolib.map.consts.DirectionConst;
+	import com.jfw.engine.isolib.map.data.AStar;
+	import com.jfw.engine.isolib.map.data.IMapData;
+	import com.jfw.engine.isolib.map.data.MapData;
+	import com.jfw.engine.isolib.map.data.Tile;
 	import examples.animation.source.BG;
 	
 	import flash.display.Bitmap;
@@ -36,6 +35,7 @@ package examples.animation
 		private var juggler:Juggler=null;
 		private var mLastFrameTimestamp:Number;
 		private var role:RoleView=null;
+		private var mapData:IMapData=null;
 		
 		public function Test()
 		{
@@ -46,82 +46,33 @@ package examples.animation
 		private function onAdded (e:Event):void
 		{
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
-			
+			stage.align = StageAlign.TOP_LEFT;	
 			
 			juggler=new Juggler();
-//			var role:RoleView=new RoleView("Role",12);
-//			juggler.add(role);
-//			role.move(100,100);
-			var bg:Bitmap=AssetsManager.Instance.getEmbedResource("MyMapBg") as Bitmap;
-			var data:XML=XML(AssetsManager.Instance.getEmbedResource("MyMapData"));
-//			this.addChild(bg);
-			
-			var mapData:IMapData=new MapData(data);
-
-		//	var roleClass:String="RoleTexture";
-		//	var roleData:String="RoleData";
-		//	var bmdAtlas:BmdAtlas=new BmdAtlas((AssetsManager.Instance.getEmbedResource(roleClass) as Bitmap).bitmapData,XML(AssetsManager.Instance.getEmbedResource(roleData)));
-			var grid:IsoGrid=new IsoGrid();
-			grid.cellSize=30;
-			grid.showOrigin=true;
-			grid.setGridSize(24,24);
-			
-			
-
-			var scene:IsoScene=new IsoScene();
-			scene.hostContainer=this;
-			
-			scene.addChild(new BG());
-			
-			scene.addChild(grid);
 			
 			role=new RoleView("Role");
-			scene.addChild(role);
-			var pt:Pt=IsoMath.screenToIso(new Pt(mapData.bgWidth>>1,mapData.bgHeight-mapData.cellSize*mapData.gridCols>>1));
 			
-			role.moveBy(pt.x,pt.y,pt.z);
-//			grid.moveBy(pt.x,pt.y,pt.z);
-//			scene.render();
 
-			var view:IsoView=new IsoView();
-			this.addChild(view);
-			view.addScene(scene);
-//			view.setSize(stage.stageWidth,stage.stageHeight);
-			view.setSize(mapData.bgWidth,mapData.bgHeight);
-			view.panBy(mapData.bgWidth>>1,mapData.bgHeight>>1);
 
-//			view.render();
-			juggler.add(role);
+			
 			role.MapData=mapData;
-			scene.render();
-		//	var tile:Tile=mapData.getTilesByData("1")[0];
-		//	var ptt:Point=mapData.GridToScreen(new Point(tile.getXIndex(),tile.getZIndex()));
-//			role.move(ptt.x,ptt.y);
-	//		role.moveTo(0,00,0);
-	//		role.render();
-//			role.setPosition(tile.getXIndex(),tile.getZIndex());
-//			trace(tile.getXIndex(),tile.getZIndex());
-			mLastFrameTimestamp = getTimer() / 1000.0;
-			stage.removeEventListener(Event.ADDED_TO_STAGE, onAdded);
+			role.setPosition(0,0);
+
+			juggler.add(role);
+			
+			mLastFrameTimestamp=getTimer() / 1000.0;
+			
 			stage.addEventListener(Event.ENTER_FRAME,onEnterFrame);
 			stage.addEventListener(MouseEvent.CLICK,onClick);
-			stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
+			
+			
 		}
 		
 		private function onClick(e:MouseEvent):void
 		{
-			var p3d:Point=role.MapData.screenToGrid(new Point(e.stageX,e.stageY));
-			trace(p3d.x,p3d.y);
-			
-			if(!role.MapData.getPointOverRide(p3d.x,p3d.y))
-			{
-				var star:AStar=new AStar(role.MapData);
-				star.findPath(role.gridX,role.gridY,p3d.x,p3d.y,conditions);
-				role.WalkPath=star.Path;
-				role.StartMove();
-				role.setPosition(p3d.x,p3d.y);
-			}
+			var p:Point=mapData.screenToGrid(new Point(e.stageX,e.stageY));
+			trace(p.x,p.y);
+			role.walkTo(p.x,p.y);
 		}
 		
 		private function conditions(tile:Tile):Boolean
@@ -153,10 +104,8 @@ package examples.animation
 			var now:Number = getTimer() / 1000.0;
 			var passedTime:Number = now - mLastFrameTimestamp;
 			mLastFrameTimestamp = now;
-			
+
 			juggler.advanceTime(passedTime);
-			
-			trace(role.XOffset,role.YOffset);
 		}
 		
 		private function onEnterFrame(e:Event):void

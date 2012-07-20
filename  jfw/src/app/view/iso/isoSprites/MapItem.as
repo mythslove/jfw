@@ -15,9 +15,7 @@ package app.view.iso.isoSprites
 	public class MapItem extends IsoSprite
 	{
 		// 已加载的资源缓存
-		private static var assetsDomains:Object = { };
 		protected var spriteContainer:Sprite = null;
-		private var _path:String = '';
 		
 		public function MapItem() 
 		{
@@ -35,7 +33,7 @@ package app.view.iso.isoSprites
 //			IsoDrawingUtil.drawIsoRectangle(base.graphics, new Pt(), 4*30,4*30);
 //			sprites = [base,spriteContainer];
 			sprites = [spriteContainer];
-			container.mouseChildren = false;
+			container.mouseChildren = true;
 			container.mouseEnabled = false;
 		}
 		

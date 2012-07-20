@@ -823,6 +823,10 @@ bulkLoader.start(3)
            log("Items to load", getNotLoadedItems(), LOG_VERBOSE);
            item.cleanListeners();
            _contents[item.url.url] = item.content;
+		   //单个文件下载完成派发事件
+		   var e :BulkProgressEvent = new BulkProgressEvent(BulkProgressEvent.SINGLE_COMPLETE);
+		   e.item = item;
+		   dispatchEvent(e);
            var next : Boolean= _loadNext();
            var allDone : Boolean = _isAllDoneP();
            

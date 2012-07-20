@@ -34,6 +34,8 @@
 
 package com.stimuli.loading 
 {
+	import com.stimuli.loading.loadingtypes.LoadingItem;
+	
 	import flash.events.*;
 
 	/**
@@ -50,7 +52,10 @@ package com.stimuli.loading
 	public class BulkProgressEvent extends ProgressEvent {
 	    /* The name of this event */
 		public static const PROGRESS : String = "progress";
+		
 		public static const COMPLETE : String = "complete";
+		
+		public static const SINGLE_COMPLETE : String = "singleComplete";
 		
 		/** How many bytes have loaded so far.*/
 		public var bytesTotalCurrent : int;
@@ -67,6 +72,8 @@ package com.stimuli.loading
 	    public var itemsTotal : int;
 
         public var name : String;
+		
+		public var item:LoadingItem;
 
 		public function BulkProgressEvent( name : String, bubbles:Boolean=true, cancelable:Boolean=false ){
 			super(name, bubbles, cancelable);		

@@ -4,10 +4,13 @@ package com.jfw.engine.core.mvc.view.map
 	import com.isolib.as3isolib.display.IsoView;
 	import com.isolib.as3isolib.display.scene.IsoGrid;
 	import com.isolib.as3isolib.display.scene.IsoScene;
+	import com.isolib.as3isolib.geom.IsoMath;
+	import com.isolib.as3isolib.geom.Pt;
 	import com.isolib.as3isolib.graphics.Stroke;
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BView;
 	
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -32,6 +35,19 @@ package com.jfw.engine.core.mvc.view.map
 		protected var gridStartY:int = 0;
 		protected var downPt:Point = null;
 		
+		
+		private var dragStartX:int = 0;
+		private var dragStartY:int = 0;
+		private var lastX:Number = 0;
+		private var lastY:Number = 0;
+		
+		private var dragStartMouseX:int = 0;
+		private var dragStartMouseY:int = 0;
+		private var isDraging:Boolean = false;
+		private var speedX:Number = 0;
+		private var speedY:Number = 0;
+		private var acceleration:Number = 0.5;//加速度
+		
 		protected var sceneRect:Rectangle = null;
 		
 		public function BIsoMap(data:IStruct=null)
@@ -55,8 +71,8 @@ package com.jfw.engine.core.mvc.view.map
 			sceneRect = new Rectangle( 0, 0, 2400, 2400 );
 			
 			this.isoGrid = new IsoGrid();
-			this.isoGrid.showOrigin = true;
-			this.isoGrid.gridlines = new Stroke( 0,0x888888,.5);
+			this.isoGrid.showOrigin = false;
+			this.isoGrid.gridlines = new Stroke( 0,0x888888,0);
 			this.isoGrid.setGridSize( mapWidth,mapHeight );
 			this.isoGrid.cellSize = cellWidth;
 			this.isoGrid.container.cacheAsBitmap = true;
@@ -77,7 +93,7 @@ package com.jfw.engine.core.mvc.view.map
 			
 			addEventListener( MouseEvent.CLICK, onClick );
 			addEventListener( MouseEvent.MOUSE_DOWN, onMouseDown );
-			addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
+			stage.addEventListener( MouseEvent.MOUSE_UP, onMouseUp );
 			addEventListener( MouseEvent.MOUSE_MOVE, onMouseMove );
 		}
 		
@@ -86,13 +102,9 @@ package com.jfw.engine.core.mvc.view.map
 			
 		}
 		
-		protected function onMouseUp(event:MouseEvent):void
-		{
-			stopDrag();
-		}
-		
 		protected function onMouseDown(event:MouseEvent):void
 		{
+			
 			startDrag( false, new Rectangle( 
 				stage.stageWidth - sceneRect.width, 
 				stage.stageHeight - sceneRect.height, 
@@ -101,10 +113,15 @@ package com.jfw.engine.core.mvc.view.map
 			
 			downPt = new Point( event.stageX, event.stageY );
 		}
+				
+		protected function onMouseUp(event:MouseEvent):void
+		{
+			stopDrag();
+		}
 		
 		protected function onClick(event:MouseEvent):void
 		{
-			// 移动过大，表示正在拖动场景
+//			 移动过大，表示正在拖动场景
 			if ( Math.abs( event.stageX - downPt.x ) > 2 || 
 				Math.abs( event.stageY - downPt.y ) > 2 ) 
 				return;
@@ -113,12 +130,35 @@ package com.jfw.engine.core.mvc.view.map
 		
 		public function gridToView(pt:Point):Point
 		{
-			return null;
+			pt.x *= cellWidth;
+			pt.y *= cellHeight;
+			var isopt:Pt = new Pt( pt.x, pt.y );
+			isopt = IsoMath.isoToScreen( isopt );
+			
+			var ptRet:Point = new Point( isopt.x, isopt.y );
+			ptRet.x += gridStartX;
+			ptRet.y += gridStartY;
+			return ptRet;
 		}
 		
 		public function viewToGrid( pt:Point ):Point
 		{
-			return null;
+			pt.x -= gridStartX;
+			pt.y -= gridStartY;
+			var isopt:Pt = new Pt( pt.x, pt.y );
+			isopt = IsoMath.screenToIso( isopt );
+			
+			var ptRet:Point = new Point( isopt.x, isopt.y );
+			ptRet.x = int( ptRet.x / cellWidth );
+			ptRet.y = int( ptRet.y / cellHeight );
+			return ptRet;
+		}
+		
+		public function formatView( pt:Point ):Point
+		{
+			var ptRet:Point = viewToGrid( pt );
+			ptRet = gridToView( ptRet );
+			return ptRet;
 		}
 		
 		public function addItem():void

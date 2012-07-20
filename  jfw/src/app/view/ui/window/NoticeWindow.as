@@ -1,7 +1,7 @@
 package app.view.ui.window
 {
-	import app.view.ui.TipManager;
-	import app.view.ui.WindowManager;
+	import app.view.ui.manager.TipManager;
+	import app.view.ui.manager.WindowManager;
 	
 	import com.jfw.engine.core.base.CoreConst;
 	import com.jfw.engine.core.data.IStruct;

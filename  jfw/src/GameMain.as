@@ -7,7 +7,7 @@ package
 	import flash.display.Sprite;
 	import flash.system.Security;
 
-	[SWF(width="768",height="610",frameRate="24", backgroundColor="#ffffff")]
+	[SWF(width="760",height="700",frameRate="24", backgroundColor="#ffffff")]
 	
 	public class GameMain extends Sprite
 	{

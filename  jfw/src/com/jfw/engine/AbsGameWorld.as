@@ -40,26 +40,26 @@ package com.jfw.engine
 		/** 抽象方法，子类必须重写，初始化命令 */
 		protected function initCmds():void
 		{
-			throw new Error("Abstract method!");
+			throw new Error("Abstract method: initCmds!");
 		}
 		
 		/** 抽象方法，子类必须重写，初始化models */
 		protected function initModels():void
 		{
-			throw new Error("Abstract method!");
+			throw new Error("Abstract method: initModels!");
 		} 
 		
 		
 		/** 抽象方法，子类必须重写，初始化视图 */
 		protected function initViews():void
 		{
-			throw new Error("Abstract method!");
+			throw new Error("Abstract method: initViews!");
 		}
 		
 		/** 抽象方法，子类必须重写，启动游戏 */
 		protected function startGame():void
 		{
-			throw new Error("Abstract method!");
+			throw new Error("Abstract method: startGame!");
 		}
 	}
 }

@@ -1,9 +1,14 @@
 package app.view
 {
+	import app.model.BattleModel;
+	import app.model.events.BattleEvent;
 	import app.model.events.LoadingEvent;
 	import app.model.events.ModelEvent;
 	import app.view.init.LoadingView;
+	import app.view.ui.MainUIView;
+	import app.view.ui.component.Tip;
 	
+	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BView;
 	import com.jfw.engine.utils.Stats;
@@ -47,6 +52,7 @@ package app.view
 			
 			//初始化Popup管理器
 			PopUpManager.init( popLayer, true, 0x0, .5 );
+			Tip.init(this.gameContainer);
 			
 			//Debug
 			CONFIG::debug {
@@ -69,7 +75,8 @@ package app.view
 			return [
 				LoadingEvent.LOADING_SHOW,
 				LoadingEvent.LOADING_HIDE,
-				ModelEvent.GAME_INIT
+				ModelEvent.GAME_INIT,
+				BattleEvent.BATTLE_RES_LOAD_COMPLETE
 			];
 		}
 		
@@ -90,6 +97,10 @@ package app.view
 				case ModelEvent.GAME_INIT :
 					trace( 'Game init ...' );
 					new HomeView( this.mapLayer );
+					new MainUIView( this.uiLayer );
+					break;
+				case BattleEvent.BATTLE_RES_LOAD_COMPLETE:
+					new BattleView(this.mapLayer);
 					break;
 			}
 		}

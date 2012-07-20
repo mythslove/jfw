@@ -1,6 +1,6 @@
 package com.jfw.engine.core.mvc.view
 {
-	import app.view.ui.WindowManager;
+	import app.view.ui.manager.WindowManager;
 	
 	import com.jfw.engine.core.base.CoreConst;
 	import com.jfw.engine.core.data.IStruct;

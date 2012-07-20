@@ -40,29 +40,6 @@ package app.model
 			return assets;	
 		}
 		
-		override protected function initAssets():void
-		{
-			for(var i:int = 0, len:int = this.baseAssetsList.length;i<len;i++)
-			{
-				var asset:LoadStruct = this.baseAssetsList[i] as LoadStruct;
-				
-				if( LoadStruct.TYPE_BINARY == asset.type )
-				{
-					var content:ByteArray = loader.getBinary( asset.id );
-					try
-					{
-						content.uncompress( );
-					}
-					catch( e:Error )
-					{
-						throw e;
-					}
-					this.xmlMap[ asset.id ] = XML( content );
-				}
-			}
-		}
-		
-		
 		override public function process( obj:*=null ):void
 		{
 			var evt:BulkProgressEvent = BulkProgressEvent( obj );

@@ -1,12 +1,15 @@
 package examples.animation
 {
-	import com.jfw.engine.animation.BmdAtlas;
+	import app.manager.IResourceManager;
+	import app.manager.ResourceManager;
 	
-	import examples.animation.animation.IsoActiveAnimation;
-	import examples.animation.animation.AnimationConst;
-	import examples.animation.geom.isolib.map.consts.DirectionConst;
-	import examples.animation.geom.isolib.map.data.Tile;
-	import examples.animation.source.AssetsManager;
+	import com.isolib.as3isolib.geom.Pt;
+	import com.jfw.engine.animation.BmdAtlas;
+	import com.jfw.engine.isolib.map.consts.DirectionConst;
+	import com.jfw.engine.isolib.map.data.AStar;
+	import com.jfw.engine.isolib.map.data.Tile;
+	import com.jfw.engine.motion.AnimationConst;
+	import com.jfw.engine.motion.IsoActiveAnimation;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -20,48 +23,64 @@ package examples.animation
 	 */	
 	public class RoleView extends IsoActiveAnimation
 	{ 
-		private var animation:IsoActiveAnimation=null;
-		public var gridX:int=0;
-		public var gridY:int=0;
-	
+		protected var sourceManager:IResourceManager=null;
+		protected var gridX:int=0;
+		protected var gridY:int=0;
+
 		public function RoleView(name:String,fps:Number=12)
 		{
-			var roleClass:String=name+"Texture";
-			var roleData:String=name+"Data";
-			var bmdAtlas:BmdAtlas=new BmdAtlas((AssetsManager.Instance.getEmbedResource(roleClass) as Bitmap).bitmapData,XML(AssetsManager.Instance.getEmbedResource(roleData)));
-			super(bmdAtlas,DirectionConst.LEFTDOWN,AnimationConst.STOP,5,fps);
+			sourceManager=ResourceManager.getInstance();
+			super(name,sourceManager,DirectionConst.LEFTDOWN,AnimationConst.STOP,5,fps);
 		}
-	
 		/**
-		 * 行走至某处。请在调用此方法前先设置path属性
-		 * @param time							经过时间
-		 * @param autoChangeDirection	是否开启自动调整方向功能。默认为true
+		 * 
+		 * @param x
+		 * @param y
 		 * 
 		 */		
-		public function walkTo(x:Number,y:Number):void
+		public function walkTo(gdx:Number,gdy:Number):void
 		{
+			if(!_mapData.checkPointOverRide(gdx,gdy))
+			{
+				var star:AStar=new AStar(_mapData);
+				star.findPath(this.gridX,this.gridY,gdx,gdy,conditions);
+				this._path=star.Path;
+				this.StartMove();
+			}
 		}
 		
-		public function move(x:Number,y:Number):void
+		public function conditions(tile:Tile):Boolean
 		{
-			this.PosX=x;
-			this.PosY=y;
+			return true;
 		}
-		
+
+		/**
+		 * 移动到指定格子处
+		 * @param gdx
+		 * @param gdy
+		 * 
+		 */		
 		public function setPosition(gdx:int,gdy:int):void
 		{
 			gridX=gdx;
 			gridY=gdy;
+			
+			var p:Point=this._mapData.gridToScreen(new Pt(gdx,gdy));
+			
+			this.FootX=p.x;
+			this.FootY=p.y;
 		}
 		
 		override public function onUpdate(tile:Tile):void
 		{
-			//trace(tile.getXIndex(),tile.getZIndex());
+			gridX=tile.getXIndex();
+			gridY=tile.getZIndex();
 		}
 		
 		/** 停止行走 */
 		public function stopWalk():void
 		{
+			this.PauseMove();
 		}
 	}
 }
