@@ -43,10 +43,9 @@ package com.jfw.engine.core.mvc.view
 			var len:int = container.numChildren;
 			var chd:DisplayObject ;
 			
-			while( --len )
+			while( len-- )
 			{
 				chd = container.getChildAt( len );
-				
 				if ( null != chd )
 				{
 					if( chd is TextField )
@@ -81,7 +80,7 @@ package com.jfw.engine.core.mvc.view
 		{
 			var len:int = container.numChildren;
 			var chd:DisplayObject;
-			while( --len )
+			while( len-- )
 			{
 				chd = container.getChildAt( len );
 				if(this.checkMcType( chd.name ))
@@ -97,6 +96,16 @@ package com.jfw.engine.core.mvc.view
 			}
 		}
 		
+		/**
+		 * 注册tooltips 
+		 * @param obj
+		 * 
+		 */
+		protected function regTips( obj:Object ):void
+		{
+			
+		}
+		
 		public function tweenTo(duration:int,params:Object ):void
 		{
 			TweenLite.to( this,duration,params );
@@ -104,22 +113,28 @@ package com.jfw.engine.core.mvc.view
 		
 		protected function onMouseOver( evt:MouseEvent ):void
 		{
-			var btn:MovieClip = MovieClip( evt.target );
-			var end:Object = new Object();
-			end.scaleX = 1.2;
-			end.scaleY = 1.2;
-			end.ease = Bounce.easeOut;
-			TweenLite.to( btn, 0.5, end );
+			if( evt.target is MovieClip )
+			{
+				var end:Object = new Object();
+				end.scaleX = 1.2;
+				end.scaleY = 1.2;
+				end.ease = Bounce.easeOut;
+				TweenLite.to( evt.target, 0.5, end );
+			}
+			
+			regTips( evt.target );
 		}
 		
 		protected function onMouseOut( evt:MouseEvent ):void
 		{
-			var btn:MovieClip = MovieClip( evt.target );
-			var end:Object = new Object();
-			end.scaleX = 1;
-			end.scaleY = 1;
-			end.ease = Bounce.easeOut;
-			TweenLite.to( btn,0.5,end );
+			if( evt.target is MovieClip )
+			{
+				var end:Object = new Object();
+				end.scaleX = 1;
+				end.scaleY = 1;
+				end.ease = Bounce.easeOut;
+				TweenLite.to( evt.target,0.5,end );
+			}
 		}
 		
 		protected function onMouseDown( evt:MouseEvent ):void

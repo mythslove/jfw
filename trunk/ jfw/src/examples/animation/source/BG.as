@@ -5,6 +5,7 @@ package examples.animation.source
 	import com.isolib.as3isolib.utils.IsoDrawingUtil;
 	
 	import flash.display.Sprite;
+	import app.manager.AssetsManager;
 	
 	public class BG extends IsoSprite
 	{

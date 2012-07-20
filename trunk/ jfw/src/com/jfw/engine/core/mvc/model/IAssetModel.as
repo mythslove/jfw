@@ -28,5 +28,8 @@ package com.jfw.engine.core.mvc.model
 		
 		/** 根据类名获取XML */
 		function getXML( name:String ):XML;
+		
+		/** 缓存xml */
+		function addXML( name:String ,xml:XML ):void;
 	}
 }

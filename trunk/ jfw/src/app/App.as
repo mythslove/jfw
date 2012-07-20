@@ -1,7 +1,7 @@
 package app
 {
 	import app.control.TestCmd;
-	import app.control.events.TestEvent;
+	import app.manager.ResourceManager;
 	import app.model.AssetsModel;
 	import app.model.BattleModel;
 	import app.model.ConfigModel;
@@ -11,12 +11,12 @@ package app
 	import app.model.MissionModel;
 	import app.model.NetModel;
 	import app.model.UserModel;
+	import app.model.events.CommandTestEvent;
+	import app.model.player.PlayerModel;
 	import app.view.GameView;
 	
 	import com.jfw.engine.AbsGameWorld;
 	import com.jfw.engine.utils.Queue;
-	
-	import examples.resourceManager.ResourceManager;
 	
 	public class App extends AbsGameWorld
 	{
@@ -40,7 +40,7 @@ package app
 		
 		override protected function initCmds():void
 		{
-			this.regCmd( TestEvent.TEST_COMMAND_EVENT,TestCmd );
+			this.regCmd( CommandTestEvent.COMMAND_TEST_EVENT,TestCmd );
 		}
 		
 		override  protected function initModels():void
@@ -57,7 +57,8 @@ package app
 			new UserModel( );
 			new GuidModel( );
 			new MissionModel( );
-			new BattleModel( );
+			new PlayerModel( );
+//			new BattleModel( );
 		}
 		
 		override protected function initViews():void

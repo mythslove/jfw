@@ -1,12 +1,12 @@
 package app.view
 {
-	import app.control.events.TestEvent;
 	import app.model.data.BuildingStruct;
+	import app.model.events.CommandTestEvent;
 	import app.model.events.HomeEvent;
 	import app.model.events.LoadingEvent;
 	import app.model.events.ModelEvent;
 	import app.view.iso.isoSprites.building.MapBuilding;
-	import app.view.ui.WindowManager;
+	import app.view.ui.manager.WindowManager;
 	import app.view.ui.component.alert.Alert;
 	import app.view.ui.component.alert.AlertSmallWindow;
 	import app.view.ui.component.alert.AlertWindow;
@@ -39,6 +39,8 @@ package app.view
 		private var mapBg:Bitmap = null;
 		
 		private var buildings:Vector.<BuildingStruct>;
+		
+		private var path:Array;
 		
 		public function HomeView( mapContainer:DisplayObjectContainer = null,data:IStruct=null)
 		{
@@ -91,9 +93,9 @@ package app.view
 			
 			this.isoScene.render();
 			
-			
 			sendEvent( LoadingEvent.LOADING_HIDE );
 		}
+		
 		
 		override protected function listEventInterests():Array
 		{
@@ -133,8 +135,7 @@ package app.view
 		
 		override protected function onClick(event:MouseEvent):void
 		{
-			trace( "测试Command: " );
-			sendEvent( TestEvent.TEST_COMMAND_EVENT,{'fuck':100} );
+			sendEvent( CommandTestEvent.COMMAND_TEST_EVENT,{name:'sssssssssssssss'} );
 		}
 		
 		override protected function onMouseUp(event:MouseEvent):void

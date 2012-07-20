@@ -6,7 +6,8 @@ package app.control
 	{
 		override public function execute(evt:String, param:Object):void
 		{
-			trace( evt,param.toString() );
+			//Command测试
+			trace(evt,param.toString());
 		}
 	}
 }
