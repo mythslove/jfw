@@ -1,11 +1,13 @@
 package app.model
 {
+	import app.consts.NetConst;
 	import app.model.data.ProgressDataStruct;
 	import app.model.events.LoadingEvent;
 	import app.model.events.ModelEvent;
 	
 	import com.jfw.engine.core.data.LoadStruct;
 	import com.jfw.engine.core.mvc.model.LoadModel;
+	import com.jfw.engine.utils.logger.Logger;
 	import com.stimuli.loading.BulkProgressEvent;
 	
 	import flash.display.Bitmap;
@@ -48,7 +50,7 @@ package app.model
 			var progressVO:ProgressDataStruct = new ProgressDataStruct();
 			progressVO.percent = Math.ceil( evt.weightPercent * 100 );
 			
-			//trace(evt.loadingStatus()," <: loading status");
+			//Logger.info(evt.loadingStatus()," <: loading status");
 			
 			progressVO.description = evt.itemsLoaded.toString() + '/' + evt.itemsTotal.toString();
 			
@@ -58,10 +60,11 @@ package app.model
 		override public function result():void
 		{
 			super.result();
-			//Debugger.trace( this,"AssetsModel load finish..." );
+			Logger.info( "AssetsModel load finish..." );
 			
 			//sendEvent( ModelEvent.LOADING_HIDE );
-			sendEvent( ModelEvent.GAME_INIT );
+			//sendEvent( ModelEvent.GAME_INIT );
+			sendEvent( NetConst.UserInit );
 		}
 	}
 }

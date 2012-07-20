@@ -30,6 +30,8 @@ package com.jfw.engine
 			this.gameStage.scaleMode = StageScaleMode.NO_SCALE;
 			this.gameStage.align = StageAlign.TOP_LEFT;
 			
+			
+			
 			this.initCmds();
 			this.initModels();
 			this.initViews();

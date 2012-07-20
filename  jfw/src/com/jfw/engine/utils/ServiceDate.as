@@ -52,7 +52,7 @@ package com.jfw.engine.utils
 		 */
 		public function setServiceTime(serviceTime:Number):void
 		{
-			offest = new Date().getTime() - serviceTime;
+			offest = new Date().time - serviceTime;
 			prevServiceOffest = serviceTime - getTimer();
 		}
 		
@@ -74,9 +74,9 @@ package com.jfw.engine.utils
 		public function getTime():Number
 		{
 			if (mode == 0)
-				return new Date().getTime() - offest;
+				return new Date().time - offest;
 			else
-				return isNaN(prevServiceOffest) ? new Date().getTime() : prevServiceOffest + getTimer();
+				return isNaN(prevServiceOffest) ? new Date().time: prevServiceOffest + getTimer();
 		}
 	}
 }

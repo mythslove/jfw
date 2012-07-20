@@ -1,5 +1,6 @@
 package app
 {
+	import app.consts.NetConst;
 	import app.control.TestCmd;
 	import app.manager.ResourceManager;
 	import app.model.AssetsModel;
@@ -40,7 +41,20 @@ package app
 		
 		override protected function initCmds():void
 		{
+			NetConst.getInstance().init();
+
 			this.regCmd( CommandTestEvent.COMMAND_TEST_EVENT,TestCmd );
+			this.regCmd( CommandTestEvent.COMMAND_TEST_EVENT2,TestCmd );
+			
+			//Net Commands
+			var netCommands:Array = NetConst.getInstance().netCommands;
+			for( var netId:String in netCommands )
+			{
+				var callCmd:String = netCommands[netId][1];
+				var callBackCmd:String = netCommands[netId][2];
+				var cmdCls:Class = netCommands[netId][0];
+				this.regCmds( [ callCmd,callBackCmd ], cmdCls ); 
+			}
 		}
 		
 		override  protected function initModels():void
@@ -51,8 +65,6 @@ package app
 			queue.add( new LoadingModel( ) );
 			queue.add( new AssetsModel( ) );
 			
-			ResourceManager.getInstance();
-			new NetModel( );
 			new LoginModel( );
 			new UserModel( );
 			new GuidModel( );

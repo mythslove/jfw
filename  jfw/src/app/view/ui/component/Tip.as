@@ -45,11 +45,11 @@ package app.view.ui.component
 //			this.graphics.lineTo(6, 3 + h);
 //			this.graphics.endFill();
 			this.graphics.beginFill(0x0,.8);
-			this.graphics.drawRoundRect(0, 0, w, h, 5, 5);
-			this.graphics.moveTo(3, h);
-			this.graphics.lineTo(9, h);
-			this.graphics.lineTo(6, 5 + h);
-			this.graphics.lineTo(3, h);
+			this.graphics.drawRoundRect(0, 0, w, h, 8, 8);
+//			this.graphics.moveTo(3, h);
+//			this.graphics.lineTo(9, h);
+//			this.graphics.lineTo(6, 5 + h);
+//			this.graphics.lineTo(3, h);
 			this.graphics.endFill();
 		}
 		
@@ -96,6 +96,17 @@ package app.view.ui.component
 			var lp:Point = this.parent.globalToLocal(point);
 			this.x = lp.x - 6;			
 			this.y = lp.y - label.height - 12;
+			
+			if( this.y < 0 )
+				this.y = lp.y + 24;
+			if( ( this.y + label.height ) > stage.stageHeight )
+				this.y = lp.y - label.height - 12;
+			if( this.x < 0 )
+				this.x = lp.x + 6;
+			if( ( this.x + label.width ) > stage.stageWidth )
+				this.x = lp.x - label.width - 6;
+			
+			
 			if(!visible){
 				visible = true;
 			}

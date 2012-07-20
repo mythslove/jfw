@@ -1,7 +1,5 @@
 package com.jfw.engine.net.nc
 {
-	import com.jfw.engine.utils.json.JSON;
-	
 	import flash.events.AsyncErrorEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
@@ -38,7 +36,7 @@ package com.jfw.engine.net.nc
 			if ( null == param || false == param )
 				param = { error:'error_system_null', res:{} }
 			
-			param = JSON.decode(param as String);		
+			param = JSON.parse(param as String);		
 			var err:String				= String( param.error ? param.error : '' );
 			var errno:int				= int( param.errno );
 			
