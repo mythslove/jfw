@@ -3,7 +3,7 @@ package com.jfw.engine.motion
 	import com.jfw.engine.animation.BmdMovieClip;
 	import com.jfw.engine.animation.Texture;
 	/**
-	 * 多状态MovieClip。你可以通过setKeyFrame和gotoAndPlay方法来设置/跳转到某个关键帧 
+	 * 多状态MovieClip
 	 * 
 	 */	
 	public class MutiStateMovieClip extends BmdMovieClip
@@ -32,8 +32,6 @@ package com.jfw.engine.motion
 				{
 					if( i < numFrames )
 					{
-						this.width=texturs[i].width;
-						this.height=texturs[i].height;
 						setFrameTexture(i, texturs[i]);//改变动画中该帧纹理
 					}
 					else
@@ -46,8 +44,6 @@ package com.jfw.engine.motion
 			{
 				for(var j:int=0; j<len; j++)
 				{				
-					this.width=texturs[j].width;
-					this.height=texturs[j].height;
 					setFrameTexture(j, texturs[j]);
 				}
 			}
@@ -59,8 +55,6 @@ package com.jfw.engine.motion
 				{
 					if( k < len )
 					{
-						this.width=texturs[k].width;
-						this.height=texturs[k].height;
 						setFrameTexture(k, texturs[k]);
 					}
 					else

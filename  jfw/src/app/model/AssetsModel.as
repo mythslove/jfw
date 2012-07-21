@@ -1,11 +1,12 @@
 package app.model
 {
-	import app.consts.NetConst;
 	import app.model.data.ProgressDataStruct;
-	import app.model.events.LoadingEvent;
-	import app.model.events.ModelEvent;
+	import app.control.events.LoadingEvent;
+	import app.control.events.ModelEvent;
+	import app.model.net.NetRequest;
 	
 	import com.jfw.engine.core.data.LoadStruct;
+	import com.jfw.engine.core.mvc.model.IAssetModel;
 	import com.jfw.engine.core.mvc.model.LoadModel;
 	import com.jfw.engine.utils.logger.Logger;
 	import com.stimuli.loading.BulkProgressEvent;
@@ -17,7 +18,7 @@ package app.model
 	import flash.utils.ByteArray;
 	
 	/** 游戏数据模块 */
-	public class AssetsModel extends LoadModel
+	public class AssetsModel extends LoadModel implements IAssetModel
 	{
 		public function AssetsModel()
 		{
@@ -63,8 +64,7 @@ package app.model
 			Logger.info( "AssetsModel load finish..." );
 			
 			//sendEvent( ModelEvent.LOADING_HIDE );
-			//sendEvent( ModelEvent.GAME_INIT );
-			sendEvent( NetConst.UserInit );
+			sendEvent( NetRequest.UserInit );
 		}
 	}
 }

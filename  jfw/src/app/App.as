@@ -1,7 +1,7 @@
 package app
 {
-	import app.consts.NetConst;
-	import app.control.TestCmd;
+	import app.control.WarnCmd;
+	import app.control.events.ModelEvent;
 	import app.manager.ResourceManager;
 	import app.model.AssetsModel;
 	import app.model.BattleModel;
@@ -10,9 +10,10 @@ package app
 	import app.model.LoadingModel;
 	import app.model.LoginModel;
 	import app.model.MissionModel;
-	import app.model.NetModel;
 	import app.model.UserModel;
-	import app.model.events.CommandTestEvent;
+	import app.model.WarnModel;
+	import app.model.net.NetModel;
+	import app.model.net.NetRequest;
 	import app.model.player.PlayerModel;
 	import app.view.GameView;
 	
@@ -41,13 +42,12 @@ package app
 		
 		override protected function initCmds():void
 		{
-			NetConst.getInstance().init();
+			NetRequest.getInstance().init();
 
-			this.regCmd( CommandTestEvent.COMMAND_TEST_EVENT,TestCmd );
-			this.regCmd( CommandTestEvent.COMMAND_TEST_EVENT2,TestCmd );
+			this.regCmd( ModelEvent.ERROR_REFRESH_ALERT,WarnCmd );
 			
 			//Net Commands
-			var netCommands:Array = NetConst.getInstance().netCommands;
+			var netCommands:Array = NetRequest.getInstance().netCommands;
 			for( var netId:String in netCommands )
 			{
 				var callCmd:String = netCommands[netId][1];
@@ -65,6 +65,7 @@ package app
 			queue.add( new LoadingModel( ) );
 			queue.add( new AssetsModel( ) );
 			
+			new WarnModel( );
 			new LoginModel( );
 			new UserModel( );
 			new GuidModel( );

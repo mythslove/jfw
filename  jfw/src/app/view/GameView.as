@@ -1,12 +1,13 @@
 package app.view
 {
 	import app.model.BattleModel;
-	import app.model.events.BattleEvent;
-	import app.model.events.LoadingEvent;
-	import app.model.events.ModelEvent;
+	import app.control.events.BattleEvent;
+	import app.control.events.LoadingEvent;
+	import app.control.events.ModelEvent;
 	import app.view.init.LoadingView;
 	import app.view.ui.MainUIView;
 	import app.view.ui.component.Tip;
+	import app.view.ui.component.alert.Alert;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.data.IStruct;
@@ -88,17 +89,21 @@ package app.view
 				case LoadingEvent.LOADING_SHOW :
 					if( !loadingView )
 						loadingView = new LoadingView();
-					this.addChild( loadingView );
+					this.mapLayer.addChild( loadingView );
 					break;
 				case LoadingEvent.LOADING_HIDE :
 					if( loadingView )
-						this.removeChild( loadingView ); 
+						this.mapLayer.removeChild( loadingView ); 
 					loadingView = null;
 					break;
 				case ModelEvent.GAME_INIT :
 					Logger.info( 'Game init ...' );
+					
 					new HomeView( this.mapLayer );
 					new MainUIView( this.uiLayer );
+					
+//					var battleModel:BattleModel=Core.getInstance().retModel("BattleModel") as BattleModel;
+//					battleModel.startLoad(null);
 					break;
 				case BattleEvent.BATTLE_RES_LOAD_COMPLETE:
 					new BattleView(this.mapLayer);

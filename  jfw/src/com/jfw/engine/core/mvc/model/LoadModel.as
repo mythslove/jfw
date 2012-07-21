@@ -1,6 +1,6 @@
 package com.jfw.engine.core.mvc.model
 {
-	import app.model.events.LoadingEvent;
+	import app.control.events.LoadingEvent;
 	
 	import com.jfw.engine.core.data.LoadStruct;
 	import com.jfw.engine.utils.IQueueItem;
@@ -19,7 +19,7 @@ package com.jfw.engine.core.mvc.model
 	import flash.utils.ByteArray;
 
 	/** 加载静态资源基类 ,实现 IEventDispatcher接口,可发送事件 */
-	public class LoadModel extends BModel implements IAssetModel,IQueueItem
+	public class LoadModel extends BModel implements ILoadModel,IQueueItem
 	{
 		/** 下载失败重试次数 */
 		static private const RETRY_LIMIT:int = 10;

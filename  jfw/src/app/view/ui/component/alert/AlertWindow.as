@@ -4,7 +4,7 @@ package app.view.ui.component.alert
 	import com.jfw.engine.utils.FontUtil;
 	
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -17,16 +17,16 @@ package app.view.ui.component.alert
 		
 		//属性
 		public var $txTxt:TextField;
-		public var $pbOkButton:MovieClip;
-		public var $pbCancelButton:MovieClip;
-		public var $pbShareButton:MovieClip;
-		public var $pbRefreshButton:MovieClip;
-		public var $pbCancelDisableButton:MovieClip;
-		public var $pbOkDisableButton:MovieClip;
+		public var $pbOkButton:SimpleButton;
+		public var $pbCancelButton:SimpleButton;
+		public var $pbShareButton:SimpleButton;
+		public var $pbRefreshButton:SimpleButton;
+		public var $pbCancelDisableButton:SimpleButton;
+		public var $pbOkDisableButton:SimpleButton;
 		
 		private var _id:int;
 		private var _closeHandler:Function;
-		private var buttons:Vector.<MovieClip>;
+		private var buttons:Vector.<SimpleButton>;
 		private var _isDisable:Boolean;
 		
 		public var buttonFlags:uint;
@@ -36,16 +36,12 @@ package app.view.ui.component.alert
 			super();
 			
 			clearAllButton();
-			buttons = new Vector.<MovieClip>();
+			buttons = new Vector.<SimpleButton>();
 		}
 		
 		override protected function onInit():void
 		{
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
-			
-			FontUtil.setText($pbCancelDisableButton.canceButtonText, '取消');//取消
-			FontUtil.setText($pbRefreshButton.refreshButtonText, '刷新');//刷新
-			FontUtil.setText($pbCancelButton.cancelText,'取消');//取消
 		}
 		
 		override protected function onMouseClick(evt:MouseEvent):void
@@ -76,6 +72,15 @@ package app.view.ui.component.alert
 			removeAlert(buttonType);
 		}
 		
+		override protected function onMouseOver(evt:MouseEvent):void
+		{
+			
+		}
+		
+		override protected function onMouseOut(evt:MouseEvent):void
+		{
+			
+		}
 		
 		// helper
 		
@@ -92,7 +97,7 @@ package app.view.ui.component.alert
 		
 		private function showButton(butN:uint):void
 		{
-			var button:MovieClip;
+			var button:SimpleButton;
 			switch(butN)
 			{
 				case Alert.OK:
@@ -179,10 +184,10 @@ package app.view.ui.component.alert
 			{
 				var len:int = buttons.length;
 				var buttonW:Number = buttons[0].width;
-				var butsW:Number = buttonW * len + BUTTON_GAP*(len - 1);
-				var startX:Number = (width - butsW)/2 + buttonW/2;
+				var butsW:Number = buttonW * len + BUTTON_GAP * (len - 1);
+				var startX:Number = (width - butsW) / 2;
 				var i:int = 0;
-				for each(var but:MovieClip in buttons)
+				for each(var but:SimpleButton in buttons)
 				{
 					but.x = startX + (buttonW + BUTTON_GAP) * i;
 					i++;

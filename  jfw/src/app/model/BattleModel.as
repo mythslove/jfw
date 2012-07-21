@@ -1,9 +1,17 @@
 package app.model
 {
+	import app.control.events.BattleEvent;
+	import app.manager.PrefixConst;
+	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.data.LoadStruct;
 	import com.jfw.engine.core.mvc.model.LoadModel;
 	import com.jfw.engine.isolib.map.data.IMapData;
+	import com.jfw.engine.isolib.map.data.MapData;
+	import com.stimuli.loading.BulkLoader;
+	import com.stimuli.loading.BulkProgressEvent;
+	
+	import examples.animation.RoleView;
 	
 	import flash.display.Bitmap;
 
@@ -18,13 +26,13 @@ package app.model
 		public var mapdata:IMapData=null;
 		public var mapID:String;
 		public var mapBG:Bitmap=null;
+		protected var taskList:Array=null;
 		
 		public function BattleModel()
 		{
 			super();
 		}
-		
-		
+
 		/**
 		 * 启动总加载 
 		 * @param vo
@@ -32,29 +40,86 @@ package app.model
 		 */		
 		public function startLoad(vo:Object):void
 		{
-			var task:LoadStruct=new LoadStruct();
-			task.id="3201001";
-			task.type=LoadStruct.TYPE_MOVIECLIP;
-			
-			
+			addTask("MAP_3201001");
+			addTask("D3201001");
+			this.loadRes(taskList);
 		}
 		
-		protected function addTask():void
+		public function createRole(id:String):RoleView
 		{
-			if(baseAssetsList==null)
-				baseAssetsList=[];
-		
-			this.core.configModel.configData['preload'];
-//
-//				var loadStruct:LoadStruct = new LoadStruct( assetsAry[i] );
-//				loadStruct.id = assetsAry[i].id;
-//				loadStruct.path = loadStruct.path.replace( '$lang$' , this.core.configModel.configData['lang'] );
-//				loadStruct.type = assetsAry[i].type;
-//				assets.push( loadStruct );
-//			
-
+			return new RoleView(id);
 		}
 		
+		public function loadMap(id:String):void
+		{
+			
+		}
+		
+		public function loadCharacter(id:String):void
+		{
+			
+		}
+		
+		public function loadDefItem(id:String):void
+		{
+			
+		}
+		
+		public function loadMagicItem(id:String):void
+		{
+			
+		}
+		/**
+		 * 添加一项加载任务 
+		 * @param id
+		 * 
+		 */		
+		protected function addTask(id:String):void
+		{
+			if(taskList==null)
+				taskList=[];
+			
+			var obj:Object=getConfigObj(id);
+			
+			if(obj==null)
+				return;
+			
+			var loadStruct:LoadStruct = new LoadStruct(obj);
+			taskList.push( loadStruct );
+		}
+		/**
+		 * 判断是否有此资源 
+		 * @param id
+		 * @return 
+		 * 
+		 */		
+		protected function getConfigObj(id:String):Object
+		{
+			var assetsAry:Array = this.core.configModel.configData[PrefixConst.ASSETS];
+			
+			for each(var obj:Object in assetsAry)
+			{
+				if(obj.id==id)
+					return obj;
+			}
+			
+			return null;
+		}
+		/**
+		 * 根据前缀判断类型 
+		 * @param prefix
+		 * @return 
+		 * 
+		 */		
+		protected function getTypeByPrefix(prefix:String):String
+		{
+			return null;
+		}
+
+		override protected function onSingleAssetLoaded( evt:BulkProgressEvent ):void
+		{
+			super.onSingleAssetLoaded(evt);
+		}
 		/**
 		 * 需要完成后要做的事
 		 * @return 
@@ -62,7 +127,10 @@ package app.model
 		 */
 		override protected function initAssets():void
 		{
+			this.mapdata=new MapData(this.getXML("D3201001"));
+			this.mapBG=this.getBitmap("MAP_3201001");
 			
+			this.sendEvent(BattleEvent.BATTLE_RES_LOAD_COMPLETE);
 		}
 	}
 }

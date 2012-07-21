@@ -1,9 +1,9 @@
 package app.view.ui
 {
 	import app.model.data.player.PlayerStruct;
-	import app.model.events.CommandTestEvent;
 	import app.model.player.PlayerModel;
 	import app.view.ui.component.Tip;
+	import app.view.ui.component.alert.Alert;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;
@@ -81,11 +81,10 @@ package app.view.ui
 					break;
 				//社交
 				case this.$mcShortcut['$pbSocial']:
-					sendEvent( CommandTestEvent.COMMAND_TEST_EVENT,{name:'sssssssssssssss'} );
+					Alert.show( '测试',Alert.OK,null,'small' );
 					break;
 				//任务
 				case this.$mcShortcut['$pbTask']:
-					sendEvent( CommandTestEvent.COMMAND_TEST_EVENT2,{name:'sssssssssssssss'} );
 					break;
 			}
 		}

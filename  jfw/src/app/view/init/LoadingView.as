@@ -1,8 +1,8 @@
 package app.view.init
 {
 	import app.model.data.ProgressDataStruct;
-	import app.model.events.LoadingEvent;
-	import app.model.events.ModelEvent;
+	import app.control.events.LoadingEvent;
+	import app.control.events.ModelEvent;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BSprite;

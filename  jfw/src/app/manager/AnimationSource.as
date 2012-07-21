@@ -5,12 +5,29 @@ package app.manager
 	public class AnimationSource
 	{
 		public var className:String;
-		public var xml:XML=null;
-		public var bitmap:Bitmap=null;
-		public var callBack:Function=null;
+		public var callBackArr:Array=null;
 		
-		public function AnimationSource()
+		public function AnimationSource(className:String,callBack:Function)
 		{
+			this.className=className;
+			
+			if(callBackArr==null)
+				callBackArr=[];
+			
+			callBackArr.push(callBack);
+		}
+		
+		public function dispose():void
+		{
+			if(callBackArr)
+			{
+				for each(var call:Function in callBackArr)
+				{
+					call=null;
+				}
+				
+				callBackArr=null;
+			}
 		}
 	}
 }

@@ -8,6 +8,7 @@ package com.jfw.engine.core.mvc.view
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -221,7 +222,7 @@ package com.jfw.engine.core.mvc.view
 					addListner(btn);
 					break;
 				case CoreConst.TAG_PM:
-					if(btn is Sprite || btn is MovieClip)
+					if(btn is Sprite || btn is MovieClip )
 					{
 						(btn as MovieClip).mouseChildren = false;
 						(btn as MovieClip).buttonMode = false;

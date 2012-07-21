@@ -15,10 +15,10 @@ package com.jfw.engine.utils
 		 */
 		public var mode:int;
 		
-		//时间偏移量 
-		private var offest:Number = 0;
+		//时间偏移量 ( 毫秒数)
+		private var offest:Number = 0; 
 		
-		//上次的服务器时间与getTimer的偏移
+		//上次的服务器时间与getTimer的偏移（毫秒数)
 		private var prevServiceOffest:Number;
 		
 		
@@ -47,12 +47,12 @@ package com.jfw.engine.utils
 		
 		/**
 		 * 设置服务器时间 
-		 * @param serviceTime
+		 * @param serviceTime （秒数）
 		 * 
 		 */
 		public function setServiceTime(serviceTime:Number):void
 		{
-			offest = new Date().time - serviceTime;
+			offest = new Date().time - serviceTime * 1000;
 			prevServiceOffest = serviceTime - getTimer();
 		}
 		
@@ -63,11 +63,11 @@ package com.jfw.engine.utils
 		 */
 		public function getDate():Date
 		{
-			return new Date(getTime());
+			return new Date( getTime() );
 		}
 		
 		/**
-		 * 返回服务器时间 
+		 * 返回服务器时间（毫秒数）
 		 * @return 返回一个Number
 		 * 
 		 */
