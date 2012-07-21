@@ -1,10 +1,9 @@
 package app.view
 {
 	import app.model.data.BuildingStruct;
-	import app.model.events.CommandTestEvent;
-	import app.model.events.HomeEvent;
-	import app.model.events.LoadingEvent;
-	import app.model.events.ModelEvent;
+	import app.control.events.HomeEvent;
+	import app.control.events.LoadingEvent;
+	import app.control.events.ModelEvent;
 	import app.view.iso.isoSprites.building.MapBuilding;
 	import app.view.ui.manager.WindowManager;
 	import app.view.ui.component.alert.Alert;

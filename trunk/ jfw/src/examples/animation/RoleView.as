@@ -9,7 +9,8 @@ package examples.animation
 	import com.jfw.engine.isolib.map.data.AStar;
 	import com.jfw.engine.isolib.map.data.Tile;
 	import com.jfw.engine.motion.AnimationConst;
-	import com.jfw.engine.motion.IsoActiveAnimation;
+	import com.jfw.engine.motion.AnimationEvent;
+	import com.jfw.engine.motion.AsynActiveAnimation;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -21,7 +22,7 @@ package examples.animation
 	 * RoleView用于显示人物角色
 	 * 
 	 */	
-	public class RoleView extends IsoActiveAnimation
+	public class RoleView extends AsynActiveAnimation
 	{ 
 		protected var sourceManager:IResourceManager=null;
 		protected var gridX:int=0;
@@ -30,7 +31,9 @@ package examples.animation
 		public function RoleView(name:String,fps:Number=12)
 		{
 			sourceManager=ResourceManager.getInstance();
-			super(name,sourceManager,DirectionConst.LEFTDOWN,AnimationConst.STOP,5,fps);
+			super(name,sourceManager,DirectionConst.LEFTDOWN,AnimationConst.WALK,0.5,fps);
+			this.YAdjust=5;
+			this.addEventListener(AnimationEvent.WALK_COMPLETE,onWalkComplete);
 		}
 		/**
 		 * 
@@ -49,7 +52,7 @@ package examples.animation
 			}
 		}
 		
-		public function conditions(tile:Tile):Boolean
+		protected function conditions(tile:Tile):Boolean
 		{
 			return true;
 		}
@@ -67,11 +70,11 @@ package examples.animation
 			
 			var p:Point=this._mapData.gridToScreen(new Pt(gdx,gdy));
 			
-			this.FootX=p.x;
-			this.FootY=p.y;
+			this.OriginX=p.x;
+			this.OriginY=p.y;
 		}
 		
-		override public function onUpdate(tile:Tile):void
+		override protected function onUpdate(tile:Tile):void
 		{
 			gridX=tile.getXIndex();
 			gridY=tile.getZIndex();
@@ -81,6 +84,14 @@ package examples.animation
 		public function stopWalk():void
 		{
 			this.PauseMove();
+		}
+		
+		protected function onWalkComplete(evt:AnimationEvent):void
+		{
+			evt.stopImmediatePropagation();
+			var toX:int=Math.round(Math.random()*23);
+			var toY:int=Math.round(Math.random()*23);
+			walkTo(toX,toY);
 		}
 	}
 }

@@ -72,7 +72,7 @@ package app.view.ui.component.alert
 		
 		private static function get myClassPackagePath():String
 		{
-			return "com.kingnet.dinoage.view.ui.window.components.alert.";
+			return "app.view.ui.component.alert.";
 		}
 		
 		private static function closeAlertHandler(e:AlertCloseEvent):void

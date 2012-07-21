@@ -1,11 +1,11 @@
 package examples.resourceManager
 {
-	import app.model.events.LoadingEvent;
+	import app.control.events.LoadingEvent;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.base.Observer;
 	import com.jfw.engine.core.data.LoadStruct;
-	import com.jfw.engine.core.mvc.model.IAssetModel;
+	import com.jfw.engine.core.mvc.model.ILoadModel;
 	import com.jfw.engine.core.mvc.model.IConfigModel;
 	import com.jfw.engine.utils.Queue;
 	
@@ -78,7 +78,7 @@ package examples.resourceManager
 		 * @return 
 		 * 
 		 */
-		private function get assets():IAssetModel
+		private function get assets():ILoadModel
 		{
 			return Core.getInstance().assetsModel;
 		}

@@ -5,6 +5,7 @@ package com.jfw.engine.core.mvc.view
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.utils.getQualifiedClassName;
 	
