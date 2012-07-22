@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="GameMain.as" projectUUID="ffa1843f-990a-4b1c-897c-c9413b89462a" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="examples/crypt/Test.as" projectUUID="ffa1843f-990a-4b1c-897c-c9413b89462a" version="10">
   <compiler additionalCompilerArguments="-locale zh_CN -define=CONFIG::debug,true" autoRSLOrdering="true" copyDependentFiles="true" flexSDK="Flex 4.6.0" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -33,6 +33,7 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
+    <application path="examples/crypt/Test.as"/>
     <application path="examples/animation/Test2.as"/>
     <application path="examples/binding/FlexLiteBindingTest.as"/>
     <application path="examples/animation/Test.as"/>
