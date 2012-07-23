@@ -121,7 +121,7 @@ package app.view.ui.component
 					this.move(new Point(event.stageX, event.stageY));					
 					break;
 				case MouseEvent.MOUSE_OVER:
-					this.show(event.target as DisplayObject);
+					this.show(event.currentTarget as DisplayObject);
 					this.move(new Point(event.stageX, event.stageY))
 					break;
 			}

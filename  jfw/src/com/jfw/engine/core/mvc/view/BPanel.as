@@ -19,6 +19,9 @@ package com.jfw.engine.core.mvc.view
 	/** 面板基类 */
 	public class BPanel extends BSprite implements IPanel
 	{
+		/** 背景 */
+		public var $mcBg:MovieClip = null;
+		
 		public function BPanel( cls_ref:Object=null, data:IStruct=null )
 		{
 			super( cls_ref, data );
@@ -114,28 +117,28 @@ package com.jfw.engine.core.mvc.view
 		
 		protected function onMouseOver( evt:MouseEvent ):void
 		{
-			if( evt.target is MovieClip )
-			{
-				var end:Object = new Object();
-				end.scaleX = 1.2;
-				end.scaleY = 1.2;
-				end.ease = Bounce.easeOut;
-				TweenLite.to( evt.target, 0.5, end );
-			}
+//			if( evt.target is MovieClip )
+//			{
+//				var end:Object = new Object();
+//				end.scaleX = 1.2;
+//				end.scaleY = 1.2;
+//				end.ease = Bounce.easeOut;
+//				TweenLite.to( evt.target, 0.5, end );
+//			}
 			
 			regTips( evt.target );
 		}
 		
 		protected function onMouseOut( evt:MouseEvent ):void
 		{
-			if( evt.target is MovieClip )
-			{
-				var end:Object = new Object();
-				end.scaleX = 1;
-				end.scaleY = 1;
-				end.ease = Bounce.easeOut;
-				TweenLite.to( evt.target,0.5,end );
-			}
+//			if( evt.target is MovieClip )
+//			{
+//				var end:Object = new Object();
+//				end.scaleX = 1;
+//				end.scaleY = 1;
+//				end.ease = Bounce.easeOut;
+//				TweenLite.to( evt.target,0.5,end );
+//			}
 		}
 		
 		protected function onMouseDown( evt:MouseEvent ):void
@@ -278,6 +281,29 @@ package com.jfw.engine.core.mvc.view
 				return true;
 			else
 				return false;
+		}
+		
+		override public function get width():Number
+		{
+			if ( null != $mcBg )
+				return $mcBg.width * scaleX;
+			else
+				return super.width * scaleX;
+		}
+		
+		override public function get height():Number
+		{
+			if ( null != $mcBg )
+				return $mcBg.height * scaleY;
+			else
+				return super.height * scaleY;
+		}
+		
+		override public function destroy():void
+		{
+			this.$mcBg = null;
+			
+			super.destroy();
 		}
 	}
 }

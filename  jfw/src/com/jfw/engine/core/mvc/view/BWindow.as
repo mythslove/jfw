@@ -24,9 +24,6 @@ package com.jfw.engine.core.mvc.view
 		/** 是否支持缓动 */
 		public var isTween:Boolean = true;
 		
-		/** 背景 */
-		public var $mcBg:MovieClip = null;
-		
 		public function BWindow(cls_ref:Object=null, data:IStruct=null)
 		{
 			super( cls_ref, data );
@@ -93,30 +90,6 @@ package com.jfw.engine.core.mvc.view
 					evt.target.parent.stopDrag();
 					break;
 			}
-		}
-		
-		
-		override public function get width():Number
-		{
-			if ( null != $mcBg )
-				return $mcBg.width * scaleX;
-			else
-				return super.width * scaleX;
-		}
-		
-		override public function get height():Number
-		{
-			if ( null != $mcBg )
-				return $mcBg.height * scaleY;
-			else
-				return super.height * scaleY;
-		}
-		
-		override public function destroy():void
-		{
-			this.$mcBg = null;
-			
-			super.destroy();
 		}
 	}
 }
