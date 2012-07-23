@@ -43,23 +43,15 @@ package com.jfw.engine.resource
 			return byteArray;
 		}
 		
+		/**
+		 * 加扰 
+		 * @param data
+		 * @return 
+		 * 
+		 */
 		public function encryptResource( data:ByteArray ):ByteArray
 		{
-			var byteArray:ByteArray = new ByteArray();
-			
-			if( data.bytesAvailable >= 4 )
-			{
-				data.readBytes( byteArray,0,4 );
-			}
-			var n:int = 0;
-			var leaveBytes:ByteArray = new ByteArray();
-			while( data.bytesAvailable > 0 )
-			{
-				leaveBytes.writeInt( data.readInt() ^ seed[ n%9 ] );
-				n++;
-			}
-			byteArray.writeBytes( leaveBytes );
-			return byteArray;
+			return decryptResource( data );
 		}
 	}
 }
