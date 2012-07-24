@@ -94,7 +94,6 @@ package app.view.ui.component
 			_drawMaskHeight		= _height;
 			
 			_itemInstance		= (new _itemClass(this)) as IListItem;
-			
 			this.direction		= direction;
 			
 			this.initilize();

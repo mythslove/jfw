@@ -4,9 +4,9 @@ package app.view.ui.component
 	import app.view.ui.component.interfaces.IListItem;
 	
 	import com.jfw.engine.core.data.IStruct;
-	import com.jfw.engine.core.mvc.view.BSprite;
+	import com.jfw.engine.core.mvc.view.BPanel;
 
-	public class BaseListItem extends BSprite implements IListItem
+	public class BaseListItem extends BPanel implements IListItem
 	{
 		protected var _list:IList;
 		protected var _itemId:int;
