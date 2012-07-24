@@ -1,5 +1,6 @@
 package app.view.ui.component
 {
+	import app.model.player.FriendModel;
 	import app.view.ui.component.pagebar.PageBar;
 	
 	import com.greensock.TweenLite;
@@ -19,6 +20,9 @@ package app.view.ui.component
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
+	/**
+	 * 好友面板 
+	 */	
 	public class MainFriendPanel extends BPanel
 	{
 		public var $pbFriend:SimpleButton;
@@ -31,11 +35,12 @@ package app.view.ui.component
 		
 		private var list:List = null;
 		private var dataList:Array = null;
+		private var keyword:String = '';
 		private var pageBar:PageBar = null;
 		
 		private static const listW:int = 214;
-		private static const listH:int = 326;
-		private static const listSpace:int = 1;
+		private static const listH:int = 330;
+		private static const listSpace:int = 3;
 		private static const FRIEND_COUNT_DISPLAY:int = 9;
 		
 		public var refreshMask:Shape = null;
@@ -45,7 +50,7 @@ package app.view.ui.component
 		private var currentPage:int	= 1;
 		private var contentContainer:Sprite = null;
 		private var contentEffect:Bitmap = null;
-		private var _contentArea:Rectangle = new Rectangle( 25, 80, 214, 326 );
+		private var _contentArea:Rectangle = new Rectangle( 25, 80, 214, 330 );
 		
 		public function MainFriendPanel()
 		{
@@ -95,11 +100,37 @@ package app.view.ui.component
 			
 			pageBar = addChild( new PageBar( $mcPageBar ) ) as PageBar;
 			pageBar.setUpdateFun( pageUpdate );
+			
+			setData( friendModel.friendList );
+			pageUpdate(1);
+			pageBar.goto(1);
+			updatePageBar();
+		}
+		
+		private function updatePageBar ():void
+		{
+			pageBar.max = Math.ceil(dataList.length/FRIEND_COUNT_DISPLAY);
+			if(currentPage > pageBar.max)
+			{
+				currentPage = pageBar.max;
+			}
+			pageUpdate(currentPage);
 		}
 		
 		private function setData( value:Array ):void
 		{
-			list.data = [];
+			dataList = value;
+			list.data = value;
+			list.setCurrentItem( 0 );
+//			list.data = value;
+//			if ( keyword.length > 0 )
+//				fliterFriendList( keyword );
+//			else
+//			{
+//				list.data = availableSourceList;
+//				currentItemIndex = 0;
+//				checkPageBtnEnable();
+//			}
 		}
 		
 		private function pageUpdate(page:int):void
@@ -140,7 +171,13 @@ package app.view.ui.component
 		 */
 		private function updateContent(page:int):void
 		{
-			
+			/**
+//			emptyNoticeField.visible = dataList.length == 0;
+			for(var i:int=0; i<items.length; i++)
+			{
+//				var index:int = (page-1) * FRIEND_COUNT_DISPLAY + i;
+//				items[i].setData( dataList[index] );
+			}*/
 		}
 		
 		private function get contentArea():Rectangle
@@ -148,5 +185,10 @@ package app.view.ui.component
 			return _contentArea;
 		}
 		
+		
+		private function get friendModel():FriendModel
+		{
+			return core.retModel( FriendModel.NAME ) as FriendModel;
+		}
 	}
 }

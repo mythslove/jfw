@@ -14,6 +14,7 @@ package app
 	import app.model.WarnModel;
 	import app.model.net.NetModel;
 	import app.model.net.NetRequest;
+	import app.model.player.FriendModel;
 	import app.model.player.PlayerModel;
 	import app.view.GameView;
 	
@@ -71,6 +72,7 @@ package app
 			new GuidModel( );
 			new MissionModel( );
 			new PlayerModel( );
+			new FriendModel( );
 //			new BattleModel( );
 		}
 		

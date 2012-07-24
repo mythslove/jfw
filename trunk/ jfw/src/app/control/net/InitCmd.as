@@ -3,6 +3,7 @@ package app.control.net
 	import app.control.events.ModelEvent;
 	import app.model.net.NetModel;
 	import app.model.net.NetRequest;
+	import app.model.player.FriendModel;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.mvc.control.BCmd;
@@ -24,9 +25,13 @@ package app.control.net
 				case NetRequest.UserInit + NetRequest.CALLBACK:
 					var netObj:Object = param;
 					
+					//初始化好友列表
+					( Core.getInstance().retModel( FriendModel.NAME ) as FriendModel ).initFriendList( );
+					
 					sendEvent( ModelEvent.GAME_INIT );
 					break;
 			}
 		}
+		
 	}
 }

@@ -132,7 +132,6 @@ package app.view.ui
 		
 		override protected function onMouseOver(evt:MouseEvent):void
 		{
-			trace( evt.target.name,evt.currentTarget.name);
 			switch( evt.target )
 			{
 				case this.$mcShortcut['$pbHelp']:
@@ -177,7 +176,6 @@ package app.view.ui
 			switch( obj )
 			{
 				case this.$mcShortcut['$pmGb']:
-//					TipManager.createToolTip( this.$mcTopPanel['$pbHelp'],'即将开放' );
 					break;
 			}
 		}
