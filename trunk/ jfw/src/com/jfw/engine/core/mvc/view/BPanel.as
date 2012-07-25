@@ -100,16 +100,6 @@ package com.jfw.engine.core.mvc.view
 			}
 		}
 		
-		/**
-		 * 注册tooltips 
-		 * @param obj
-		 * 
-		 */
-		protected function regTips( obj:Object ):void
-		{
-			
-		}
-		
 		public function tweenTo(duration:int,params:Object ):void
 		{
 			TweenLite.to( this,duration,params );
@@ -125,8 +115,6 @@ package com.jfw.engine.core.mvc.view
 //				end.ease = Bounce.easeOut;
 //				TweenLite.to( evt.target, 0.5, end );
 //			}
-			
-			regTips( evt.target );
 		}
 		
 		protected function onMouseOut( evt:MouseEvent ):void

@@ -25,8 +25,7 @@
 
             applyFilter(child, matrix);
         }
-
-
+		
         public static function applyRed(child:DisplayObject):void {
            
             var matrix:Array = new Array();
@@ -58,6 +57,13 @@
 
             applyFilter(child, matrix);
         }
+		
+		public static function applyContrast( child:DisplayObject, filter:ColorMatrixFilter = null ):void
+		{
+			if( !filter )
+				filter = new ColorMatrixFilter([2.69,-0.61,-0.08,0,-128,-0.31,2.39,-0.08,0,-128,-0.31,-0.61,2.92,0,-128,0,0,0,1,0]);
+			child.filters = [ filter ];
+		}
 
         public static function applyFilter(child:DisplayObject, matrix:Array):void 
 		{

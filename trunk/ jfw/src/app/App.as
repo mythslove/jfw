@@ -9,6 +9,7 @@ package app
 	import app.model.GuidModel;
 	import app.model.LoadingModel;
 	import app.model.LoginModel;
+	import app.model.MaterialModel;
 	import app.model.MissionModel;
 	import app.model.UserModel;
 	import app.model.WarnModel;
@@ -71,6 +72,7 @@ package app
 			new UserModel( );
 			new GuidModel( );
 			new MissionModel( );
+			new MaterialModel( ) ;
 			new PlayerModel( );
 			new FriendModel( );
 //			new BattleModel( );

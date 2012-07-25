@@ -9,6 +9,7 @@ package app.view.ui.component
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;
 	import com.jfw.engine.core.mvc.view.BSprite;
+	import com.jfw.engine.utils.FilterUtil;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -35,6 +36,8 @@ package app.view.ui.component
 		
 		private var list:List = null;
 		private var dataList:Array = null;
+		private var currentItemIndex:int = 0;
+		
 		private var keyword:String = '';
 		private var pageBar:PageBar = null;
 		
@@ -96,21 +99,44 @@ package app.view.ui.component
 			
 			refreshMask	= new Shape()
 			addChild( refreshMask );
-			setData( new Array() );
+			
+			setData( friendModel.friendList );
 			
 			pageBar = addChild( new PageBar( $mcPageBar ) ) as PageBar;
 			pageBar.setUpdateFun( pageUpdate );
-			
-			setData( friendModel.friendList );
 			pageUpdate(1);
 			pageBar.goto(1);
 			updatePageBar();
+			//list.setCurrentItem( 0 );
+		}
+		
+		override protected function onMouseOver(evt:MouseEvent):void
+		{
+			trace( evt.target.name );
+			switch( evt.target )
+			{
+				case this.$mcPageBar['$pbPrevButton']:
+				case this.$mcPageBar['$pbNextButton']:
+					FilterUtil.applyContrast( evt.target as MovieClip );
+					break;
+			}
+		}
+		
+		override protected function onMouseOut(evt:MouseEvent):void
+		{
+			switch( evt.target )
+			{
+				case this.$mcPageBar['$pbPrevButton']:
+				case this.$mcPageBar['$pbNextButton']:
+					FilterUtil.clearGlowFilter( evt.target as MovieClip );
+					break;
+			}
 		}
 		
 		private function updatePageBar ():void
 		{
-			pageBar.max = Math.ceil(dataList.length/FRIEND_COUNT_DISPLAY);
-			if(currentPage > pageBar.max)
+			pageBar.max = Math.ceil( dataList.length / FRIEND_COUNT_DISPLAY );
+			if( currentPage > pageBar.max )
 			{
 				currentPage = pageBar.max;
 			}
@@ -121,47 +147,12 @@ package app.view.ui.component
 		{
 			dataList = value;
 			list.data = value;
-			list.setCurrentItem( 0 );
-//			list.data = value;
-//			if ( keyword.length > 0 )
-//				fliterFriendList( keyword );
-//			else
-//			{
-//				list.data = availableSourceList;
-//				currentItemIndex = 0;
-//				checkPageBtnEnable();
-//			}
 		}
 		
-		private function pageUpdate(page:int):void
+		private function pageUpdate( page:int ):void
 		{
-			if(currentPage != page)
-			{
-				this.contentEffect.bitmapData	= new BitmapData(contentArea.width, contentArea.height, true, 0);
-				this.contentEffect.bitmapData.draw( this.contentContainer );
-				this.contentEffect.alpha = 1;
-				
-				var effectX:int	= 0;
-				
-				if(currentPage > page)
-				{
-					this.contentContainer.x	= 0 - contentArea.width;
-					this.contentEffect.x = 0;
-					
-					effectX	= 0 + contentArea.width + 20;
-				}else if(currentPage < page)
-				{
-					this.contentContainer.x	= 0 + contentArea.width;
-					this.contentEffect.x = 0;
-					
-					effectX	= 0 - contentArea.width - 20;
-				}
-				currentPage	= page;
-				
-				TweenLite.to(this.contentEffect, 0.5, {x:effectX, alpha:0});
-				TweenLite.to(this.contentContainer, 0.5, {x:0});
-			}
-			updateContent(page);
+			currentItemIndex = ( page - 1 ) * FRIEND_COUNT_DISPLAY;
+			list.setCurrentItemMoveTo( currentItemIndex );
 		}
 		
 		/**
@@ -169,22 +160,24 @@ package app.view.ui.component
 		 * @param page
 		 * 
 		 */
-		private function updateContent(page:int):void
+		private function updateContent( page:int ):void
 		{
-			/**
-//			emptyNoticeField.visible = dataList.length == 0;
-			for(var i:int=0; i<items.length; i++)
-			{
-//				var index:int = (page-1) * FRIEND_COUNT_DISPLAY + i;
-//				items[i].setData( dataList[index] );
-			}*/
+		}
+		
+		private function get minIndex():int
+		{
+			return 0;
+		}
+		
+		private function get maxIndex():int
+		{
+			return this.dataList.length - FRIEND_COUNT_DISPLAY;
 		}
 		
 		private function get contentArea():Rectangle
 		{
 			return _contentArea;
 		}
-		
 		
 		private function get friendModel():FriendModel
 		{

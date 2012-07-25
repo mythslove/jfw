@@ -1,9 +1,17 @@
 package app.view.ui.component
 {
+	import app.model.MaterialModel;
+	import app.model.data.player.FriendStruct;
+	import app.model.player.FriendModel;
 	import app.view.ui.component.interfaces.IList;
 	
+	import com.jfw.engine.utils.FilterUtil;
+	import com.jfw.engine.utils.FontUtil;
+	
 	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
+	import flash.text.FontType;
 	import flash.text.TextField;
 	
 	public class MainFriendItem extends BaseListItem
@@ -16,6 +24,12 @@ package app.view.ui.component
 		public var $txFriendly:TextField;
 		public var $txVip:TextField;
 		public var $mcFace:MovieClip;
+		public var $mcSpar:MovieClip;
+		public var $mcBox:MovieClip;
+		public var $pbGift:SimpleButton;
+		public var $mcIconVip:MovieClip;
+		public var $mcFriendly:MovieClip;
+		
 		private var image:Image = null;
 		
 		public function MainFriendItem(list:IList)
@@ -33,31 +47,84 @@ package app.view.ui.component
 		
 		override protected function onMouseClick(evt:MouseEvent):void
 		{
+			switch( evt.target )
+			{
+				case this.$pbGift:
+						return ;
+					break;
+			}
+			
 			this.selected = true;
-			if( this.selected )
-				setBgFrame( LIGHT );
-			else
-				setBgFrame( NORMAL );
 		}
 		
 		override protected function initData():void
 		{
+			FontUtil.setText( this.$txName , this.friend.uname );
 			
+			this.showVip( (this.friend.vip == 1),this.friend.viplv );
+			
+			$mcSpar.gotoAndStop( this.friend.type + 1 );
+			Tip.register( $mcSpar ,"该玩家的五行山产出" + materialModel.sparColorStr( this.friend.type ) );
+			Tip.register( $mcBox,'访问玩家领取宝箱' );
+			Tip.register( $pbGift,'赠送或索取礼物' );
+			Tip.register( $mcFriendly,'好友亲密度' );
+			
+			FontUtil.setText( this.$txName, this.friend.uname );
+			FontUtil.setText( $txLevel,'Lv' + this.friend.lv.toString() );
+			FontUtil.setText( $txFriendly, this.friend.friendly );
+			image.load( this.friend.thumb );
+		}
+		
+		override public function set selected( value:Boolean ):void
+		{
+			super.selected = value;
+			setBgFrame( value );
+			this._list.setSelectItem( this.itemId );
 		}
 		
 		override protected function onMouseOver(evt:MouseEvent):void
 		{
-//			setBgFrame( LIGHT );
+			FilterUtil.applyContrast( this.$mcBg );
 		}
 		
 		override protected function onMouseOut(evt:MouseEvent):void
 		{
-//			setBgFrame( NORMAL );
+			FilterUtil.clearGlowFilter( this.$mcBg );
 		}
 		
-		private function setBgFrame( frame:int ):void
+		private function showVip( vip:Boolean,viplv:int ):void
 		{
-			this.$mcBg.gotoAndStop( frame );
+			this.showMc( this.$mcIconVip,vip );
+			this.showMc( this.$txVip, vip );
+			
+			if( vip )
+			{
+				FontUtil.setText( this.$txVip, viplv );
+				Tip.register( $mcIconVip,'玩家VIP级别' );
+			}
+		}
+		
+		private function setBgFrame( light:Boolean ):void
+		{
+			if( light )
+				this.$mcBg.gotoAndStop( LIGHT );
+			else
+				this.$mcBg.gotoAndStop( NORMAL );
+		}
+		
+		private function get friend():FriendStruct
+		{
+			return data as FriendStruct;
+		}
+		
+		private function get friendModel():FriendModel
+		{
+			return this.core.retModel( FriendModel.NAME ) as FriendModel;
+		}
+		
+		private function get materialModel():MaterialModel
+		{
+			return this.core.retModel( MaterialModel.NAME ) as MaterialModel;
 		}
 	}
 }

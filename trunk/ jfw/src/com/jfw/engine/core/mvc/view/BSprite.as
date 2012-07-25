@@ -1,9 +1,11 @@
 package com.jfw.engine.core.mvc.view
 {
 	import com.jfw.engine.core.data.IStruct;
+	import com.jfw.engine.utils.FilterUtil;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.InteractiveObject;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
@@ -59,6 +61,30 @@ package com.jfw.engine.core.mvc.view
 		protected function set skin(v:DisplayObjectContainer):void
 		{
 			this._skin = v;
+		}
+		
+		/**
+		 * 设置mc显示隐藏 
+		 * @param mc
+		 * @param show
+		 * 
+		 */
+		protected function showMc( mc:DisplayObject,show:Boolean ):void
+		{
+			mc.visible = show;
+		}
+		
+		protected function disableMc( mc:* , disabled:Boolean ):void
+		{
+			if( mc is DisplayObjectContainer || mc is SimpleButton )
+			{ 
+				mc.mouseEnabled = disabled;
+				mc.mouseChildren = disabled;
+				if( disabled )
+					FilterUtil.clearGlowFilter( mc );
+				else
+					FilterUtil.applyblack( mc );
+			}
 		}
 		
 		/** 初始化资源 */

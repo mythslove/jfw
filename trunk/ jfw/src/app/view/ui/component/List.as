@@ -63,9 +63,9 @@ package app.view.ui.component
 //		拖拽移动位置
 		private var _dragMPoint:int;
 //		拖拽特效时间
-		private var _dragEffectTime:Number		= 1;
+		private var _dragEffectTime:Number		= .3;
 //		拖拽效果最大时间
-		private var _dragEffectMaxTime:Number	= 1;
+		private var _dragEffectMaxTime:Number	= .5;
 //		拖拽效果最大距离
 		private var _dragEffectMaxDistance:int	= 2000;
 		
@@ -213,30 +213,30 @@ package app.view.ui.component
 			
 			
 			
-			this._container.stage.addEventListener(MouseEvent.MOUSE_MOVE, onCotainerMouseMove);
-			this._container.stage.addEventListener(MouseEvent.MOUSE_UP, onCotainerMouseUp);
+			this._container.stage.addEventListener(MouseEvent.MOUSE_MOVE, onContainerMouseMove);
+			this._container.stage.addEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
 		}
 		
-		private function onCotainerMouseMove(e:MouseEvent):void
+		private function onContainerMouseMove(e:MouseEvent):void
 		{
 			this.containerPoint	= (this._dragMPoint - this._container[this._mousePoint]);
 		}
 		
-		private function onCotainerMouseUp(e:MouseEvent):void
+		private function onContainerMouseUp(e:MouseEvent):void
 		{
-			this._container.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onCotainerMouseMove);
-			this._container.stage.removeEventListener(MouseEvent.MOUSE_UP, onCotainerMouseUp);
+			this._container.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onContainerMouseMove);
+			this._container.stage.removeEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
 			
 			if(_dragEffect)
 			{
-				var t:Number	= (getTimer() - this._checkTime) / 1000;
+				var t:Number	= ( getTimer() - this._checkTime ) / 1000;
 				var p:Number	= (this._containerPoint - this._checkPoint);
 				var s:Number 	= p / t;
 				
 				var np:Number	= Math.max(Math.min((s * this._dragEffectMaxTime), this._dragEffectMaxDistance), -this._dragEffectMaxDistance);
-				var ad:Number	= this._containerPoint + np/4;
+				var ad:Number	= this._containerPoint + np / 4;
 				
-				TweenLite.to(this, this._dragEffectTime, {containerPoint:ad});
+				TweenLite.to(this, this._dragEffectTime, { containerPoint:ad });
 				
 				this._dragEffectTimer.removeEventListener(TimerEvent.TIMER, checkTimeFun);
 				this._dragEffectTimer.stop();
@@ -266,8 +266,8 @@ package app.view.ui.component
 		public function setCurrentItem(value:int,refresh:Boolean=true):void
 		{
 			TweenLite.killTweensOf(this);
-			_containerPoint	= value * (this.iSize + _space);
-			if(refresh)
+			_containerPoint	= value * ( this.iSize + _space );
+			if( refresh )
 			{
 				refreshListData();
 			}
@@ -283,7 +283,7 @@ package app.view.ui.component
 		public function setSelectItem(value:int):void
 		{
 			_itemSelectedItemId	= value;
-			refreshListData();
+			refreshListData( );
 		}
 		
 		/**
@@ -306,7 +306,7 @@ package app.view.ui.component
 		/**
 		 * 刷新显示对象中的数据
 		 */
-		protected function refreshListData(isAll:Boolean=false):void
+		protected function refreshListData( isAll:Boolean=false ):void
 		{
 			var i:int
 			var j:int;
@@ -317,11 +317,10 @@ package app.view.ui.component
 			var item:IListItem;
 			
 			var isNeed:Boolean;
-			var ss:Array		= [];
 			var needList:Array	= [];
 			var outList:Array	= [];
 			//item.data	= _data[item.itemId];
-			if (isAll)
+			if ( isAll )
 			{
 				for (i = 0; i < max; i++)
 				{
@@ -335,16 +334,16 @@ package app.view.ui.component
 					}
 					item[this._point]	= (item.itemId * itemSize)-_containerPoint-itemSize;
 				}
-			}else
+			}
+			else
 			{
 				//查询列表中需求itemId
 				for (i = 0; i < max; i++)
 				{
-					needList.push(Math.ceil((_containerPoint + (i* itemSize)) / itemSize));
+					needList.push( Math.ceil(( _containerPoint + ( i * itemSize)) / itemSize ) );
 				}
-				
 				//找到显示区域外的子项
-				for (i = 0; i < max; i++)
+				for ( i = 0; i < max; i++ )
 				{
 					item		= _list[i];
 					isNeed		= false;
@@ -399,7 +398,7 @@ package app.view.ui.component
 		 */
 		protected function maxDisplayNum():int
 		{
-			return Math.ceil(this.lSize / getItemSize()) + 1;
+			return Math.ceil( this.lSize / getItemSize() ) + 1;
 		}
 		
 		/**
