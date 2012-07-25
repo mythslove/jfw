@@ -68,6 +68,9 @@ package app.model.data.player
 		/** 幸运值 */
 		public var lucky:int ;
 		
+		/** 好友度 */
+		public var friendly:int;
+		
 		/** 当前地图序号 */
 		public var clvid:int;
 		
@@ -122,6 +125,7 @@ package app.model.data.player
 			this.sk = obj.sk;
 			this.jifen = obj.jifen;
 			this.lucky = obj.lucky;
+			this.friendly = obj.friendly;
 			
 			this.equip = obj.equip;
 			this.eq1 = ( obj is Array && obj.length == 0 ) ? null: obj.eq1;

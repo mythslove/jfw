@@ -1,9 +1,9 @@
 package app.view
 {
-	import app.model.BattleModel;
 	import app.control.events.BattleEvent;
 	import app.control.events.LoadingEvent;
 	import app.control.events.ModelEvent;
+	import app.model.BattleModel;
 	import app.view.init.LoadingView;
 	import app.view.ui.MainUIView;
 	import app.view.ui.component.Tip;
@@ -18,6 +18,9 @@ package app.view
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.display.Stage;
+	import flash.display.StageDisplayState;
+	import flash.events.MouseEvent;
 	
 	public class GameView extends BView
 	{
@@ -47,6 +50,8 @@ package app.view
 			uiLayer = new Sprite();
 			popLayer = new Sprite();
 			
+			mapLayer.addEventListener(MouseEvent.DOUBLE_CLICK,onMouseDoubleClick );
+			
 			this.addChild( mapLayer );
 			this.addChild( uiLayer );
 			this.addChild( popLayer );
@@ -60,6 +65,12 @@ package app.view
 			CONFIG::debug {
 				this.addChild( new Stats() );
 			}
+		}
+		
+		private function onMouseDoubleClick( evt:MouseEvent ):void
+		{
+			if( ( this.gameContainer as Stage ).displayState == StageDisplayState.NORMAL )
+				
 		}
 		
 		override public function destroy( ):void

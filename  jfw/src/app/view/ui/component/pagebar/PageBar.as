@@ -4,22 +4,30 @@ package app.view.ui.component.pagebar
 	import com.jfw.engine.core.mvc.view.BPanel;
 	import com.jfw.engine.utils.FontUtil;
 	
-	import flash.display.MovieClip;
+	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
 	/**
 	 * 简单分页条
-	 *  样式：
-	 * 			< 50/100 >
-	 * @author 
 	 * 
+	 *  样式：
+	 * 		<< < 50/100 > >>
+	 * 
+	 *  支持三种分页情况：
+	 *  1、单页翻：一次滚动一页
+	 *  2、跳转到首页和尾页
+	 * 
+	 * @author jianzi 
 	 */
 	public class PageBar extends BPanel implements IPageBar
 	{
+		public var $pbPrevPageButton:SimpleButton = null;
+		public var $pbNextPageButton:SimpleButton = null;
 		
-		public var $pbPrevButton:MovieClip = null;
-		public var $pbNextButton:MovieClip = null;
+		public var $pbFirstButton:SimpleButton = null;
+		public var $pbEndButton:SimpleButton = null;
+		
 		public var $txNumText:TextField = null;
 		
 		private var current:int	= 1;
@@ -59,6 +67,19 @@ package app.view.ui.component.pagebar
 			return _max;
 		}
 		
+		public function get min():int
+		{
+			return _min;
+		}
+		
+		//
+		// 设置最小页数
+		// 
+		public function set min( val:int ):void
+		{
+			this._min = val;
+		}
+		
 		//
 		// 设置当前页数
 		//	
@@ -76,26 +97,47 @@ package app.view.ui.component.pagebar
 					updateFun( current );
 			}
 			FontUtil.setText( $txNumText, current + '/' + max );
+			
+			checkBtnStatus( page );
 		}
 		
 		override protected function onMouseClick(evt:MouseEvent):void
 		{
 			switch( evt.currentTarget )
 			{
-				case $pbPrevButton:
+				case $pbPrevPageButton:
 					onPrevButtonClick();
 					break;
-				case $pbNextButton:
+				case $pbNextPageButton:
 					onNextButtonClick();
 					break;
+				case $pbFirstButton:
+					onFirstButtonClick();
+					break;
+				case $pbEndButton:
+					onEndButtonClick();
+					break;
 			}
+		}
+		
+		private function onPrevStepButtonClick():void
+		{
+			var page:int = current;
+			--page;
+			page = Math.max( page, min ); 
+			updateMe( page );
+		}
+		
+		private function onNextStepButtonClick():void
+		{
+			
 		}
 		
 		private function onPrevButtonClick():void
 		{
 			var page:int = current;
 			--page;
-			page = Math.max( page, 1 ); 
+			page = Math.max( page, min ); 
 			updateMe( page );
 		}
 		
@@ -105,6 +147,36 @@ package app.view.ui.component.pagebar
 			++page;
 			page = Math.min( page, max );
 			updateMe( page );
+		}
+		
+		private function onFirstButtonClick():void
+		{
+			updateMe( min );
+		}
+		
+		private function onEndButtonClick():void
+		{
+			updateMe( max );
+		}
+		
+		
+		private function checkBtnStatus( page:int ):void
+		{
+			disableMc( $pbPrevPageButton , true );
+			disableMc( $pbNextPageButton , true );
+			disableMc( $pbFirstButton, true );
+			disableMc( $pbEndButton, true );
+			
+			if( page >= max )
+			{
+				disableMc( $pbPrevPageButton, false );
+				disableMc( $pbEndButton, false );
+			}
+			if( page <= min )
+			{
+				disableMc( $pbPrevPageButton, false );
+				disableMc( $pbFirstButton, false );
+			}
 		}
 	}
 }

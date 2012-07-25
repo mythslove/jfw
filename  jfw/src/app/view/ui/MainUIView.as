@@ -171,15 +171,6 @@ package app.view.ui
 			}
 		}
 		
-		override protected function regTips(obj:Object):void
-		{
-			switch( obj )
-			{
-				case this.$mcShortcut['$pmGb']:
-					break;
-			}
-		}
-		
 		private function onStageResize( ):void
 		{
 			if ( !stage )

@@ -80,7 +80,7 @@ package app.view.ui.component
 			this.area = area;
 			this.area.addEventListener(MouseEvent.MOUSE_OUT, this.handler);
 			this.area.addEventListener(MouseEvent.MOUSE_MOVE, this.handler);
-			label.text = area.accessibilityProperties.description;
+			label.htmlText = area.accessibilityProperties.description;
 			redraw();			
 		}
 		
