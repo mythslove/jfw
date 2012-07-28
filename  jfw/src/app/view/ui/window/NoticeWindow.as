@@ -34,14 +34,14 @@ package app.view.ui.window
 			switch( getMcName( evt.target as DisplayObject ) )
 			{
 				case CoreConst.TAG_PB + 'Buy':
-					WindowManager.getInstance().openWindow( new AddGemWindow(),null,false,false );
+					this.openWindow( new AddGemWindow(),null,false,true );
 					break;
 			}
 		}
 		
 		override public function execute( obj:* = null ):void
 		{
-			WindowManager.getInstance().openWindow( this, null,false );
+			this.openWindow( this, null,false );
 		}
 		
 		override public function destroy():void

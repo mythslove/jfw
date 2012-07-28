@@ -43,11 +43,11 @@ package com.jfw.engine.core.mvc.view
 		}
 		
 		/** 创建一个窗口 */
-		public function createWindow( windowClassRef:Class, param:Object = null, spriteMC:MovieClip=null ,hasAction:Boolean = true ):void
+		public function createWindow( windowClassRef:Class, param:Object = null, skinMC:MovieClip=null ,hasAction:Boolean = true ):void
 		{
 			var window:BWindow = null;
-			if ( spriteMC )
-				window = new windowClassRef( spriteMC , param ) as BWindow;
+			if ( skinMC )
+				window = new windowClassRef( skinMC , param ) as BWindow;
 			else
 				window = new windowClassRef() as BWindow;
 			
@@ -99,7 +99,19 @@ package com.jfw.engine.core.mvc.view
 			{
 				if( window.hasEventListener( Event.CLOSE ) )
 					window.removeEventListener(Event.CLOSE,onCloseWindow);
+				
+				//关闭所有子窗体
+				closeAllSons( window );
+				//从管理器中删除自己
 				removeWindow( window.sign );
+				//如果存在父窗体，则从父窗体删除自己
+				if( window.pSign )
+				{
+					var p:BWindow = getWindow( window.pSign );
+					if( p )
+						p.removeSon( window.sign );
+				}
+				//关闭
 				PopUpManager.removePopUp( window,hasAction );
 			});
 			
@@ -156,6 +168,21 @@ package com.jfw.engine.core.mvc.view
 			shaking = false;
 		}
 		
+
+		private function closeAllSons( parent:BWindow ):void
+		{
+			var sons:Vector.<String> = parent.getSons();
+			for each( var sign:String in sons )
+			{
+				var son:BWindow = this.getWindow( sign );
+				//从管理器中删除
+				removeWindow( son.sign );
+				//从父窗体中删除
+				parent.removeSon( son.sign );
+				//关闭
+				PopUpManager.removePopUp( son, false );
+			}
+		}
 		
 		private function hasWindow( sign:String ):Boolean
 		{
