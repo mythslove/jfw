@@ -77,22 +77,24 @@ package com.jfw.engine.utils.manager
 		 */
 		public static function removePopUp(obj:DisplayObject,hasAction:Boolean=true):void
 		{
-			
-			if (popupArray != null)
+			if (popupArray != null && popupArray.length > 0)
 			{
 				var index:int = popupArray.indexOf(obj);
 				if (index >= 0)
 				{
-					popupArray.splice(index, 1);
-					
 					impl.removePopUp(obj,hasAction);
-					
-				}else if(popupWaitArray != null)
+					popupArray[index] = null;
+					delete popupArray[index];
+					//popupArray.splice(index, 1);
+				}
+				else if(popupWaitArray != null)
 				{
 					index = popupWaitArray.indexOf(obj);
 					if (index >= 0)
 					{
-						popupWaitArray.splice(index, 1);
+						popupWaitArray[index] = null;
+						delete popupWaitArray[index];
+						//popupWaitArray.splice(index, 1);
 					}
 				}
 			}
@@ -114,14 +116,20 @@ package com.jfw.engine.utils.manager
 				return false;
 		}
 
+		/**
+		 * 删除所有窗体 
+		 * 
+		 */
 		public static function removeAllPopUp():void
 		{
 			if (popupArray != null)
 			{
-				for each (var obj:DisplayObject in popupArray)
+				for each (var obj:DisplayObject in popupArray )
 				{
+					trace( obj.name,"remove all<" );
 					removePopUp(obj,false);
 				}
+				popupArray = [];
 			}
 
 		}
@@ -158,6 +166,7 @@ package com.jfw.engine.utils.manager
 				{
 					popupArray=[];
 				}
+				trace(obj.name,'add<');
 				popupArray.push(obj);
 				
 			}

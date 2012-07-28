@@ -5,7 +5,6 @@ package app.view
 	import app.control.events.LoadingEvent;
 	import app.control.events.ModelEvent;
 	import app.view.iso.isoSprites.building.MapBuilding;
-	import app.view.ui.manager.WindowManager;
 	import app.view.ui.component.alert.Alert;
 	import app.view.ui.component.alert.AlertSmallWindow;
 	import app.view.ui.component.alert.AlertWindow;

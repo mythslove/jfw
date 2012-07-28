@@ -1,6 +1,6 @@
 package app.view.ui.window
 {
-	import app.view.ui.manager.WindowManager;
+	import com.jfw.engine.core.mvc.view.WindowManager;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BWindow;
@@ -9,12 +9,12 @@ package app.view.ui.window
 	{
 		public function AddGemWindow()
 		{
-			super()
+			super();
 		}
 		
 		override public function execute( obj:* = null ):void
 		{
-			WindowManager.getInstance().openWindow( this,null,null,false );
+			WindowManager.getInstance().openWindow( this,null,false,false );
 		}
 	}
 }
