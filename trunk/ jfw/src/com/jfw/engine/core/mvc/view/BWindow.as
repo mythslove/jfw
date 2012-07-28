@@ -68,6 +68,16 @@ package com.jfw.engine.core.mvc.view
 			}
 		}
 		
+		protected function openWindow( window:BWindow,param:Object = null,unshared:Boolean = false,isModel:Boolean=true, hasAction:Boolean=true):void
+		{
+			if( window != this )
+			{
+				this.addSon( window.sign );
+				window.pSign = this.sign;
+			}
+			WindowManager.getInstance().openWindow( window,param,unshared,isModel,hasAction );
+		}
+		
 		public function getSons():Vector.<String>
 		{
 			return _sons;
@@ -79,7 +89,6 @@ package com.jfw.engine.core.mvc.view
 			
 			result();
 		}
-		
 		
 		public function execute( obj:* = null ):void
 		{
