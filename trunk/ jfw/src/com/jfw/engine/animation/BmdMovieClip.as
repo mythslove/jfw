@@ -9,8 +9,8 @@ package com.jfw.engine.animation
 	{
 		private var mTextures:Vector.<Texture>;
 		private var mSounds:Vector.<Sound>;
-		private var mDurations:Vector.<Number>;
-		private var mStartTimes:Vector.<Number>;
+		protected var mDurations:Vector.<Number>;
+		protected var mStartTimes:Vector.<Number>;
 		
 		private var mDefaultFrameDuration:Number;
 		private var mTotalTime:Number;
@@ -59,7 +59,7 @@ package com.jfw.engine.animation
 		{
 			if (frameID < 0 || frameID > numFrames) throw new ArgumentError("Invalid frame id");
 			if (duration < 0) duration = mDefaultFrameDuration;
-			
+
 			mTextures.splice(frameID, 0, bmd);
 			mSounds.splice(frameID, 0, sound);
 			mDurations.splice(frameID, 0, duration);
@@ -195,7 +195,7 @@ package com.jfw.engine.animation
 			
 			mCurrentTime += passedTime;
 			finalFrame = mTextures.length - 1;
-			
+
 			while (mCurrentTime >= mStartTimes[mCurrentFrame] + mDurations[mCurrentFrame])
 			{
 				if (mCurrentFrame == finalFrame)

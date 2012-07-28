@@ -1,7 +1,7 @@
 package app.control
 {
 	import app.consts.NetConst;
-	import app.model.NetModel;
+	import app.model.net.NetModel;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.mvc.control.BCmd;

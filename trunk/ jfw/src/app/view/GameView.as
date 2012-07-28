@@ -5,7 +5,8 @@ package app.view
 	import app.control.events.ModelEvent;
 	import app.model.BattleModel;
 	import app.view.init.LoadingView;
-	import app.view.ui.MainUIView;
+	import app.view.ui.MainShortCut;
+	import app.view.ui.MainUI;
 	import app.view.ui.component.Tip;
 	import app.view.ui.component.alert.Alert;
 	
@@ -31,6 +32,7 @@ package app.view
 		private var mapLayer:Sprite = null;
 		private var uiLayer:Sprite = null;
 		private var popLayer:Sprite = null;
+		private var shortCutLayer:Sprite = null;
 		private var debugLayer:Sprite = null;
 		
 		public function GameView( container:DisplayObjectContainer, data:IStruct=null )
@@ -49,12 +51,12 @@ package app.view
 			mapLayer = new Sprite();
 			uiLayer = new Sprite();
 			popLayer = new Sprite();
-			
-			mapLayer.addEventListener(MouseEvent.DOUBLE_CLICK,onMouseDoubleClick );
+			shortCutLayer = new Sprite();
 			
 			this.addChild( mapLayer );
 			this.addChild( uiLayer );
 			this.addChild( popLayer );
+			this.addChild( shortCutLayer );
 			
 			
 			//初始化Popup管理器
@@ -63,14 +65,8 @@ package app.view
 			
 			//Debug
 			CONFIG::debug {
-				this.addChild( new Stats() );
+				//this.addChild( new Stats() );
 			}
-		}
-		
-		private function onMouseDoubleClick( evt:MouseEvent ):void
-		{
-			if( ( this.gameContainer as Stage ).displayState == StageDisplayState.NORMAL )
-				
 		}
 		
 		override public function destroy( ):void
@@ -78,6 +74,7 @@ package app.view
 			this.mapLayer = null;
 			this.uiLayer = null;
 			this.popLayer = null;
+			this.shortCutLayer = null;
 			this.gameContainer = null;
 			this.loadingView = null;
 			super.destroy( );
@@ -111,7 +108,8 @@ package app.view
 					Logger.info( 'Game init ...' );
 					
 					new HomeView( this.mapLayer );
-					new MainUIView( this.uiLayer );
+					new MainUI( this.uiLayer );
+					new MainShortCut( this.shortCutLayer );
 					
 //					var battleModel:BattleModel=Core.getInstance().retModel("BattleModel") as BattleModel;
 //					battleModel.startLoad(null);

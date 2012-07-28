@@ -21,7 +21,7 @@ package app.manager
 	/**
 	 * 
 	 * @author 
-	 * 
+	 * 只有判断xml于bitmap同时存在才返回指定纹理
 	 */	
 	public class ResourceManager extends EventDispatcher implements IResourceManager
 	{

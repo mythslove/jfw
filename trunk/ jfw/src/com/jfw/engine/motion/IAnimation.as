@@ -95,5 +95,18 @@
 		 * 
 		 */		
 		function getFrameTexture(frameID:int):Texture;
+		/**
+		 * 设置贞频 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		function set fps(value:Number):void;
+		/**
+		 * 获取贞频 
+		 * @return 
+		 * 
+		 */		
+		function get fps():Number;
 	}
 }

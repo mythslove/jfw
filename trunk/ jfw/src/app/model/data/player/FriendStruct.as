@@ -9,6 +9,9 @@ package app.model.data.player
 		/** 是否自己 */
 		public var isSelf:Boolean = false;
 		
+		/** 是否仇人 */
+		public var isPoe:Boolean = false;
+		
 		/** 好友五行山的晶石类型 */
 		public var type:int = 0;
 		
@@ -17,6 +20,12 @@ package app.model.data.player
 		
 		/** 是否已经拜访过 */
 		public var isVisit:Boolean = false;
+		
+		/** 是否已赠送或索要过礼物 */
+		public var isSendGift:Boolean = false;
+		
+		/** 是否已获得访问礼包 */
+		public var isGetBox:Boolean = false;
 		
 		
 		public function FriendStruct(obj:Object=null)
@@ -28,11 +37,14 @@ package app.model.data.player
 		{
 			super.parse(obj);
 			
-			this.isNpc 		= obj.isNpc;
-			this.isSelf 	= obj.isSelf;
-			this.rank 		= obj.rank;
-			this.isVisit 	= obj.isVisit;
-			this.type 		= obj.type;
+			this.isNpc 			= ( obj.isNpc == 1 );
+			this.isSelf 		= ( obj.isSelf == 1 );
+			this.isPoe			= ( obj.isPoe == 1 );
+			this.rank 			= obj.rank;
+			this.isVisit 		= ( obj.isVisit == 1 );
+			this.type 			= obj.type;
+			this.isSendGift 	= ( obj.isSendGift == 1 );
+			this.isGetBox		= ( obj.isGetBox == 1 );
 		}
 	}
 }

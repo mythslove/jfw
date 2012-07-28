@@ -6,11 +6,9 @@ package app
 	import app.model.AssetsModel;
 	import app.model.BattleModel;
 	import app.model.ConfigModel;
-	import app.model.GuidModel;
+	import app.model.DebugModel;
 	import app.model.LoadingModel;
-	import app.model.LoginModel;
 	import app.model.MaterialModel;
-	import app.model.MissionModel;
 	import app.model.UserModel;
 	import app.model.WarnModel;
 	import app.model.net.NetModel;
@@ -67,15 +65,13 @@ package app
 			queue.add( new LoadingModel( ) );
 			queue.add( new AssetsModel( ) );
 			
+			new DebugModel( );
 			new WarnModel( );
-			new LoginModel( );
 			new UserModel( );
-			new GuidModel( );
-			new MissionModel( );
 			new MaterialModel( ) ;
 			new PlayerModel( );
 			new FriendModel( );
-//			new BattleModel( );
+			new BattleModel( );
 		}
 		
 		override protected function initViews():void

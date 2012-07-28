@@ -5,10 +5,7 @@ package app.view.ui.component
 	
 	import com.greensock.TweenLite;
 	import com.greensock.easing.Bounce;
-	import com.greensock.easing.EaseLookup;
-	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;
-	import com.jfw.engine.core.mvc.view.BSprite;
 	import com.jfw.engine.utils.FilterUtil;
 	
 	import flash.display.Bitmap;
@@ -17,8 +14,8 @@ package app.view.ui.component
 	import flash.display.Shape;
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
 	/**
@@ -26,34 +23,38 @@ package app.view.ui.component
 	 */	
 	public class MainFriendPanel extends BPanel
 	{
+		//属性
 		public var $pbFriend:SimpleButton;
-		public var $mcTab:MovieClip;
-		public var $pbFind:SimpleButton;
-		public var $pbInvite:SimpleButton;
-		public var $pbRefresh:SimpleButton;
 		public var $mcPageBar:MovieClip;
 		public var $txInput:TextField;
+		
+		//tab
+		private var tabNav:Navigation;
+		private var tabFactory:Array;
+		private var currSelectedTab:int = 0;
 		
 		private var list:List = null;
 		private var dataList:Array = null;
 		private var currentItemIndex:int = 0;
+		private var listEffect:Bitmap = null;
+		private var listContainer:Sprite = null;
+		private var listMask:Shape = null;
+		private var listTween:Object = { };
 		
-		private var keyword:String = '';
 		private var pageBar:PageBar = null;
 		
 		private static const listW:int = 214;
 		private static const listH:int = 330;
-		private static const listSpace:int = 3;
 		private static const FRIEND_COUNT_DISPLAY:int = 9;
 		
-		public var refreshMask:Shape = null;
+		private static const listHSpace:int	= 0;
+		private static const listSpace:int = 3;
 		
+		
+		//面板展开隐藏
 		private var showStatus:Boolean = false;
 		
 		private var currentPage:int	= 1;
-		private var contentContainer:Sprite = null;
-		private var contentEffect:Bitmap = null;
-		private var _contentArea:Rectangle = new Rectangle( 25, 80, 214, 330 );
 		
 		public function MainFriendPanel()
 		{
@@ -86,19 +87,8 @@ package app.view.ui.component
 			super.onInit();
 			x = stage.stageWidth;
 			
-			// 好友列表
-			list = new List( MainFriendItem, listW, listH, listSpace, List.VERTICAL );
-			list.drag = false;
-			addChild( list );
-			list.x = 25;
-			list.y = 80;
-			
-			contentContainer = new Sprite();
-			contentEffect = new Bitmap();
-			this.addChild( contentEffect );
-			
-			refreshMask	= new Shape()
-			addChild( refreshMask );
+			createTab();
+			createListContainer();
 			
 			setData( friendModel.friendList );
 			
@@ -112,7 +102,6 @@ package app.view.ui.component
 		
 		override protected function onMouseOver(evt:MouseEvent):void
 		{
-			trace( evt.target.name );
 			switch( evt.target )
 			{
 				case this.$mcPageBar['$pbPrevButton']:
@@ -131,6 +120,115 @@ package app.view.ui.component
 					FilterUtil.clearGlowFilter( evt.target as MovieClip );
 					break;
 			}
+		}
+		
+		/**
+		 * 创建Tab条 
+		 * 
+		 */
+		private function createTab( ):void
+		{
+			tabFactory = 
+				[
+					{ tabName: '好友',type: 0 }, 
+					{ tabName: '仇人',type: 1 }
+				];
+			
+			tabNav = new Navigation( tabFactory.length );
+			for each ( var itemObj:Object in tabFactory )
+			{
+				tabNav.addItem( new MainFriendTab( itemObj.tabName ) );
+			}
+			
+			this.addChild( tabNav );
+			tabNav.x = 57;
+			tabNav.y = 32;
+			tabNav.selectedIndex = 0;
+			tabNav.addEventListener(Event.CHANGE, onChangeTab);
+		}
+		
+		/**
+		 *  切换选项卡 
+		 * @param evt
+		 * 
+		 */
+		private function onChangeTab( evt:Event ):void
+		{
+			listEffect.bitmapData = new BitmapData( listW, listH, true, 0 );
+			listEffect.bitmapData.draw( list );
+			listEffect.alpha = 1;
+			
+			var endA:int = 0;
+			var endB:int = 0;
+			
+			if ( this.currSelectedTab < tabNav.selectedIndex )
+			{
+				listEffect.x = 0;
+				list.x = listW + listHSpace;
+				endA = -( listW + listHSpace );
+				endB = 0;
+			}
+			else if ( this.currSelectedTab > tabNav.selectedIndex )
+			{
+				listEffect.x = 0;
+				list.x =  -( listW + listHSpace );
+				endA = listW + listHSpace ;
+				endB = 0;
+			}
+			
+			listTween.value	= list.x;
+			TweenLite.to( listEffect, 0.4, { x:endA, alpha:0 } );
+			TweenLite.to( listTween, 0.4, { value:endB, onUpdate:onListTweenUpdate } );
+			
+			list.setCurrentItem( 0, false );
+			
+			currSelectedTab = tabNav.selectedIndex;
+			
+			var type:int = tabFactory[ tabNav.selectedIndex ].type;
+			var data:Array = friendModel.getData( type );
+			
+			pageBar.max = Math.ceil( data.length / FRIEND_COUNT_DISPLAY ) ;
+			pageBar.goto(1);
+			pageUpdate(1);
+			
+			var tab:MainFriendTab = MainFriendTab( tabNav.getItemByIndex( tabNav.selectedIndex ) );
+			if( tab.getCount() != 0 )
+			{
+				tab.setCount(0);
+			}
+			
+			setData( data );
+		}
+		
+		private function onListTweenUpdate():void
+		{
+			list.x = listTween.value;
+		}
+		
+		private function createListContainer():void
+		{
+			listContainer = new Sprite();
+			listContainer.x = 25;
+			listContainer.y = 80;
+			
+			// 好友列表
+			list = new List( MainFriendItem, listW, listH, listSpace, List.VERTICAL );
+			list.drag = false;
+			listContainer.addChild( list );
+			
+			listEffect = new Bitmap();
+			listContainer.addChild( listEffect );
+			
+			listMask = new Shape();
+			listMask.x = listContainer.x;
+			listMask.y = listContainer.y;
+			listMask.graphics.beginFill( 0xFF00FF, 0.5 );
+			listMask.graphics.drawRect( 0, 0, listW, listH );
+			listMask.graphics.endFill();
+			
+			listContainer.mask = listMask;
+			addChild( listContainer );
+			addChild( listMask );
 		}
 		
 		private function updatePageBar ():void
@@ -155,28 +253,10 @@ package app.view.ui.component
 			list.setCurrentItemMoveTo( currentItemIndex );
 		}
 		
-		/**
-		 * 更新内容 
-		 * @param page
-		 * 
-		 */
-		private function updateContent( page:int ):void
+		override public function destroy():void
 		{
-		}
-		
-		private function get minIndex():int
-		{
-			return 0;
-		}
-		
-		private function get maxIndex():int
-		{
-			return this.dataList.length - FRIEND_COUNT_DISPLAY;
-		}
-		
-		private function get contentArea():Rectangle
-		{
-			return _contentArea;
+			tabNav.removeEventListener(Event.CHANGE, onChangeTab);
+			super.destroy();
 		}
 		
 		private function get friendModel():FriendModel
