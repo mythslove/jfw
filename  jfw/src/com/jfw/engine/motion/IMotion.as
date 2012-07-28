@@ -45,6 +45,11 @@
 		 */		
 		function ResumeMove():void;
 		/**
+		 *停止移动 
+		 * 
+		 */		
+		function StopMove():void;
+		/**
 		 * 移动状态 
 		 * @return 
 		 * 

@@ -31,7 +31,7 @@ package examples.animation
 		public function RoleView(name:String,fps:Number=12)
 		{
 			sourceManager=ResourceManager.getInstance();
-			super(name,sourceManager,DirectionConst.LEFTDOWN,AnimationConst.WALK,0.5,fps);
+			super(name,sourceManager,DirectionConst.LEFTDOWN,AnimationConst.WALK,1,fps);
 			this.YAdjust=5;
 			this.addEventListener(AnimationEvent.WALK_COMPLETE,onWalkComplete);
 		}
@@ -46,7 +46,18 @@ package examples.animation
 			if(!_mapData.checkPointOverRide(gdx,gdy))
 			{
 				var star:AStar=new AStar(_mapData);
-				star.findPath(this.gridX,this.gridY,gdx,gdy,conditions);
+				
+				if(this.WalkPath==null)
+					star.findPath(gridX,gridY,gdx,gdy,conditions);
+				else
+				{
+					var tile:Tile=this.WalkPath[this._pathIndex] as Tile;
+					star.findPath(tile.getXIndex(),tile.getZIndex(),gdx,gdy,conditions);
+				}
+	
+				if(this.isMoving)
+					this.StopMove();
+				
 				this._path=star.Path;
 				this.StartMove();
 			}

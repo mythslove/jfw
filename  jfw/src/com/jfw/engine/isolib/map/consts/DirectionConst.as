@@ -26,6 +26,16 @@ package com.jfw.engine.isolib.map.consts
 			var a: Number = angle;
 			if (angle < 0) a = 360 + angle;
 			
+//			if ((a >= 0) && (a < 22.5)) return DirectionConst.RIGHT;
+//			if ((a >= 22.5) && (a <= 67.5)) return DirectionConst.RIGHTDOWN;
+//			if ((a > 67.5) && (a < 112.5)) return DirectionConst.DOWN;
+//			if ((a >= 112.5) && (a <= 157.5)) return DirectionConst.LEFTDOWN;
+//			if ((a > 157.5) && (a < 202.5)) return DirectionConst.LEFT;
+//			if ((a >= 202.5) && (a <= 247.5)) return DirectionConst.LEFTUP;
+//			if ((a > 247.5) && (a < 292.5)) return DirectionConst.UP;
+//			if ((a >= 292.5) && (a <= 337.5)) return DirectionConst.RIGHTUP;
+//			if ((a > 337.5) && (a < 360)) return DirectionConst.RIGHT;
+			
 			if ((a >= 0) && (a < 22.5)) return DirectionConst.RIGHT;
 			if ((a >= 22.5) && (a <= 67.5)) return DirectionConst.RIGHTDOWN;
 			if ((a > 67.5) && (a < 112.5)) return DirectionConst.DOWN;

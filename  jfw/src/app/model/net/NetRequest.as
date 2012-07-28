@@ -12,6 +12,9 @@ package app.model.net
 		static private var instance:NetRequest ;
 		static public const CALLBACK:String = '.callback';
 		
+		/** 是否使用调试数据，不使用网络 */
+		static public const USE_DEBUG_DATA:Boolean = true;
+		
 		private var _netCommands:Array = [];
 
 		/** 游戏初始化 */

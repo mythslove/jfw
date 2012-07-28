@@ -32,7 +32,7 @@ package com.jfw.engine.motion
 		private var _endX: Number=0;
 		private var _endY: Number=0;
 		private var _movedLength:Number=0;				//已经移动的距离
-		private var _pathIndex: int=0;					//走到第几格
+		protected var _pathIndex: int=0;					//走到第几格
 		private var _motionAngle: int=0;				//每一贞时人物的角度
 		private var _isLastWalk: Boolean=false; 		//是否移动到最后一格了,只读
 		private var _isEnd:Boolean=false;				//是否到达最终坐标
@@ -100,12 +100,20 @@ package com.jfw.engine.motion
 		{
 			return _motion.YOffset;
 		}
-		
+		/**
+		 * 设置动画对象相对原点偏移量 ,此设置不会影响动画本身偏移量,主要用来给用户调整用
+		 * @return 
+		 * 
+		 */	
 		public function set XAdjust(value:Number):void
 		{
 			this._motion.XAdjust=value;
 		}
-		
+		/**
+		 * 设置动画对象相对原点偏移量 ,此设置不会影响动画本身偏移量,主要用来给用户调整用
+		 * @return 
+		 * 
+		 */	
 		public function set YAdjust(value:Number):void
 		{
 			this._motion.YAdjust=value;
@@ -143,10 +151,20 @@ package com.jfw.engine.motion
 			return _motion.getFrameTexture(frameID);
 		}
 		
+		public function set fps(value:Number):void
+		{
+			_motion.fps=value;
+		}
+	
+		public function get fps():Number
+		{
+			return this._motion.fps;
+		}
+		
 		public function advanceTime(time:Number):void
 		{
 			this._motion.advanceTime(time);
-
+	
 			if(!this._abort&&!this._isEnd)
 				gotoNextStep();
 		}
@@ -203,6 +221,16 @@ package com.jfw.engine.motion
 			
 			this._abort=false;
 		}
+		
+		public function StopMove():void
+		{
+			this._path=null;
+			this._abort=true;
+			this._isLastWalk =false;	
+			this._isEnd=false;
+			this._pathIndex=0;
+			this._movedLength=0;
+		}
 		/**
 		 * 是否正在移动 
 		 * @return 
@@ -250,8 +278,6 @@ package com.jfw.engine.motion
 		
 		private function initMotion(): void 
 		{
-			_pathIndex += 1;
-			
 			if (_pathIndex >= WalkPath.length - 1) //检查是否最后一格移动
 				_isLastWalk = true;
 
@@ -289,7 +315,10 @@ package com.jfw.engine.motion
 					this.dispatchEvent(new AnimationEvent(AnimationEvent.WALK_COMPLETE,true,true));
 				}
 				else 
+				{
+					_pathIndex ++;
 					initMotion();
+				}
 			}
 			else 
 			{

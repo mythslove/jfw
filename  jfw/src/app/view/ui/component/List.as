@@ -12,11 +12,6 @@ package app.view.ui.component
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	
-	/**
-	 * 多功能列表组件 
-	 * @author Sam Wang
-	 * 
-	 */	
 	public class List extends Sprite implements IList
 	{
 		// 纵向 	
@@ -319,6 +314,7 @@ package app.view.ui.component
 			var isNeed:Boolean;
 			var needList:Array	= [];
 			var outList:Array	= [];
+			var inList:Array = [];
 			//item.data	= _data[item.itemId];
 			if ( isAll )
 			{

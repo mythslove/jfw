@@ -145,6 +145,18 @@
 			
 			return _glowFilter;
 		}
+		
+		public static function setTextLightBorder(displayObject:DisplayObject,color:uint=0xffffff,blur:Number=1.5,strength:Number=10,alpha:Number=1):void
+		{
+			
+			var blurX:Number=blur;
+			
+			var blurY:Number=blur;
+			
+			var quality:Number=BitmapFilterQuality.HIGH;
+			
+			displayObject.filters = [new GlowFilter(color, alpha, blurX, blurY, strength, quality)];
+		}
 	}
 
 }

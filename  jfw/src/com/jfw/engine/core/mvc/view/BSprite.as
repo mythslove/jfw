@@ -79,7 +79,8 @@ package com.jfw.engine.core.mvc.view
 			if( mc is DisplayObjectContainer || mc is SimpleButton )
 			{ 
 				mc.mouseEnabled = disabled;
-				mc.mouseChildren = disabled;
+				if( mc is DisplayObjectContainer )
+					mc.mouseChildren = disabled;
 				if( disabled )
 					FilterUtil.clearGlowFilter( mc );
 				else

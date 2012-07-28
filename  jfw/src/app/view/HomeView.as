@@ -59,7 +59,6 @@ package app.view
 			var bmpBg:Bitmap = this.core.assetsModel.getBitmap('HomeBg');
 			if( bmpBg )
 				setMapBg( bmpBg );
-			
 		}
 		
 		override protected function onInit():void

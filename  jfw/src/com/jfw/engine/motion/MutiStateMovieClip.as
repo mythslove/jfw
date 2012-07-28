@@ -16,6 +16,20 @@ package com.jfw.engine.motion
 		{
 			super(textures, fps);
 		}
+		
+		private function updateStartTime(index:int):void
+		{
+			if(index>0)
+			{
+				mStartTimes[index] = mStartTimes[index-1] + mDurations[index-1];
+			}
+			else
+			{
+				mStartTimes.length = 0;
+				mStartTimes[index]=0; 
+			}
+		}
+		
 		/**  
 		 * 改变当前MovieClip所用动画纹理序列 
 		 * 
@@ -33,6 +47,7 @@ package com.jfw.engine.motion
 					if( i < numFrames )
 					{
 						setFrameTexture(i, texturs[i]);//改变动画中该帧纹理
+						updateStartTime(i);
 					}
 					else
 					{
@@ -45,6 +60,7 @@ package com.jfw.engine.motion
 				for(var j:int=0; j<len; j++)
 				{				
 					setFrameTexture(j, texturs[j]);
+					updateStartTime(j);
 				}
 			}
 			else//if(len<numFrames)
@@ -56,6 +72,7 @@ package com.jfw.engine.motion
 					if( k < len )
 					{
 						setFrameTexture(k, texturs[k]);
+						updateStartTime(k);
 					}
 					else
 					{

@@ -1,7 +1,8 @@
 package app.model.net
 {
-	import app.model.data.ConfigStruct;
 	import app.control.events.ModelEvent;
+	import app.model.DebugModel;
+	import app.model.data.ConfigStruct;
 	
 	import com.jfw.engine.core.mvc.model.BModel;
 	import com.jfw.engine.net.nc.NetErrorType;
@@ -31,11 +32,23 @@ package app.model.net
 			if ( null == param )
 				param = { };
 			
-			Logger.info( 'Call net command: ',netCmd );
-			NetManager.getInstance().call( this.gateWay, netCmd, param, onResult );
+			if( !NetRequest.USE_DEBUG_DATA )
+			{
+				Logger.info( 'Call net command: ',netCmd );
+				NetManager.getInstance().call( this.gateWay, netCmd, param, onResult );
+			}
+			else
+			{
+				Logger.info( 'DEBUG DATA: Call net command: ',netCmd );
+				var netVO:NetVO = new NetVO();
+				netVO.returnResult = true;
+				netVO.sendCommand = netCmd;
+				netVO.returnParams = ( this.core.retModel( DebugModel.NAME ) as DebugModel ).netDebugData( netVO.sendCommand );
+				onResult( netVO );
+			}
 		}
 		
-		private function onResult( netVO:NetVO ):void
+		private function onResult( netVO:NetVO = null ):void
 		{
 			var errno:int = -1;
 			
@@ -62,7 +75,7 @@ package app.model.net
 				
 				/** 正确返回 */
 				sendEvent( netVO.sendCommand + NetRequest.CALLBACK,netVO.returnParams );
-				Logger.info( 'Call net command callback:',netVO.sendCommand );
+				Logger.info( 'Call net command callback:',netVO.sendCommand,'use time:',netVO.useTime );
 			}
 		}
 		

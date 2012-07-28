@@ -14,6 +14,9 @@ package app.model.data.player
 		/** 用户名称  */
 		public var uname:String = '';
 		
+		/** 称号 */
+		public var callName:String = '';
+		
 		/** 用户性别 0女 1男 */
 		public var sex:int;
 		
@@ -107,6 +110,7 @@ package app.model.data.player
 			this.uid = obj.uid;
 			this.aid = obj.aid;
 			this.uname = obj.uname ? obj.uname : 'Nick Name';
+			this.callName = obj.callName;
 			this.sex = obj.sex;
 			this.date = obj.date;
 			this.thumb = obj.thumb ? obj.thumb : 'http://head.xiaonei.com/photos/0/0/men_head.gif';

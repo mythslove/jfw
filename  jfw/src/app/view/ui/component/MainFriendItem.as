@@ -1,5 +1,6 @@
 package app.view.ui.component
 {
+	import app.control.events.HomeEvent;
 	import app.model.MaterialModel;
 	import app.model.data.player.FriendStruct;
 	import app.model.player.FriendModel;
@@ -55,6 +56,7 @@ package app.view.ui.component
 			}
 			
 			this.selected = true;
+			this.sendEvent(HomeEvent.VISITFRIEND_INIT,friend );	
 		}
 		
 		override protected function initData():void
@@ -62,6 +64,8 @@ package app.view.ui.component
 			FontUtil.setText( this.$txName , this.friend.uname );
 			
 			this.showVip( (this.friend.vip == 1),this.friend.viplv );
+			this.showGetBox( this.friend.isGetBox );
+			this.showSendGift( this.friend.isSendGift );
 			
 			$mcSpar.gotoAndStop( this.friend.type + 1 );
 			Tip.register( $mcSpar ,"该玩家的五行山产出" + materialModel.sparColorStr( this.friend.type ) );
@@ -78,7 +82,7 @@ package app.view.ui.component
 		override public function set selected( value:Boolean ):void
 		{
 			super.selected = value;
-			setBgFrame( value );
+			//setBgFrame( value );
 			this._list.setSelectItem( this.itemId );
 		}
 		
@@ -92,6 +96,12 @@ package app.view.ui.component
 			FilterUtil.clearGlowFilter( this.$mcBg );
 		}
 		
+		/**
+		 * 显示VIP图标状态
+		 * 
+		 * @param vip
+		 * @param viplv
+		 */
 		private function showVip( vip:Boolean,viplv:int ):void
 		{
 			this.showMc( this.$mcIconVip,vip );
@@ -102,6 +112,16 @@ package app.view.ui.component
 				FontUtil.setText( this.$txVip, viplv );
 				Tip.register( $mcIconVip,'玩家VIP级别' );
 			}
+		}
+		
+		private function showGetBox( isShowBox:Boolean ):void
+		{
+			this.$mcBox.visible = !isShowBox;
+		}
+		
+		private function showSendGift( isShowGift:Boolean ):void
+		{
+			this.$pbGift.visible = !isShowGift;
 		}
 		
 		private function setBgFrame( light:Boolean ):void

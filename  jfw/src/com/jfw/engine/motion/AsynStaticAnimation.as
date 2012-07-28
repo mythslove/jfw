@@ -54,12 +54,20 @@ package com.jfw.engine.motion
 		{
 			return _motion.YOffset;
 		}
-		
+		/**
+		 * 设置动画对象相对原点偏移量 ,此设置不会影响动画本身偏移量,主要用来给用户调整用
+		 * @return 
+		 * 
+		 */	
 		public function set XAdjust(value:Number):void
 		{
 			this._motion.XAdjust=value;
 		}
-		
+		/**
+		 * 设置动画对象相对原点偏移量 ,此设置不会影响动画本身偏移量,主要用来给用户调整用
+		 * @return 
+		 * 
+		 */	
 		public function set YAdjust(value:Number):void
 		{
 			this._motion.YAdjust=value;
@@ -130,6 +138,16 @@ package com.jfw.engine.motion
 		public function getFrameTexture(frameID:int):Texture
 		{
 			return _motion.getFrameTexture(frameID);
+		}
+		
+		public function set fps(value:Number):void
+		{
+			_motion.fps=value;
+		}
+		
+		public function get fps():Number
+		{
+			return this._motion.fps;
 		}
 		
 		public function destroy():void

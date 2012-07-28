@@ -14,14 +14,15 @@ package app.model.player
 		public function PlayerModel()
 		{
 			super( NAME );
-			
-			/** test */
-			this._playerVO = new PlayerStruct();
-			this._playerVO.aid = 'C10001';
-			this._playerVO.exp = 100;
-			this._playerVO.gb = 5000;
-			this._playerVO.yb = 234;
-			this._playerVO.power = 190;
+		}
+		
+		/**
+		 * 初始化玩家信息 
+		 * @param info
+		 */
+		public function initPlayerVO( info:Object ):void
+		{
+			this.playerVO = new PlayerStruct( info );
 		}
 		
 		public function get playerVO( ):PlayerStruct

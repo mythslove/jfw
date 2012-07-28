@@ -14,11 +14,6 @@ package app.view.ui.component.pagebar
 	 *  样式：
 	 * 		<< < 50/100 > >>
 	 * 
-	 *  支持三种分页情况：
-	 *  1、单页翻：一次滚动一页
-	 *  2、跳转到首页和尾页
-	 * 
-	 * @author jianzi 
 	 */
 	public class PageBar extends BPanel implements IPageBar
 	{
@@ -120,19 +115,6 @@ package app.view.ui.component.pagebar
 			}
 		}
 		
-		private function onPrevStepButtonClick():void
-		{
-			var page:int = current;
-			--page;
-			page = Math.max( page, min ); 
-			updateMe( page );
-		}
-		
-		private function onNextStepButtonClick():void
-		{
-			
-		}
-		
 		private function onPrevButtonClick():void
 		{
 			var page:int = current;
@@ -169,7 +151,7 @@ package app.view.ui.component.pagebar
 			
 			if( page >= max )
 			{
-				disableMc( $pbPrevPageButton, false );
+				disableMc( $pbNextPageButton, false );
 				disableMc( $pbEndButton, false );
 			}
 			if( page <= min )
