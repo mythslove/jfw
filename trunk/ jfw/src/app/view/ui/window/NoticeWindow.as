@@ -1,7 +1,7 @@
 package app.view.ui.window
 {
-	import app.view.ui.manager.TipManager;
-	import app.view.ui.manager.WindowManager;
+	import com.jfw.engine.core.mvc.view.WindowManager;
+	import app.view.ui.component.Tip;
 	
 	import com.jfw.engine.core.base.CoreConst;
 	import com.jfw.engine.core.data.IStruct;
@@ -14,6 +14,7 @@ package app.view.ui.window
 	public class NoticeWindow extends BWindow
 	{
 		public var $pbBuy:MovieClip ;
+		public var $pbClose:MovieClip;
 		
 		public function NoticeWindow()
 		{
@@ -22,22 +23,8 @@ package app.view.ui.window
 		
 		override protected function onInit():void
 		{
-			
-		}
-		
-		override protected function onMouseOver(evt:MouseEvent):void
-		{
-			super.onMouseOver( evt );
-			
-			switch( getMcName( evt.target as DisplayObject ) )
-			{
-				case CoreConst.TAG_PB + 'Buy':
-					TipManager.createToolTip( evt.target as DisplayObject,"续费并领取");
-					break;
-				case CoreConst.TAG_PB + 'Close':
-					TipManager.createToolTip( evt.target as DisplayObject,"点击关闭");
-					break;
-			}
+			Tip.register($pbBuy,'续费并领取');
+			Tip.register($pbClose,'续费并领取');
 		}
 		
 		override protected function onMouseClick(evt:MouseEvent):void
@@ -47,14 +34,14 @@ package app.view.ui.window
 			switch( getMcName( evt.target as DisplayObject ) )
 			{
 				case CoreConst.TAG_PB + 'Buy':
-					WindowManager.getInstance().openWindow( new AddGemWindow() );
+					WindowManager.getInstance().openWindow( new AddGemWindow(),null,false,false );
 					break;
 			}
 		}
 		
 		override public function execute( obj:* = null ):void
 		{
-			WindowManager.getInstance().openWindow( this, null,null,false );
+			WindowManager.getInstance().openWindow( this, null,false );
 		}
 		
 		override public function destroy():void

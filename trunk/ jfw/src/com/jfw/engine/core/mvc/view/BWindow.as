@@ -1,6 +1,5 @@
 package com.jfw.engine.core.mvc.view
 {
-	import app.view.ui.manager.WindowManager;
 	
 	import com.jfw.engine.core.base.CoreConst;
 	import com.jfw.engine.core.data.IStruct;
@@ -24,9 +23,54 @@ package com.jfw.engine.core.mvc.view
 		/** 是否支持缓动 */
 		public var isTween:Boolean = true;
 		
-		public function BWindow(cls_ref:Object=null, data:IStruct=null)
+		protected var _pSign:String = null;
+		protected var _sons:Vector.<String> = null;
+		
+		public function BWindow(cls_ref:Object=null, data:IStruct=null,parentSign:String = null )
 		{
 			super( cls_ref, data );
+			
+			if( parentSign )
+				this.pSign = parentSign;
+			
+			_sons = new Vector.<String>();
+		}
+		
+		public function set pSign( sign:String ):void
+		{
+			this._pSign = sign;
+		}
+		
+		public function get pSign():String
+		{
+			return _pSign;
+		}
+		
+		public function addSon( sign:String ):void
+		{
+			for each( var s:String in this._sons )
+			{
+				if( s === sign )
+					return;
+			}
+			this._sons.push( sign );
+		}
+		
+		public function removeSon( sign:String ):void
+		{
+			for( var i:int = 0,len:int = _sons.length;i<len;i++)
+			{
+				if( _sons[i] === sign )
+				{
+					_sons[i] = null;
+					_sons.splice( i,1 );
+				}
+			}
+		}
+		
+		public function getSons():Vector.<String>
+		{
+			return _sons;
 		}
 		
 		public function close():void

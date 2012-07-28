@@ -2,7 +2,7 @@ package com.jfw.engine.core.mvc.view
 {
 	import flash.display.DisplayObjectContainer;
 
-	public interface IPanel
+	public interface IPanel extends IView
 	{
 		/** 注册面板中的button */
 		function regButtons( container:DisplayObjectContainer ):void
@@ -18,10 +18,8 @@ package com.jfw.engine.core.mvc.view
 		 */
 		function tweenTo(duration:int,params:Object ):void;
 		
-//		/** 显示面板 */
-//		function show():void;
-//		
-//		/** 隐藏面板 */
-//		function hide():void;
+		/** 重写宽高 */
+		function get width():Number;
+		function get height():Number;
 	}
 }

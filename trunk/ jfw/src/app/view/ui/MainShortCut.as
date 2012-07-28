@@ -15,6 +15,7 @@ package app.view.ui
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.MouseEvent;
+	import com.jfw.engine.core.mvc.view.WindowManager;
 	
 	/**
 	 * 快捷栏 
@@ -70,12 +71,12 @@ package app.view.ui
 					break;
 				//社交
 				case this.$pbSocial:
-					WindowManager.getInstance().openWindow(new NoticeWindow());
+					WindowManager.getInstance().openWindow(new NoticeWindow(),null,true);
 					//					Alert.show( '测试',Alert.OK,null,'small' );
 					break;
 				//任务
 				case this.$pbTask:
-					WindowManager.getInstance().openWindow(new ShopWindow());
+					WindowManager.getInstance().openWindow(new ShopWindow(),null,true);
 					
 					break;
 				//背包
@@ -98,7 +99,7 @@ package app.view.ui
 					break;
 				//法术
 				case this.$mcSpell['$pbSpell']:
-					WindowManager.getInstance().openWindow( new SpellWindow() );
+					WindowManager.getInstance().openWindow( new SpellWindow(),null,true);
 					break;
 				//法宝
 				case this.$pbMagic:

@@ -1,8 +1,5 @@
-package app.view.ui
+package com.jfw.engine.core.mvc.view
 {
-	import com.jfw.engine.core.mvc.view.BWindow;
-	import com.jfw.engine.core.mvc.view.IWindow;
-	import com.jfw.engine.utils.ShakeUtil;
 	import com.jfw.engine.utils.manager.PopUpManager;
 	
 	import flash.display.MovieClip;
@@ -11,22 +8,28 @@ package app.view.ui
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 
+	/**
+	 * 窗口管理器
+	 * 通过窗体的sign进行管理
+	 * 
+	 * @author jianzi
+	 */	
 	public class WindowManager
 	{
 		static private var instance:WindowManager;
 
 		private var windowMap:Object ;
 		
+		/** 若窗口已打开，震动提示 */
 		private var shakeInstance:BWindow ;
 		private var shakeRect:Rectangle;
 		private var oldRect:Rectangle;
-		
 		private var shaking:Boolean = false;
 		
 		public function WindowManager()
 		{
 			if( instance )
-				throw new Error("");
+				throw new Error("窗口管理器为单例!");
 			instance = this;
 			
 			windowMap = new Object();
@@ -48,49 +51,74 @@ package app.view.ui
 			else
 				window = new windowClassRef() as BWindow;
 			
+			if( hasWindow( window.sign ) )
+			{
+				this.shakeInstance = getWindow( window.sign );
+				//记录起始位置 shakeInstance.x,shakeInstance.y,
+				this.oldRect = new Rectangle( 0,0,shakeInstance.width,shakeInstance.height );
+				this.shakeRect = this.oldRect.clone();
+				
+				shakeWindow( window.sign );
+				return;
+			}
+			
 			window.addEventListener( Event.CLOSE, function onCloseWindow( evt:Event ):void
 			{
+				if( window.hasEventListener( Event.CLOSE ) )
+					window.removeEventListener(Event.CLOSE,onCloseWindow);
 				removeWindow( window.sign );
 				PopUpManager.removePopUp( window,hasAction );
 			});
 			
-			if( hasWindow( window.sign ) )
-			{
-				shakeWindow( window.sign );
-				return;
-			}
 			PopUpManager.addPopUp( window );
 			this.windowMap[ window.sign ] = window;
 		}
 		
-		/** 打开一个窗口 */
-		public function openWindow( window:BWindow, param:Object = null, spriteMC:MovieClip=null,hasAction:Boolean = true ):void
+		/**
+		 * 打开一个窗口
+		 * 
+		 * @param window
+		 * @param param
+		 * @param unshared 	是否独占
+		 * @param hasAction
+		 */		
+		public function openWindow( window:BWindow, param:Object = null, unshared:Boolean = false,isModel:Boolean = true,hasAction:Boolean = true ):void
 		{
-			window.addEventListener( Event.CLOSE, function onCloseWindow( evt:Event ):void
-			{
-				removeWindow( window.sign );
-				PopUpManager.removePopUp( window,hasAction );
-			});
 			if( hasWindow( window.sign ) )
 			{
+				this.shakeInstance = getWindow( window.sign );
+				//记录起始位置 shakeInstance.x,shakeInstance.y,
+				this.oldRect = new Rectangle( 0,0,shakeInstance.width,shakeInstance.height );
+				this.shakeRect = this.oldRect.clone();
+				
 				shakeWindow( window.sign );
 				return;
 			}
-			PopUpManager.addPopUp( window );
+			
+			window.addEventListener( Event.CLOSE, function onCloseWindow( evt:Event ):void
+			{
+				if( window.hasEventListener( Event.CLOSE ) )
+					window.removeEventListener(Event.CLOSE,onCloseWindow);
+				removeWindow( window.sign );
+				PopUpManager.removePopUp( window,hasAction );
+			});
+			
+			if( unshared )
+			{
+				PopUpManager.removeAllPopUp();
+				this.windowMap = new Object();
+			}
+			PopUpManager.addPopUp( window,isModel );
 			this.windowMap[ window.sign ] = window;
 		}
 		
 		public function shakeWindow( sign:String ):void
 		{
-			if( !hasWindow( sign ) || shaking )
+			if( shaking )
 				return;
 			
 			shaking = true;
 			
-			this.shakeInstance = getWindow( sign );
-			//记录起始位置
-			this.oldRect = new Rectangle( shakeInstance.x,shakeInstance.y,shakeInstance.width,shakeInstance.height );
-			this.shakeRect = this.oldRect.clone();
 			var shakeTimer:Timer = null;
 			shakeTimer = new Timer(50, 10);
 			shakeTimer.addEventListener(TimerEvent.TIMER, this.shakeOnce);

@@ -9,7 +9,6 @@ package app
 	import app.model.DebugModel;
 	import app.model.LoadingModel;
 	import app.model.MaterialModel;
-	import app.model.UserModel;
 	import app.model.WarnModel;
 	import app.model.net.NetModel;
 	import app.model.net.NetRequest;
@@ -67,7 +66,6 @@ package app
 			
 			new DebugModel( );
 			new WarnModel( );
-			new UserModel( );
 			new MaterialModel( ) ;
 			new PlayerModel( );
 			new FriendModel( );
