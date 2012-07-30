@@ -158,6 +158,14 @@ package com.jfw.engine.core.mvc.view
 		// helper
 		//==========================================================
 		
+		protected function setButtonMode( mc:MovieClip,mode:Boolean = true ):void
+		{
+			if( !mc )
+				return;
+			mc.buttonMode = mode;
+			mc.mouseEnabled = mode;
+		}
+		
 		/**
 		 * 从名称获取对象名称前缀
 		 * 例如：$pbClose_3 返回 $pbClose 

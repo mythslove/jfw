@@ -20,6 +20,8 @@ package com.jfw.engine.utils
 		 */
 		static public function setText( txtField:TextField, str:Object, tf:TextFormat = null,isHtml:Boolean=false ,showBorder:Boolean = true,borderColor:uint=0x0,borderSize:int = 2):void
 		{
+			if( !txtField )
+				return;
 			
 			if ( TextFieldType.INPUT != txtField.type )
 			{

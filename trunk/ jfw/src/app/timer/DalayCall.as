@@ -1,6 +1,6 @@
 package app.timer
 {
-	import app.control.events.SubTimerEvent;
+	import app.mvc.control.events.SubTimerEvent;
 	
 	public class DalayCall 
 	{
@@ -24,7 +24,7 @@ package app.timer
 			timer.stop();
 		}
 		
-		private function onComplete(e:app.control.events.SubTimerEvent):void
+		private function onComplete(e:app.mvc.control.events.SubTimerEvent):void
 		{
 			if(callBack!=null)
 				callBack();

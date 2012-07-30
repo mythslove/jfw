@@ -1,6 +1,6 @@
 package app.manager
 {
-	import app.view.iso.isoSprites.charactor.AIMonster;
+	import app.mvc.view.iso.isoSprites.charactor.AIMonster;
 
 	/**
 	 *  AI Monsters
