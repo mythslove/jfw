@@ -1,6 +1,6 @@
 package app.timer
 {
-	import app.control.events.SubTimerEvent;
+	import app.mvc.control.events.SubTimerEvent;
 	
 	import flash.events.EventDispatcher;
 	/**

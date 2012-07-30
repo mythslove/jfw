@@ -1,6 +1,6 @@
 package examples.resourceManager
 {
-	import app.control.events.LoadingEvent;
+	import app.mvc.control.events.LoadingEvent;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.base.Observer;

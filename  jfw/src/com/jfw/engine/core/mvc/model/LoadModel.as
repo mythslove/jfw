@@ -1,6 +1,6 @@
 package com.jfw.engine.core.mvc.model
 {
-	import app.control.events.LoadingEvent;
+	import app.mvc.control.events.LoadingEvent;
 	
 	import com.jfw.engine.core.data.LoadStruct;
 	import com.jfw.engine.utils.IQueueItem;
