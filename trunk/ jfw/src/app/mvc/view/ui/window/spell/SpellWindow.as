@@ -1,5 +1,7 @@
 package app.mvc.view.ui.window.spell
 {
+	import app.mvc.model.MonsterModel;
+	import app.mvc.model.spell.SpellModel;
 	import app.mvc.view.ui.component.List;
 	import app.mvc.view.ui.component.Navigation;
 	import app.mvc.view.ui.component.TabPanel;
@@ -32,17 +34,13 @@ package app.mvc.view.ui.window.spell
 		
 		private var list:List = null;
 		private var currentItemIndex:int = 0;
-		private var listEffect:Bitmap = null;
-		private var listContainer:Sprite = null;
-		private var listMask:Shape = null;
-		private var listTween:Object = { };
 		
-		private static const listW:int = 214;
-		private static const listH:int = 330;
+		private static const listW:int = 670;
+		private static const listH:int = 130;
 		private static const SPELL_COUNT_DISPLAY:int = 7;
 		
 		private static const listHSpace:int	= 0;
-		private static const listSpace:int = 3;
+		private static const listSpace:int = 4;
 		
 		public function SpellWindow( )
 		{
@@ -54,45 +52,28 @@ package app.mvc.view.ui.window.spell
 		{
 			super.onInit();
 			
-			dataList = [];
+			dataList = monsterModel.monsterList;
+			
+			createListContainer();
+			list.data = dataList ;
+			
 			pageBar = $mcBottomPanel.addChild( new PageBar( $mcBottomPanel['$mcPageBar'] ) ) as PageBar;
 			pageBar.setUpdateFun( pageUpdate );
 			pageUpdate(1);
 			pageBar.goto(1);
 			updatePageBar();
 			
-			createListContainer();
-			
-			list.data = [] ;
-			
 			createContentContainer();
 		}
 		
 		private function createListContainer():void
 		{
-			listContainer = new Sprite();
-			listContainer.x = 50;
-			listContainer.y = 58;
-			
 			// 好友列表
 			list = new List( SpellListItem, listW, listH, listSpace, List.HORIZONTAL );
 			list.drag = false;
-			listContainer.addChild( list );
-			
-			listEffect = new Bitmap();
-			listContainer.addChild( listEffect );
-			
-			listMask = new Shape();
-			listMask.x = listContainer.x;
-			listMask.y = listContainer.y;
-			listMask.graphics.beginFill( 0xFF00FF, 0.5 );
-			listMask.graphics.drawRect( 0, 0, listW, listH );
-			listMask.graphics.endFill();
-			
-			listContainer.mask = listMask;
-			$mcBottomPanel.addChild( listContainer );
-			$mcBottomPanel.addChild( listMask );
-			
+			list.x = 45;
+			list.y = 56;
+			$mcBottomPanel.addChild( list );
 		}		
 		
 		private function updatePageBar ():void
@@ -107,17 +88,27 @@ package app.mvc.view.ui.window.spell
 		
 		private function pageUpdate( page:int ):void
 		{
-			
+			currentItemIndex = ( page - 1 ) * SPELL_COUNT_DISPLAY;
+			list.setCurrentItemMoveTo( currentItemIndex );
 		}
 		
 		private function createContentContainer():void
 		{
 			var tabfactory:Vector.<TabStruct> = new Vector.<TabStruct>();
 			tabfactory.push(new TabStruct( { label:'升级',type:1,cls:SpellUpgradePage } ) ); 
-			tabfactory.push(new TabStruct( { label:'法术合成',type:2,cls:SpellMixturePage } ) );
-			tabfactory.push( new TabStruct( { label:'法术合成2',type:3,cls:SpellMixturePage2 } ));
+			tabfactory.push(new TabStruct( { label:'进阶',type:2,cls:SpellMixturePage } ) );
 			spellPanel = new SpellTabPanel( this.$mcSpellPanel,null,tabfactory,SpellTab );
 			this.addChildAt( spellPanel,1 );
+		}
+		
+		private function get spellModel():SpellModel
+		{
+			return this.core.retModel( SpellModel.NAME ) as SpellModel;
+		}
+		
+		private function get monsterModel():MonsterModel
+		{
+			return this.core.retModel( MonsterModel.NAME ) as MonsterModel;
 		}
 
 	}

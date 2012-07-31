@@ -2,6 +2,7 @@ package app.mvc.model.player
 {
 	import app.mvc.model.data.player.FriendStruct;
 	
+	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.model.BModel;
 
 	public class FriendModel extends BModel
@@ -9,10 +10,10 @@ package app.mvc.model.player
 		static public const NAME:String = 'FriendModel';
 		
 		/** 好友列表 */
-		public var friendList:Array = [];
+		public var friendList:Array ;
 		
 		/** 仇人列表 */
-		public var foeList:Array = [];
+		public var foeList:Array ;
 		
 		public function FriendModel( )
 		{

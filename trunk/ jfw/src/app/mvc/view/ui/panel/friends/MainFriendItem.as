@@ -64,19 +64,17 @@ package app.mvc.view.ui.panel.friends
 		
 		override protected function initData():void
 		{
-			FontUtil.setText( this.$txName , this.friend.uname );
-			
 			this.showVip( (this.friend.vip == 1),this.friend.viplv );
 			this.showGetBox( this.friend.isGetBox );
 			this.showSendGift( this.friend.isSendGift );
 			
 			$mcSpar.gotoAndStop( this.friend.type + 1 );
-			Tip.register( $mcSpar ,"该玩家的五行山产出" + materialModel.sparColorStr( this.friend.type ) );
+			Tip.register( $mcSpar ,"该玩家的五行山产出" + materialModel.sparColorStr( this.friend.spartype ) );
 			Tip.register( $mcBox,'访问玩家领取宝箱' );
 			Tip.register( $pbGift,'赠送或索取礼物' );
 			Tip.register( $mcFriendly,'好友亲密度' );
 			
-			FontUtil.setText( this.$txName, this.friend.uname );
+			FontUtil.setText( this.$txName, this.friend.name );
 			FontUtil.setText( $txLevel,'Lv' + this.friend.lv.toString() );
 			FontUtil.setText( $txFriendly, this.friend.friendly );
 			image.load( this.friend.thumb );

@@ -7,6 +7,8 @@ package app.mvc.control.events
 	{
 		public static const STAGERESIZE:String 			= 'stageResize';			//舞台大小改变
 		
+		static public const LOAD_PIC:String 				= 'app_load_pic';
+		
 		public static const GAME_INIT:String				= 'game_init';
 		
 		public static const BASEASSETS_LOADING:String 	= 'baseassets_loading';	//公共资源下载中

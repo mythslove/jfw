@@ -1,20 +1,24 @@
 package app
 {
-	import app.control.WarnCmd;
-	import app.control.events.ModelEvent;
 	import app.manager.ResourceManager;
-	import app.model.AssetsModel;
-	import app.model.BattleModel;
-	import app.model.ConfigModel;
-	import app.model.DebugModel;
-	import app.model.LoadingModel;
-	import app.model.MaterialModel;
-	import app.model.WarnModel;
-	import app.model.net.NetModel;
-	import app.model.net.NetRequest;
-	import app.model.player.FriendModel;
-	import app.model.player.PlayerModel;
-	import app.view.GameView;
+	import app.mvc.control.LoadPicCmd;
+	import app.mvc.control.WarnCmd;
+	import app.mvc.control.events.ModelEvent;
+	import app.mvc.model.BattleModel;
+	import app.mvc.model.DebugModel;
+	import app.mvc.model.LoadingModel;
+	import app.mvc.model.MaterialModel;
+	import app.mvc.model.MonsterModel;
+	import app.mvc.model.WarnModel;
+	import app.mvc.model.net.NetModel;
+	import app.mvc.model.net.NetRequest;
+	import app.mvc.model.player.FriendModel;
+	import app.mvc.model.player.PlayerModel;
+	import app.mvc.model.res.AssetsModel;
+	import app.mvc.model.res.ConfigModel;
+	import app.mvc.model.res.LoadPicModel;
+	import app.mvc.model.spell.SpellModel;
+	import app.mvc.view.GameView;
 	
 	import com.jfw.engine.AbsGameWorld;
 	import com.jfw.engine.utils.Queue;
@@ -43,7 +47,9 @@ package app
 		{
 			NetRequest.getInstance().init();
 
+			//register commands
 			this.regCmd( ModelEvent.ERROR_REFRESH_ALERT,WarnCmd );
+			this.regCmd( ModelEvent.LOAD_PIC,LoadPicCmd );
 			
 			//Net Commands
 			var netCommands:Array = NetRequest.getInstance().netCommands;
@@ -65,10 +71,13 @@ package app
 			queue.add( new AssetsModel( ) );
 			
 			new DebugModel( );
+			new LoadPicModel( );
 			new WarnModel( );
 			new MaterialModel( ) ;
 			new PlayerModel( );
 			new FriendModel( );
+			new SpellModel( );
+			new MonsterModel( );
 			new BattleModel( );
 		}
 		

@@ -13,7 +13,7 @@ package app.mvc.model.data.player
 		public var isPoe:Boolean = false;
 		
 		/** 好友五行山的晶石类型 */
-		public var type:int = 0;
+		public var spartype:int = 0;
 		
 		/** 排名 */
 		public var rank:int = 1;
@@ -42,7 +42,7 @@ package app.mvc.model.data.player
 			this.isPoe			= ( obj.isPoe == 1 );
 			this.rank 			= obj.rank;
 			this.isVisit 		= ( obj.isVisit == 1 );
-			this.type 			= obj.type;
+			this.spartype 		= obj.spartype;
 			this.isSendGift 	= ( obj.isSendGift == 1 );
 			this.isGetBox		= ( obj.isGetBox == 1 );
 		}

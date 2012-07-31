@@ -7,6 +7,9 @@ package app.mvc.model
 		
 		static public const NAME:String = 'MaterialModel';
 		
+		/** 品质颜色 */
+		private var qualityColor:Array = [ 0xFFFFFF,0x00ff00,0x3399ff,0xff6600,0xff0000,0xff00ff ];
+		
 		/** 晶石名称 */
 		private var sparNames:Array = ['','金晶石','木晶石','水晶石','火晶石','土晶石'];
 		
@@ -49,6 +52,17 @@ package app.mvc.model
 		public function sparColorStr( spar:int ):String
 		{
 			return "<font color='" + sparColor( spar ) + "'>" + sparName( spar ) + "</font>";
+		}
+		
+		/**
+		 * 将 0xFF0000 -> #FF0000 
+		 * @param q
+		 * @return 
+		 * 
+		 */
+		public function qualityColorStr( q:int ):String
+		{
+			return '#' + this.qualityColor[q].toString().split( '0x' )[1];
 		}
 	}
 }

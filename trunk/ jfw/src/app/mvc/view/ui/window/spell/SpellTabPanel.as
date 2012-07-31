@@ -16,8 +16,6 @@ package app.mvc.view.ui.window.spell
 		
 		override protected function onInit():void
 		{
-			super.onInit();
-			
 			this.contentW = 680;
 			this.contentH = 427;
 			this.contentSpace = 0;
@@ -27,6 +25,8 @@ package app.mvc.view.ui.window.spell
 			this.navY = 0;
 			this.navLeftDis = 40;
 			this.navSpaceBetween = 10;
+			
+			super.onInit();
 		}
 		
 	}

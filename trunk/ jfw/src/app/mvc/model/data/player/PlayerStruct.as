@@ -1,19 +1,11 @@
 package app.mvc.model.data.player
 {
+	import app.mvc.model.data.AbsStruct;
+	
 	import com.jfw.engine.core.data.BaseStruct;
 	
-	public class PlayerStruct extends BaseStruct
+	public class PlayerStruct extends AbsStruct
 	{
-		
-		/** 用户ID */
-		public var uid:int;
-		
-		/** 资源ID */
-		public var aid:String;
-		
-		/** 用户名称  */
-		public var uname:String = '';
-		
 		/** 称号 */
 		public var callName:String = '';
 		
@@ -49,9 +41,6 @@ package app.mvc.model.data.player
 		
 		/** 猴毛（军令）*/
 		public var power:int;
-		
-		/** 等级 */
-		public var lv:int;
 		
 		/** 攻击 */
 		public var att:int;
@@ -105,11 +94,11 @@ package app.mvc.model.data.player
 		
 		override protected function parse( obj:Object ):void
 		{
-			super.parse(obj);
-			
-			this.uid = obj.uid;
-			this.aid = obj.aid;
-			this.uname = obj.uname ? obj.uname : 'Nick Name';
+			this.id = obj.id;
+			this.srcid = obj.srcid;
+			this.name = obj.name ? obj.name : 'Nick Name';
+			this.lv = obj.lv;
+			this.type = obj.type;
 			this.callName = obj.callName;
 			this.sex = obj.sex;
 			this.date = obj.date;
@@ -122,7 +111,6 @@ package app.mvc.model.data.player
 			this.power = obj.power;
 			this.yb = obj.yb;
 			this.gb = obj.gb;
-			this.lv = obj.lv;
 			this.att = obj.att;
 			this.def = obj.def;
 			this.sp = obj.sp;
