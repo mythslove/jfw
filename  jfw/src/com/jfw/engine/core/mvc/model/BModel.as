@@ -20,7 +20,7 @@ package com.jfw.engine.core.mvc.model
 		
 		public function BModel( mName:String = null )
 		{
-			if( mName != null)
+			if( mName != null )
 				modelName = mName;
 			else
 				modelName = sign.substr( sign.lastIndexOf("::") + 2 );

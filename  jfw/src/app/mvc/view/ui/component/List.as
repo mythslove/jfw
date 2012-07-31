@@ -206,8 +206,6 @@ package app.mvc.view.ui.component
 				this._dragEffectTimer.start();
 			}
 			
-			
-			
 			this._container.stage.addEventListener(MouseEvent.MOUSE_MOVE, onContainerMouseMove);
 			this._container.stage.addEventListener(MouseEvent.MOUSE_UP, onContainerMouseUp);
 		}

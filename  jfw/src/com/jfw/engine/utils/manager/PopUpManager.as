@@ -126,7 +126,6 @@ package com.jfw.engine.utils.manager
 			{
 				for each (var obj:DisplayObject in popupArray )
 				{
-					trace( obj.name,"remove all<" );
 					removePopUp(obj,false);
 				}
 				popupArray = [];
@@ -166,7 +165,6 @@ package com.jfw.engine.utils.manager
 				{
 					popupArray=[];
 				}
-				trace(obj.name,'add<');
 				popupArray.push(obj);
 				
 			}

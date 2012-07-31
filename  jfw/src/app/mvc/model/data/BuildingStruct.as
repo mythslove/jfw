@@ -3,7 +3,7 @@ package app.mvc.model.data
 	import com.jfw.engine.core.data.BaseStruct;
 	
 	/** 主城建筑 */
-	public class BuildingStruct extends BaseStruct
+	public class BuildingStruct extends AbsStruct
 	{
 		/** 所有者ID */
 		public var owner:int ;

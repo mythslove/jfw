@@ -117,7 +117,7 @@ package app.mvc.view.ui.panel
 			FontUtil.setText( this.$mcTopPanel['$txLuck'],playerVO.lucky.toString() );
 			FontUtil.setText(this.$mcRoleInfo['$mcHp']['$txTxt'],playerVO.hp.toString());
 			FontUtil.setText(this.$mcRoleInfo['$mcExp']['$txTxt'],playerVO.exp.toString());
-			FontUtil.setText( this.$mcRoleInfo['$txName'],playerVO.uname );
+			FontUtil.setText( this.$mcRoleInfo['$txName'],playerVO.name );
 			FontUtil.setText( this.$mcRoleInfo['$txNick'],playerVO.callName );
 			FontUtil.setText( this.$mcRoleInfo['$txLv'],playerVO.lv.toString() );
 			FontUtil.setText( this.$mcRoleInfo['$mcVip']['$txVip'],playerVO.viplv.toString() );

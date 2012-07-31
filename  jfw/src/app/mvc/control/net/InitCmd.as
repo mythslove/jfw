@@ -2,10 +2,12 @@ package app.mvc.control.net
 {
 	import app.mvc.control.events.ModelEvent;
 	import app.mvc.model.DebugModel;
+	import app.mvc.model.MonsterModel;
 	import app.mvc.model.net.NetModel;
 	import app.mvc.model.net.NetRequest;
 	import app.mvc.model.player.FriendModel;
 	import app.mvc.model.player.PlayerModel;
+	import app.mvc.model.spell.SpellModel;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.mvc.control.BCmd;
@@ -38,6 +40,13 @@ package app.mvc.control.net
 			( Core.getInstance().retModel( FriendModel.NAME ) as FriendModel ).initFriendList( netObj.friendList );
 			//初始化仇人列表
 			( Core.getInstance().retModel( FriendModel.NAME ) as FriendModel ).initFoeList( netObj.foeList );
+			//初始化法术列表
+			( Core.getInstance().retModel( SpellModel.NAME ) as SpellModel ).initSpellList( netObj.spellList );
+			
+			
+			
+			//初始化妖将列表
+			( Core.getInstance().retModel( MonsterModel.NAME ) as MonsterModel ).initMonsterList( netObj.monsterList );
 			
 			sendEvent( ModelEvent.GAME_INIT );
 		}

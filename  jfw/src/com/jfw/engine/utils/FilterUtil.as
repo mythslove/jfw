@@ -47,8 +47,7 @@
             applyFilter(child, matrix);
         }
 
-        public static function applyBlue(event:Event):void {
-            var child:DisplayObject = DisplayObject(event.target.loader);
+        public static function applyBlue( child:DisplayObject ):void {
             var matrix:Array = new Array();
             matrix = matrix.concat([0, 0, 0, 0, 0]); // red
             matrix = matrix.concat([0, 0, 0, 0, 0]); // green
@@ -57,6 +56,31 @@
 
             applyFilter(child, matrix);
         }
+		
+		public static function applyOrange( child:DisplayObject ):void {
+			var matrix:Array = new Array();
+			matrix = matrix.concat([0, 0, 0, 0, 0]); // red
+			matrix = matrix.concat([0, 0, 0, 0, 0]); // green
+			matrix = matrix.concat([0, 0, 1, 0, 0]); // blue
+			matrix = matrix.concat([0, 0, 0, 1, 0]); // alpha
+			
+			applyFilter(child, matrix);
+		}
+		
+		public static function applyPurple( child:DisplayObject ):void {
+			var matrix:Array = new Array();
+			matrix = matrix.concat([1, 1, 1, 1, 1]); // red
+			matrix = matrix.concat([0, 0, 0, 0, 0]); // green
+			matrix = matrix.concat([1, 1, 1, 1, 1]); // blue
+			matrix = matrix.concat([0, 0, 0, 1, 0]); // alpha
+			
+			applyFilter(child, matrix);
+		}
+		
+		public static function applyColor( ):void
+		{
+			
+		}
 		
 		public static function applyContrast( child:DisplayObject, filter:ColorMatrixFilter = null ):void
 		{
