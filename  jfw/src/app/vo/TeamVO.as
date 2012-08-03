@@ -2,8 +2,6 @@ package app.vo
 {
 	import com.jfw.engine.core.data.BaseStruct;
 	
-	import examples.animation.RoleView;
-	
 	public class TeamVO extends BaseStruct
 	{
 		public var dalay:Number=1;

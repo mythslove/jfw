@@ -204,7 +204,7 @@ package com.jfw.engine.animation
 					{
 						var restTime:Number = mCurrentTime - mTotalTime;
 						mCurrentTime = mTotalTime;
-						dispatchEvent(new Event(Event.COMPLETE));
+						dispatchEvent(new Event(Event.COMPLETE,true,true));
 						
 						// user might have changed movie clip settings, so we restart the method
 						advanceTime(restTime);

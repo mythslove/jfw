@@ -107,7 +107,8 @@ package app.mvc.view
 				case ModelEvent.GAME_INIT :
 					Logger.info( 'Game init ...' );
 					
-					new HomeView( this.mapLayer );
+					//new HomeView( this.mapLayer );
+					sendEvent( LoadingEvent.LOADING_HIDE );
 					new MainUI( this.uiLayer );
 					new MainShortCut( this.shortCutLayer );
 					

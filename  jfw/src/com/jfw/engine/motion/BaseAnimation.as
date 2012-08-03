@@ -19,8 +19,6 @@ package com.jfw.engine.motion
 		protected var id:String;
 		protected var manager:IResourceManager=null;
 		protected var bmdAtlas:BmdAtlas=null;//资源工具
-		protected var currDir:String;
-		protected var actType:String;
 		protected var currFps:int=12;
 		protected var xOffset:Number=0;
 		protected var yOffset:Number=0;
@@ -28,15 +26,13 @@ package com.jfw.engine.motion
 		protected var yAdjust:Number=0;
 		protected var currFrameName:String;	
 		
-		public function BaseAnimation(srcId:String,manager:IResourceManager,dir:String=DirectionConst.LEFTDOWN,act:String=AnimationConst.STOP,fps:Number=12)
+		public function BaseAnimation(srcId:String,manager:IResourceManager,frameName:String,defaultTextures:BitmapData,fps:Number=12)
 		{
 			this.id=srcId;
-			this.currDir=dir;
-			this.actType=act;
-			this.currFps=fps;
-			this.currFrameName=this.currDir+"_"+this.actType+"_";
 			this.manager=manager;
-			
+			this.currFrameName=frameName;
+			this.currFps=fps;
+
 			bmdAtlas=manager.getSource(srcId);
 			var textures:Vector.<Texture>=null;
 			
@@ -45,16 +41,23 @@ package com.jfw.engine.motion
 				textures=bmdAtlas.getTextures(currFrameName);
 				
 				if(textures.length==0)
-					textures=manager.getDefaultSource();
+					textures=getTextures(defaultTextures);
 			}
 			else
 			{
-				textures=manager.getDefaultSource();
+				textures=getTextures(defaultTextures);
 				manager.loadRes(srcId,redraw);
 			}
 
 			super(textures,fps);
 			updateOffset();
+		}
+		
+		private function getTextures(bmd:BitmapData):Vector.<Texture>
+		{
+			var textures:Vector.<Texture>=new Vector.<Texture>();
+			textures.push( new Texture(bmd,bmd.rect,bmd.rect));
+			return textures;
 		}
 		/**
 		 * 重绘动态资源 
@@ -70,12 +73,11 @@ package com.jfw.engine.motion
 		 * 跳到某个关键帧 
 		 * @param frameName	关键帧名称
 		 */		
-		private function update():void
+		protected function update():void
 		{
 			if(bmdAtlas==null)
 				return;
 			
-			this.currFrameName=this.currDir+"_"+this.actType+"_";
 			var textures:Vector.<Texture>=bmdAtlas.getTextures(currFrameName);
 			
 			if(textures.length>0)
@@ -93,49 +95,37 @@ package com.jfw.engine.motion
 		 * 更新偏移量 
 		 * 
 		 */		
-		private function updateOffset():void
+		protected function updateOffset():void
 		{
-			var texture:Texture=this.getFrameTexture(0);
-			this.xOffset=texture.frameX-texture.regionWidth/2;
-			this.yOffset=texture.frameY-texture.regionHeight;
 		}
 		
 		public function get CurFrameName():String
 		{
 			return currFrameName;
 		}
+		
+		public function set CurFrameName(value:String):void
+		{
+			if(value!=currFrameName)
+			{
+				currFrameName=value;
+				update();
+			}
+		}
 
-		public function get Instance():DisplayObject
+		public function get CurrFrame():int
+		{
+			return this.currentFrame;
+		}
+		
+		public function get totalFrames():int
+		{
+			return this.numFrames;
+		}
+		
+		public function getAnimation():DisplayObject
 		{
 			return this;
-		}
-		
-		public function get Direction():String
-		{
-			return this.currDir;	
-		}
-		
-		public function set Direction(dir:String):void
-		{
-			if(this.currDir!=dir)
-			{
-				this.currDir=dir;
-				update();
-			}
-		}
-		
-		public function get ActionType():String
-		{
-			return this.actType;	
-		}
-		
-		public function set ActionType(value:String):void
-		{
-			if(this.actType!=value)
-			{
-				this.actType=value;
-				update();
-			}
 		}
 		
 		public function get XOffset():Number
@@ -148,11 +138,6 @@ package com.jfw.engine.motion
 			return this.yOffset+this.yAdjust;
 		}
 		
-		public function get OriginX():Number
-		{
-			return x;
-		}
-		
 		public function set XAdjust(value:Number):void
 		{
 			this.xAdjust=value;
@@ -161,6 +146,11 @@ package com.jfw.engine.motion
 		public function set YAdjust(value:Number):void
 		{
 			this.yAdjust=value;
+		}
+		
+		public function get OriginX():Number
+		{
+			return x;
 		}
 		
 		public function set OriginX(value:Number):void
@@ -180,6 +170,8 @@ package com.jfw.engine.motion
 		
 		override public function advanceTime(passedTime:Number):void
 		{
+			this.updateOffset();
+			
 			super.advanceTime(passedTime);
 		}
 		

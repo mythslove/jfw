@@ -10,17 +10,25 @@ package app.mvc.view.ui.component
 	
 	public class Navigation extends Sprite
 	{
+		// 纵向 	
+		public static const VERTICAL:String		= "vertical";
+		// 横向
+		public static const HORIZONTAL:String		= "horizontal";	
+		
 		private var indexChange:Boolean = false;
 		private var _index:int = -1;
 		private var buttonList:Array;
 		
 		private var _spaceBetween:int;
-		private var _leftDistance:int;
+		private var _distance:int;
 		
-		public function Navigation(spaceB:int=0,leftD:int=0)
+		private var _layout:String = HORIZONTAL;
+		
+		public function Navigation( spaceB:int=0,dis:int=0 ,ly:String = HORIZONTAL)
 		{
 			buttonList = [];
-			leftDistance = leftD;
+			layout = ly;
+			distance = dis;
 			spaceBetween = spaceB;
 		}
 		
@@ -65,14 +73,29 @@ package app.mvc.view.ui.component
 			var index:int;
 			var totalChild:int = this.numChildren;
 			
-			var pos:Number = leftDistance;
-			while (index < totalChild)
+			var pos:Number = distance;
+			//纵向
+			if( this.layout == VERTICAL )
 			{
-				item = this.getChildAt(index);
-				
-				item.x = pos;
-				pos += item.width + spaceBetween;
-				index++;
+				while (index < totalChild)
+				{
+					item = this.getChildAt( index );
+					item.y = pos;
+					pos += item.height + spaceBetween;
+					index++;
+				}
+			}
+				//横向
+			else
+			{
+				while (index < totalChild)
+				{
+					item = this.getChildAt(index);
+					
+					item.x = pos;
+					pos += item.width + spaceBetween;
+					index++;
+				}
 			}
 		}
 		
@@ -118,14 +141,25 @@ package app.mvc.view.ui.component
 			}
 		}
 
-		public function get leftDistance():int
+		public function get layout():String
 		{
-			return _leftDistance;
+			return this._layout;
+		}
+		
+		public function set layout( ly:String ):void
+		{
+			this._layout = ly;
 		}
 
-		public function set leftDistance(value:int):void
+		
+		public function get distance():int
 		{
-			_leftDistance = value;
+			return _distance;
+		}
+
+		public function set distance(value:int):void
+		{
+			_distance = value;
 		}
 
 		public function get spaceBetween():int

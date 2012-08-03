@@ -19,6 +19,7 @@ package app.mvc.model.data
 		public var yb:int;
 		/** 技能书ID */
 		public var bookid:String;
+		public var bookcount:int;
 		
 		public function SpellStruct(obj:Object=null)
 		{
@@ -34,6 +35,7 @@ package app.mvc.model.data
 			this.yb = obj.yb;
 			this.type = obj.type;
 			this.bookid = obj.bookid;
+			this.bookcount = obj.bookcount;
 			this.hurt = obj.hurt;
 			this.duration = obj.duration;
 		}

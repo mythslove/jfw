@@ -21,6 +21,9 @@ package com.jfw.engine.isolib.map.data
 		
 		public function findPath(startX:int,startY:int,endX:int,endY:int,conditions:Function=null):Boolean
 		{
+			if(startX==endX&&startY==endY)
+				return false;
+			
 			_startNode=_mapData.getTileAtGrid(startX,startY);
 			_endNode=_mapData.getTileAtGrid(endX,endY);
 			_conditions=conditions;
@@ -106,24 +109,12 @@ package com.jfw.engine.isolib.map.data
 		
 		private function isOpen(node:Tile):Boolean
 		{
-			for each(var tile:Tile in _open)
-			{
-				if(tile==node)
-					return true
-			}
-			
-			return false;
+			return _open.indexOf(node)!=-1;
 		}
 		
 		private function isClosed(node:Tile):Boolean
 		{
-			for each(var tile:Tile in _closed)
-			{
-				if(tile==node)
-					return true;
-			}
-			
-			return false;
+			return _closed.indexOf(node)!=-1;
 		}
 		
 		private function buildPath():void

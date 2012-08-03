@@ -1,5 +1,8 @@
 package app.mvc.model.net
 {
+	import app.mvc.control.SpellCodeTimeCmd;
+	import app.mvc.control.SpellStrengthenCmd;
+	import app.mvc.control.SpellUpgradeCmd;
 	import app.mvc.control.net.InitCmd;
 	
 	import flash.net.getClassByAlias;
@@ -24,9 +27,17 @@ package app.mvc.model.net
 		static public const CollectYb:String 				= 'BuildAction.harvestYWF';
 		static public const ExtraCollectYb:String 		= 'BuildAction.chargeYWF';
 		
+		/** 法术堂升级 */
+		static public const SpellUpgrade:String 		    = 'InitAction.spellUpgrade';
+		static public const SpellCodeTime:String 			= 'InitAction.spellCodeTime';
+		static public const SpellStrengthen:String 		= 'InitAction.spellStrengthen';
+		
 		public function init():void
 		{
 			bindingNetID( UserInit ,InitCmd );
+			bindingNetID( SpellUpgrade ,SpellUpgradeCmd );
+			bindingNetID( SpellCodeTime ,SpellCodeTimeCmd );
+			bindingNetID( SpellStrengthen ,SpellStrengthenCmd );
 		}
 		
 		public function NetRequest():void
