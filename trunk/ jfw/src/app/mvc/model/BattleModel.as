@@ -1,7 +1,10 @@
 package app.mvc.model
 {
+	import app.battle.DataProvider;
+	import app.battle.interfaces.IRole;
+	import app.battle.role.Role;
+	import app.battle.consts.PrefixConst;
 	import app.mvc.control.events.BattleEvent;
-	import app.manager.PrefixConst;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.data.LoadStruct;
@@ -10,8 +13,6 @@ package app.mvc.model
 	import com.jfw.engine.isolib.map.data.MapData;
 	import com.stimuli.loading.BulkLoader;
 	import com.stimuli.loading.BulkProgressEvent;
-	
-	import examples.animation.RoleView;
 	
 	import flash.display.Bitmap;
 
@@ -40,14 +41,14 @@ package app.mvc.model
 		 */		
 		public function startLoad(vo:Object):void
 		{
-			addTask("MAP_3201001");
-			addTask("D3201001");
+			addTask(DataProvider.Instance.getMapBgById('3201001'));
+			addTask(DataProvider.Instance.getMapIdById('3201001'));
 			this.loadRes(taskList);
 		}
 		
-		public function createRole(id:String):RoleView
+		public function createRole(id:String):IRole
 		{
-			return new RoleView(id);
+			return new Role(id);
 		}
 		
 		public function loadMap(id:String):void
@@ -127,8 +128,8 @@ package app.mvc.model
 		 */
 		override protected function initAssets():void
 		{
-			this.mapdata=new MapData(this.getXML("D3201001"));
-			this.mapBG=this.getBitmap("MAP_3201001");
+			this.mapdata=new MapData(this.getXML(DataProvider.Instance.getMapBgById('3201001')));
+			this.mapBG=this.getBitmap(DataProvider.Instance.getMapIdById('3201001'));
 			
 			this.sendEvent(BattleEvent.BATTLE_RES_LOAD_COMPLETE);
 		}

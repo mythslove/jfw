@@ -20,22 +20,23 @@ package app.manager
 		private var juggler:Juggler=null;
 		private var mLastFrameTimestamp:Number=0;
 		private var _pause:Boolean=false;
-		private var _fps:Number=1;
+		private var _speed:Number=1.0;
 		private var mObjects:Vector.<IAnimation>;
 		
-		public function AnimationManager(fps:Number=1)
+		public function AnimationManager()
 		{
 			juggler=new Juggler();
 			mObjects=new Vector.<IAnimation>();
-			this._fps=fps;
 		}
-		
-		public static function Instance(fps:Number=1):AnimationManager
+		/**
+		 * 范围为0.5-5倍 
+		 * @param spd
+		 * @return 
+		 * 
+		 */		
+		public static function get Instance():AnimationManager
 		{
-			if(instance==null)
-				instance=new AnimationManager(fps)
-					
-			return instance;
+			return instance||=new AnimationManager();
 		} 
 		
 		public function Pause():void
@@ -52,20 +53,26 @@ package app.manager
 		{
 			return this._pause;
 		}
-		
-		public function set speed(value:Number):void
+		/**
+		 * 0.5到5倍之间 
+		 * @param value
+		 * 
+		 */		
+		public function set Speed(value:Number):void
 		{
-			this._fps=value;
+			if(this._speed==value)
+				return;
 			
-			for(var i:int=0,j:int=mObjects.length;i<j;i++)
-			{
-				mObjects[i].fps=value;
-			}
+			this._speed=Math.max(0.5,Math.min(value,5));
 		}
-		
-		public function get speed():Number
+		/**
+		 * 比例系数 0.5到5倍
+		 * @return 
+		 * 
+		 */		
+		public function get Speed():Number
 		{
-			return _fps;
+			return _speed;
 		}
 		
 		public function Count():int
@@ -73,19 +80,18 @@ package app.manager
 			return mObjects.length;
 		}
 		
-		public function contain(obj:IAnimation):Boolean
+		public function Contain(obj:IAnimation):Boolean
 		{
 			return mObjects.indexOf(obj)!=-1;
 		}
 		
 		/** Adds an object to the juggler. */
-		public function add(object:IAnimation):void
+		public function Add(object:IAnimation):void
 		{
 			juggler.add(object);
 			
 			if(mObjects.indexOf(object)==-1)
 			{
-				object.fps=this._fps;
 				mObjects.push(object);
 			}
 			
@@ -97,7 +103,7 @@ package app.manager
 		}
 		
 		/** Removes an object from the juggler. */
-		public function remove(object:IAnimation):void
+		public function Remove(object:IAnimation):void
 		{
 			juggler.remove(object);
 			var index:int=mObjects.indexOf(object);
@@ -112,13 +118,13 @@ package app.manager
 		}
 		
 		/** Removes all tweens with a certain target. */
-		public function removeTweens(target:Object):void
+		public function RemoveTweens(target:Object):void
 		{
 			juggler.removeTweens(target);
 		}
 		
 		/** Removes all objects at once. */
-		public function clearAll():void
+		public function ClearAll():void
 		{
 			juggler.purge();
 			mObjects.length=0;
@@ -130,19 +136,19 @@ package app.manager
 		/** Delays the execution of a function until a certain time has passed. Creates an
 		 *  object of type 'DelayedCall' internally and returns it. Remove that object
 		 *  from the juggler to cancel the function call. */
-		public function delayCall(call:Function, delay:Number, ...args):DelayedCall
+		public function DelayCall(call:Function, delay:Number, ...args):DelayedCall
 		{
 			return juggler.delayCall(call,delay,args);
 		}
 		
 		/** Advances all objects by a certain time (in seconds). */
-		public function advanceTime(time:Number):void
+		public function AdvanceTime(time:Number):void
 		{   
 			juggler.advanceTime(time);
 		}
 		
 		/** The total life time of the juggler. */
-		public function get elapsedTime():Number 
+		public function get ElapsedTime():Number 
 		{ 
 			return juggler.elapsedTime; 
 		}
@@ -155,7 +161,7 @@ package app.manager
 				var passedTime:Number = now - mLastFrameTimestamp;
 				mLastFrameTimestamp = now;
 				
-				juggler.advanceTime(passedTime);
+				juggler.advanceTime(passedTime*_speed);
 			}
 		}
 		

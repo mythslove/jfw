@@ -21,7 +21,8 @@ package app.mvc.view.ui.component
 		protected var contentY:int = 40;
 		protected var navX:int = 0;
 		protected var navY:int = 0;
-		protected var navLeftDis:int = 40;
+		protected var navDis:int = 40;
+		protected var navLayout:String = Navigation.HORIZONTAL;
 		protected var navSpaceBetween:int = 10;
 		
 		protected var nav:Navigation ;
@@ -70,8 +71,9 @@ package app.mvc.view.ui.component
 		protected function createTab():void
 		{
 			nav = new Navigation( tabFactory.length );
-			nav.leftDistance = navLeftDis;
+			nav.distance = navDis;
 			nav.spaceBetween = navSpaceBetween;
+			nav.layout = navLayout;
 			nav.x = navX;
 			nav.y = navY;
 			
@@ -92,6 +94,7 @@ package app.mvc.view.ui.component
 			contentContainer.y = contentY;
 			
 			contentEffect = new Bitmap();
+			contentEffect.bitmapData = new BitmapData( this.contentW, this.contentH, true, 0 );
 			contentContainer.addChild( contentEffect );
 			
 			contentMask = new Shape();
@@ -118,7 +121,7 @@ package app.mvc.view.ui.component
 		
 		protected function onChangeTab( evt:Event ):void
 		{
-			contentEffect.bitmapData = new BitmapData( this.contentW, this.contentH, true, 0 );
+			contentEffect.bitmapData.fillRect( contentEffect.bitmapData.rect,0x00000000 );
 			contentEffect.bitmapData.draw( _currContent );
 			contentEffect.alpha = 1;
 			
@@ -177,10 +180,10 @@ package app.mvc.view.ui.component
 		override public function destroy():void
 		{
 			_tabFactory = null;
-			contentContainer = null;
-			contentEffect = null;
+			contentEffect.bitmapData.dispose();
 			contentEffect = null;
 			contentMask = null;
+			contentContainer = null;
 			nav.removeEventListener(Event.CHANGE, onChangeTab);
 			super.destroy();
 		}

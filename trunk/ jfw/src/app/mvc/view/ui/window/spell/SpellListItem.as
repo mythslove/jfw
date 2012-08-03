@@ -1,6 +1,7 @@
 package app.mvc.view.ui.window.spell
 {
 	import app.mvc.control.events.ModelEvent;
+	import app.mvc.control.events.SpellEvent;
 	import app.mvc.model.data.EmptyStruct;
 	import app.mvc.model.data.LoadPicStruct;
 	import app.mvc.model.data.MonsterStruct;
@@ -22,7 +23,8 @@ package app.mvc.view.ui.window.spell
 		public var $mcLvBg:MovieClip;
 		public var $txName:TextField;
 		public var $mcPhoto:MovieClip;
-		public var $pbLock:MovieClip;
+		public var $mcLock:MovieClip;
+		
 		
 		public function SpellListItem(list:IList)
 		{
@@ -33,6 +35,7 @@ package app.mvc.view.ui.window.spell
 			addEventListener( MouseEvent.ROLL_OUT, onMouseOut );
 		}
 		
+		//绑定妖将列表的数据
 		override protected function initData():void
 		{
 			
@@ -41,7 +44,7 @@ package app.mvc.view.ui.window.spell
 				this.showMc( $txLv,false );
 				this.showMc( $mcPhoto,false );
 				this.showMc( $mcLvBg,false );
-				this.showMc( $pbLock,true );
+				this.showMc( $mcLock,true );
 				FontUtil.setText(  $txName ,(this.data as EmptyStruct ).label );
 			}
 			else
@@ -49,7 +52,7 @@ package app.mvc.view.ui.window.spell
 				this.showMc( $txLv,true );
 				this.showMc( $mcPhoto,true );
 				this.showMc( $mcLvBg,true );
-				this.showMc( $pbLock,false );
+				this.showMc( $mcLock,false );
 				FontUtil.setText( $txName ,this.monster.name );
 				FontUtil.setText( $txLv,this.monster.lv.toString() );
 				this.sendEvent( ModelEvent.LOAD_PIC,new LoadPicStruct( { mc: $mcPhoto['$mcIcon'],srcid:this.monster.srcid } ) );
@@ -64,6 +67,7 @@ package app.mvc.view.ui.window.spell
 		
 		override protected function onMouseClick(evt:MouseEvent):void
 		{
+			dispatchEvent( new SpellEvent( SpellEvent.MONSTERLIST_CLICK_ITEM, this ) );		
 		}
 		
 		override protected function onMouseOver(evt:MouseEvent):void

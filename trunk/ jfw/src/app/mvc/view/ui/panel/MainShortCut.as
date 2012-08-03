@@ -4,7 +4,7 @@ package app.mvc.view.ui.panel
 	import app.mvc.model.player.PlayerModel;
 	import app.mvc.view.ui.component.Tip;
 	import app.mvc.view.ui.window.NoticeWindow;
-	import app.mvc.view.ui.window.ShopWindow;
+	import app.mvc.view.ui.window.shop.ShopWindow;
 	import app.mvc.view.ui.window.spell.SpellWindow;
 	
 	import com.greensock.TweenLite;

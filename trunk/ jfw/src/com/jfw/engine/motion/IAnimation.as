@@ -19,23 +19,14 @@
 		 * 
 		 * @return			动画效果对象
 		 */
-		function get Instance():DisplayObject;
+		function getAnimation():DisplayObject;
 		/**
-		 * 动作类型 
-		 * @param value
+		 * 当前关键贞标签 
+		 * @return 
 		 * 
 		 */		
-		function set ActionType(value:String):void;
-		function get ActionType():String;
-		/**
-		 * 设置运动对象的方向
-		 * @param 			运动对象的方向
-		 * 
-		 * @return			null
-		 */
-		function set Direction(dir: String):void;	
-		function get Direction():String;
-		
+		function get CurFrameName():String;
+		function set CurFrameName(value:String):void;
 		/**
 		 * 动画对象相对原点偏移量 
 		 * @return 
@@ -83,12 +74,6 @@
 		 */		
 		function get isPlaying():Boolean;
 		/**
-		 * 当前贞标签
-		 * @return 
-		 * 
-		 */		
-		function get currentFrame():int;
-		/**
 		 * 根据贞标签获取纹理
 		 * @param value
 		 * @return 
@@ -102,11 +87,18 @@
 		 * 
 		 */		
 		function set fps(value:Number):void;
+		function get fps():Number;
 		/**
-		 * 获取贞频 
+		 * 总贞数 
 		 * @return 
 		 * 
 		 */		
-		function get fps():Number;
+		function get totalFrames():int;
+		/**
+		 * 当前贞 
+		 * @return 
+		 * 
+		 */		
+		function get CurrFrame():int;
 	}
 }

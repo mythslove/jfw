@@ -2,6 +2,8 @@ package app.manager
 {
 	import com.jfw.engine.animation.BmdAtlas;
 	import com.jfw.engine.animation.Texture;
+	
+	import flash.display.BitmapData;
 
 	public interface IResourceManager
 	{
@@ -17,7 +19,7 @@ package app.manager
 		 * @param type
 		 * 
 		 */
-		function getDefaultSource():Vector.<Texture>;
+		function getDefaultSource():BitmapData;
 		/**
 		 * 获得资源
 		 * @param srcID 资源id

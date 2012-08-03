@@ -3,8 +3,8 @@ package app.mvc.view.ui.panel
 	import app.mvc.model.data.player.PlayerStruct;
 	import app.mvc.model.player.PlayerModel;
 	import app.mvc.view.ui.component.Image;
-	import app.mvc.view.ui.panel.friends.MainFriendPanel;
 	import app.mvc.view.ui.component.Tip;
+	import app.mvc.view.ui.panel.friends.MainFriendPanel;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;

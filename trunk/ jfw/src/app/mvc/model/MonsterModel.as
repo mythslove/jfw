@@ -18,7 +18,6 @@ package app.mvc.model
 			
 			_monsterList = [];
 		}
-		
 		/**
 		 * 初始化妖将 
 		 * @param info

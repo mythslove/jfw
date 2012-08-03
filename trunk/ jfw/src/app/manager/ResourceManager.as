@@ -1,5 +1,7 @@
 package app.manager
 {
+	import app.battle.consts.PrefixConst;
+	
 	import com.jfw.engine.animation.BmdAtlas;
 	import com.jfw.engine.animation.Texture;
 	import com.jfw.engine.core.base.Core;
@@ -22,6 +24,7 @@ package app.manager
 	 * 
 	 * @author 
 	 * 只有判断xml于bitmap同时存在才返回指定纹理
+	 * 资源名必须为C打头,纹理名必须是T打头
 	 */	
 	public class ResourceManager extends EventDispatcher implements IResourceManager
 	{
@@ -43,7 +46,7 @@ package app.manager
 			loaderContext.applicationDomain = ApplicationDomain.currentDomain;
 		}
 		
-		static public function getInstance():ResourceManager
+		static public function get Instance():ResourceManager
 		{
 			if( !instance )
 				instance = new ResourceManager();
@@ -81,12 +84,9 @@ package app.manager
 				this.addTask(tName);
 		}
 		
-		public function getDefaultSource():Vector.<Texture>
+		public function getDefaultSource():BitmapData
 		{
-			var bmd:BitmapData=assetsModel.getBitmapData(PrefixConst.DEFAULT);
-			var textures:Vector.<Texture>=new Vector.<Texture>();
-			textures.push( new Texture(bmd,bmd.rect,bmd.rect));
-			return textures;
+			return assetsModel.getBitmapData(PrefixConst.DEFAULT);
 		}
 		/**
 		 * 根据id

@@ -9,6 +9,21 @@
 	public interface IMotion extends IAnimation
 	{
 		/**
+		 * 动作类型 
+		 * @param value
+		 * 
+		 */		
+		function set ActionType(value:String):void;
+		function get ActionType():String;
+		/**
+		 * 设置运动对象的方向
+		 * @param 			运动对象的方向
+		 * 
+		 * @return			null
+		 */
+		function set Direction(dir: String):void;	
+		function get Direction():String;
+		/**
 		* 取得运动对象的步长
 		* @param 			null
 		* 

@@ -1,13 +1,20 @@
 package app.mvc.model.spell
 {
-	import com.jfw.engine.core.mvc.model.BModel;
 	import app.mvc.model.data.SpellStruct;
 	
+	import com.jfw.engine.core.data.IStruct;
+	import com.jfw.engine.core.mvc.model.BModel;
+	
+	[Bindable]
 	public class SpellModel extends BModel
 	{
 		static public const NAME:String = 'SpellModel';
 		
+		//主角的法术列表
 		private var _spellList:Array = null;
+		
+		//当前选择的妖将数据
+		private var _currSelectedMonster:IStruct = null;
 		
 		public function SpellModel( )
 		{
@@ -37,6 +44,16 @@ package app.mvc.model.spell
 		public function set spellList( spells:Array ):void
 		{
 			this._spellList = spells;
+		}
+		
+		public function get currSelectedMonster():IStruct
+		{
+			return this._currSelectedMonster;
+		}
+		
+		public function set currSelectedMonster( data:IStruct ):void
+		{
+			this._currSelectedMonster = data;
 		}
 	}
 }

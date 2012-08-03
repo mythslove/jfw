@@ -35,6 +35,10 @@ package app.mvc.model.data
 		/** 将魂数 */
 		public var soul:int = 0;
 		
+		/** 法术列表 */
+		public var spell:Vector.<SpellStruct> = null;
+
+		
 		/** 妖将的装备 */
 		public var item:Array = [];
 		public var eq1:Object = null;
@@ -67,6 +71,13 @@ package app.mvc.model.data
 			this.eq3 = obj.eq3;
 			this.eq4 = obj.eq4;
 			this.eq5 = obj.eq5;
+			
+			if(this.spell == null ){
+				this.spell=new Vector.<SpellStruct>();
+			}
+			for(var i:int=0;i<obj.spell.length;i++ ){
+				this.spell.push(new SpellStruct(obj.spell[i]));
+			}
 		}
 	}
 }

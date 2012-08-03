@@ -10,7 +10,7 @@ package app.mvc.view
 	import app.mvc.view.ui.component.alert.AlertWindow;
 	import app.mvc.view.ui.window.AddGemWindow;
 	import app.mvc.view.ui.window.NoticeWindow;
-	import app.mvc.view.ui.window.ShopWindow;
+
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BView;
