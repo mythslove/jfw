@@ -1,4 +1,4 @@
-package app.mvc.view.ui.window.shop
+package app.mvc.view.ui.window.packages
 {
 	import app.mvc.view.ui.component.Navigation;
 	import app.mvc.view.ui.component.TabPanel;
@@ -8,9 +8,9 @@ package app.mvc.view.ui.window.shop
 	
 	import flash.events.Event;
 	
-	public class ShopTabPanel extends TabPanel
+	public class PackageTabPanel extends TabPanel
 	{
-		public function ShopTabPanel(cls_ref:Object=null, data:IStruct=null, tabfactory:Vector.<TabStruct>=null, tabButtonSkin:Class=null)
+		public function PackageTabPanel(cls_ref:Object=null, data:IStruct=null, tabfactory:Vector.<TabStruct>=null, tabButtonSkin:Class=null)
 		{
 			super(cls_ref, data, tabfactory, tabButtonSkin);
 		}
