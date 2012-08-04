@@ -4,13 +4,20 @@ package app.mvc.view.ui.panel
 	import app.mvc.model.player.PlayerModel;
 	import app.mvc.view.ui.component.Tip;
 	import app.mvc.view.ui.window.NoticeWindow;
+	import app.mvc.view.ui.window.equip.EquipWindow;
+	import app.mvc.view.ui.window.help.HelpWindow;
+	import app.mvc.view.ui.window.monster.MonsterWindow;
+	import app.mvc.view.ui.window.packages.PackageWindow;
 	import app.mvc.view.ui.window.shop.ShopWindow;
+	import app.mvc.view.ui.window.social.SocialWindow;
 	import app.mvc.view.ui.window.spell.SpellWindow;
+	import app.mvc.view.ui.window.task.TaskWindow;
 	
 	import com.greensock.TweenLite;
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;
 	import com.jfw.engine.core.mvc.view.WindowManager;
+	import com.jfw.engine.utils.manager.PopUpManager;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -65,25 +72,24 @@ package app.mvc.view.ui.panel
 			{
 				//帮助
 				case this.$pbHelp:
-					var obj:Object = playerModel.playerVO.clone();
-					obj.gb = playerModel.playerVO.gb + 1;
-					playerModel.playerVO = new PlayerStruct(obj);
+					WindowManager.getInstance().openWindow(new HelpWindow(),null,true);
 					break;
 				//社交
 				case this.$pbSocial:
-					WindowManager.getInstance().openWindow(new NoticeWindow(),null,true);
+					WindowManager.getInstance().openWindow(new SocialWindow(),null,true);
 					//					Alert.show( '测试',Alert.OK,null,'small' );
 					break;
 				//任务
 				case this.$pbTask:
-					WindowManager.getInstance().openWindow(new ShopWindow(),null,true);
-					
+					WindowManager.getInstance().openWindow(new TaskWindow(),null,true);
 					break;
 				//背包
 				case this.$pbBag:
+					WindowManager.getInstance().openWindow(new PackageWindow(),null,true);
 					break;
 				//回城
 				case this.$pbHome:
+					PopUpManager.removeAllPopUp();
 					break;
 				//快捷中心
 				case this.$pbApp:
@@ -93,9 +99,11 @@ package app.mvc.view.ui.panel
 					break;
 				//妖将
 				case this.$pbRole:
+					WindowManager.getInstance().openWindow( new MonsterWindow(),null,true);
 					break;
 				//装备
 				case this.$pbEquip:
+					WindowManager.getInstance().openWindow( new EquipWindow(),null,true);
 					break;
 				//法术
 				case this.$mcSpell['$pbSpell']:
@@ -103,6 +111,7 @@ package app.mvc.view.ui.panel
 					break;
 				//法宝
 				case this.$pbMagic:
+					WindowManager.getInstance().openWindow(new ShopWindow(),null,true);
 					break;
 			}
 		}
@@ -150,7 +159,7 @@ package app.mvc.view.ui.panel
 		private function regTips():void
 		{
 			Tip.register( $pbSocial,'社交' );
-			Tip.register( $pbHelp,'帮主' );
+			Tip.register( $pbHelp,'帮助' );
 			Tip.register( $pbHome,'回城' );
 			Tip.register( $pbTask,'任务' );
 			Tip.register( $pbBattle,'战斗' );

@@ -104,7 +104,7 @@ package app.mvc.view.ui.component
 			contentMask.graphics.drawRect( 0, 0, this.contentW, this.contentH );
 			contentMask.graphics.endFill();
 			
-			contentContainer.mask = contentMask;
+		    contentContainer.mask = contentMask;
 			
 			addChild( contentContainer );
 			addChild( contentMask );

@@ -1,10 +1,11 @@
-package app.mvc.view.ui.window.shop
+package app.mvc.view.ui.window.packages
 {
 	import app.mvc.view.ui.component.List;
 	import app.mvc.view.ui.component.Navigation;
 	import app.mvc.view.ui.component.pagebar.PageBar;
 	import app.mvc.view.ui.panel.friends.MainFriendItem;
 	import app.mvc.view.ui.panel.friends.MainFriendTab;
+	import app.mvc.view.ui.window.shop.ShopTab;
 	
 	import com.jfw.engine.core.data.IStruct;
 	import com.jfw.engine.core.mvc.view.BPanel;
@@ -18,13 +19,12 @@ package app.mvc.view.ui.window.shop
 	
 	
 	/**
-	 *  商城面板
+	 *  背包面板
 	 * @author
 	 * 
 	 */	
-	public class ShopContainerShop extends BPanel
+	public class PackageContainerPackage extends BPanel
 	{
-		public var $mcShopContainer:Sprite = null;
 		
 		//tab
 		private var tabNav:Navigation;
@@ -49,9 +49,10 @@ package app.mvc.view.ui.window.shop
 		
 		
 		
-		public function ShopContainerShop()
+		public function PackageContainerPackage()
 		{
 			super();
+			x=30;
 		}
 		
 		override protected function onInit():void
@@ -79,11 +80,13 @@ package app.mvc.view.ui.window.shop
 		{
 			tabFactory = 
 				[
-					{ tabName: '畅销',type: 0 }, 
-					{ tabName: '法宝',type: 1 },
-					{ tabName: '材料',type: 2 },
-					{ tabName: '书籍',type: 3 },
-					{ tabName: '其他',type: 4 }
+					{ tabName: '全部',type: 0 }, 
+					{ tabName: '装备',type: 1 },
+					{ tabName: '法宝',type: 2 },
+					{ tabName: '材料',type: 3 },
+					{ tabName: '晶石',type: 4 },
+					{ tabName: '书籍',type: 5 },
+					{ tabName: '其他',type: 6 }
 				];
 			
 			tabNav = new Navigation( tabFactory.length,0,Navigation.VERTICAL );
@@ -93,8 +96,8 @@ package app.mvc.view.ui.window.shop
 			}
 			
 			this.addChild( tabNav );
-			tabNav.x = 15;
-			tabNav.y = 260;
+			tabNav.x = 0;
+			tabNav.y = 35;
 			tabNav.selectedIndex = 0;
 			tabNav.addEventListener(Event.CHANGE, onChangeTab);
 		}

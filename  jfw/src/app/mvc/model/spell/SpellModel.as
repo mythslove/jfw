@@ -21,6 +21,7 @@ package app.mvc.model.spell
 			super( NAME );
 		}
 		
+		
 		/**
 		 * 初始化法术列表 
 		 * @param info

@@ -4,11 +4,12 @@ package app.mvc.view
 	import app.mvc.control.events.LoadingEvent;
 	import app.mvc.control.events.ModelEvent;
 	import app.mvc.model.BattleModel;
+	import app.mvc.view.home.HomeView1;
 	import app.mvc.view.init.LoadingView;
-	import app.mvc.view.ui.panel.MainShortCut;
-	import app.mvc.view.ui.panel.MainUI;
 	import app.mvc.view.ui.component.Tip;
 	import app.mvc.view.ui.component.alert.Alert;
+	import app.mvc.view.ui.panel.MainShortCut;
+	import app.mvc.view.ui.panel.MainUI;
 	
 	import com.jfw.engine.core.base.Core;
 	import com.jfw.engine.core.data.IStruct;
@@ -108,7 +109,7 @@ package app.mvc.view
 					Logger.info( 'Game init ...' );
 					
 					//new HomeView( this.mapLayer );
-					sendEvent( LoadingEvent.LOADING_HIDE );
+					new HomeView1( this.mapLayer );
 					new MainUI( this.uiLayer );
 					new MainShortCut( this.shortCutLayer );
 					
